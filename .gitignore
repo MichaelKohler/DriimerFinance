@@ -2,7 +2,6 @@ nbproject
 build
 build.xml
 .settings
-.project
 .classpath
 bin
 
