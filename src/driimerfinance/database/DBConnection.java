@@ -7,4 +7,12 @@ package driimerfinance.database;
 */
 public class DBConnection {
     
+    public DBConnection() {
+        
+    }
+    
+    public void init() {
+        
+    }
+    
 }

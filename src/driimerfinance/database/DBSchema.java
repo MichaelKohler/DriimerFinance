@@ -7,4 +7,8 @@ package driimerfinance.database;
 */
 public class DBSchema {
     
+    public static void getSchema() {
+        
+    }
+    
 }

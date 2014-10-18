@@ -7,4 +7,12 @@ package driimerfinance.gui;
 */
 public class AboutWindow {
     
+    public AboutWindow() {
+        createGUI();
+    }
+    
+    private void createGUI() {
+        
+    }
+    
 }
