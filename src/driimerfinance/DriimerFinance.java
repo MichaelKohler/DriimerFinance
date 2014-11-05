@@ -35,7 +35,7 @@ public class DriimerFinance {
         System.out.println("Listing all Clients: ");
         List<Mandant> mandanten = driimerdb.getAllMantanten();
         for(Mandant mandant : mandanten) {
-        	System.out.println("ID: " + mandant.getID() + " Name: " + mandant.getName() + " DBSchema: " + mandant.getDBSchema());
+        	System.out.println("ID: " + mandant.getId() + " Name: " + mandant.getName() + " DBSchema: " + mandant.getDBSchema());
         }
         
         driimerdb.closeConnection();

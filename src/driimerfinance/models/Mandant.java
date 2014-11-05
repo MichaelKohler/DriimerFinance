@@ -18,7 +18,7 @@ public class Mandant {
         this.setName(name);
     }
     	
-	public Integer getID() {
+	public Integer getId() {
 		return ID;
 	}
 

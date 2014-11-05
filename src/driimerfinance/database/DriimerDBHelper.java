@@ -74,10 +74,52 @@ public class DriimerDBHelper{
 		 close();
 	 }
 	 return user;
-	 
-	 
  }
  
+ public void AddUser(User user) {
+	 try {
+		 preparedStatement = dbconnection.prepareStatement("insert into user(Name, Vorname, Password, username) values (?,?,?,?)");
+		 preparedStatement.setString(1, user.getName());
+		 preparedStatement.setString(2, user.getVorname());
+		 preparedStatement.setString(3, user.getPassword());
+		 preparedStatement.setString(4, user.getUsername());
+		 preparedStatement.execute();
+		 
+	 } catch (SQLException e) {
+		 e.printStackTrace();
+	 } finally {
+		 close();
+	 }
+ }
+ 
+ public void DeleteUser(User user)  {
+	 try{
+		 preparedStatement = dbconnection.prepareStatement("delete from users where idUser=?");
+		 preparedStatement.setInt(1, user.getId());
+	 }catch (SQLException e) {
+         e.printStackTrace();
+     }finally {
+		 close();
+	 }
+ }
+ 
+ 
+ public void UpdateUser(User user) {
+	 try {
+		 preparedStatement = dbconnection.prepareStatement("update user set Name=?, Vorname=?, Password=?, username=? where idUser=?");
+		 preparedStatement.setString(1, user.getName());
+		 preparedStatement.setString(2, user.getVorname());
+		 preparedStatement.setString(3, user.getPassword());
+		 preparedStatement.setString(4, user.getUsername());
+		 preparedStatement.setInt(5, user.getId());
+		 preparedStatement.execute();
+		 
+	 } catch (SQLException e) {
+		 e.printStackTrace();
+	 } finally {
+		 close();
+	 }
+ }
  
  public List<Mandant> getAllMantanten(){
 	 List<Mandant> mandanten = new ArrayList<Mandant>();
@@ -120,8 +162,47 @@ public class DriimerDBHelper{
 		 close();
 	 }
 	 return mandant;
-	 
-	 
+ }
+ 
+ public void AddMandant(Mandant mandant) {
+	 try {
+		 preparedStatement = dbconnection.prepareStatement("insert into mandanten(Name, DBSchema) values (?,?)");
+		 preparedStatement.setString(1, mandant.getName());
+		 preparedStatement.setString(2, mandant.getDBSchema());
+		 preparedStatement.execute();
+		 
+	 } catch (SQLException e) {
+		 e.printStackTrace();
+	 } finally {
+		 close();
+	 }
+ }
+ 
+ public void DeleteMandant(Mandant mandant)  {
+	 try{
+		 preparedStatement = dbconnection.prepareStatement("delete from mandanten where idmandanten=?");
+		 preparedStatement.setInt(1, mandant.getId());
+	 }catch (SQLException e) {
+         e.printStackTrace();
+     }finally {
+		 close();
+	 }
+ }
+ 
+ 
+ public void UpdateMandant(Mandant mandant) {
+	 try {
+		 preparedStatement = dbconnection.prepareStatement("update mandanten set Name=?, DBSchema=? where idMandanten=?");
+		 preparedStatement.setString(1, mandant.getName());
+		 preparedStatement.setString(2, mandant.getDBSchema());
+		 preparedStatement.setInt(3, mandant.getId());
+		 preparedStatement.execute();
+		 
+	 } catch (SQLException e) {
+		 e.printStackTrace();
+	 } finally {
+		 close();
+	 }
  }
  
    // you need to close all three (connection, statement, resultset) to make sure
