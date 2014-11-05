@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import driimerfinance.models.Account;
 import driimerfinance.models.Mandant;
+import driimerfinance.models.Transaction;
 import driimerfinance.models.User;
 
 public class MandantDBHelper {
@@ -15,31 +18,30 @@ public class MandantDBHelper {
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
-	private static String host = "localhost";
-	private static String databasename = "driimerfinance";
-	private static String user = "root";
-	private static String password = "mysql";
 	private DBConnection db = null;
 
-	public MandantDBHelper() {
+	public MandantDBHelper(String host, String databasename,
+			String user, String password) {
 		db = new DBConnection();
 		dbconnection = db.getConnection(host, databasename, user, password);
 	}
 
-	public List<User> getAllUsers() {
-		List<User> users = new ArrayList<User>();
+	public List<Transaction> getAllTransactions() {
+		List<Transaction> transactions = new ArrayList<Transaction>();
 		try {
 			statement = dbconnection.createStatement();
 			// resultSet gets the result of the SQL query
-			resultSet = statement.executeQuery("select * from user");
+			resultSet = statement.executeQuery("select * from konto");
 			while (resultSet.next()) {
-				User user = new User();
-				user.setId(resultSet.getInt("idUser"));
-				user.setName(resultSet.getString("Name"));
-				user.setVorname(resultSet.getString("Vorname"));
-				user.setPassword(resultSet.getString("Password"));
-				user.setUsername(resultSet.getString("username"));
-				users.add(user);
+				Transaction transaction = new Transaction();
+				transaction.setId(resultSet.getInt("idBuchung"));
+				transaction.setDate(resultSet.getDate("Datum"));
+				transaction.setSollKonto(resultSet.getString("fk_SollKonto"));
+				transaction.setHabenKonto(resultSet.getString("fk_HabenKonto"));
+				transaction.setBezeichnung(resultSet.getString("Bezeichnung"));
+				transaction.setBetrag(resultSet.getInt("Betrag"));
+				transaction.setBelegNr(resultSet.getInt("Beleg-Nr"));
+				transactions.add(transaction);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

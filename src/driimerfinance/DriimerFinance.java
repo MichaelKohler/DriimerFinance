@@ -3,8 +3,10 @@ package driimerfinance;
 import java.util.List;
 
 import driimerfinance.database.DriimerDBHelper;
+import driimerfinance.database.MandantDBHelper;
 import driimerfinance.models.Mandant;
 import driimerfinance.models.User;
+
 
 /**
  * Main entry point class
@@ -39,6 +41,12 @@ public class DriimerFinance {
         }
         
         driimerdb.closeConnection();
+        
+        MandantDBHelper dbhelper = new MandantDBHelper("localhost", "mandant", "root", "mysql");
+        
+        
+        
+        
     }
     
 }
