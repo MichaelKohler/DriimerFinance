@@ -48,7 +48,7 @@ public class MainWindow {
 		file.add(eMenuItem);
 
 		JMenu mandanten = new JMenu("Mandanten");
-		file.setMnemonic(KeyEvent.VK_F);
+		mandanten.setMnemonic(KeyEvent.VK_F);
 
 		JMenuItem addMenuItem = new JMenuItem("Hinzufügen...");
 		addMenuItem.setMnemonic(KeyEvent.VK_H);
@@ -70,9 +70,24 @@ public class MainWindow {
 			}
 		});
 		mandanten.add(changeMenuItem);
+		
+		JMenu buchungen = new JMenu("Buchungen");
+		file.setMnemonic(KeyEvent.VK_B);
+
+		JMenuItem buchungItem = new JMenuItem("Buchung hinzufügen...");
+		buchungItem.setMnemonic(KeyEvent.VK_H);
+		buchungItem.setToolTipText("Buchung hinzufügen");
+		buchungItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				AddTransactionWindow addTransactionWindow = new AddTransactionWindow();
+			}
+		});
+		buchungen.add(buchungItem);
 
 		menubar.add(file);
 		menubar.add(mandanten);
+		menubar.add(buchungen);
 		_frame.setJMenuBar(menubar);
 	}
 }
