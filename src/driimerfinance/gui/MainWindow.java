@@ -56,7 +56,7 @@ public class MainWindow {
 		addMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				AddMandantWindow addMandantWindow = new AddMandantWindow();
+				new AddMandantWindow();
 			}
 		});
 		mandanten.add(addMenuItem);
@@ -91,7 +91,7 @@ public class MainWindow {
 		buchungItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				AddTransactionWindow addTransactionWindow = new AddTransactionWindow();
+				new AddTransactionWindow();
 			}
 		});
 		buchungen.add(buchungItem);
@@ -105,7 +105,7 @@ public class MainWindow {
 		editAccountPlan.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				AccountPlanWindow accPlanWindow = new AccountPlanWindow();
+				new AccountPlanWindow();
 			}
 		});
 		accountPlan.add(editAccountPlan);
