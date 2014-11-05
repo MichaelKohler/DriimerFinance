@@ -60,16 +60,27 @@ public class MainWindow {
 			}
 		});
 		mandanten.add(addMenuItem);
-		JMenuItem changeMenuItem = new JMenuItem("Wechseln...");
-		changeMenuItem.setMnemonic(KeyEvent.VK_W);
-		changeMenuItem.setToolTipText("Mandant wechseln");
-		changeMenuItem.addActionListener(new ActionListener() {
+		JMenu mandantenChangeMenu = new JMenu("Wechseln...");
+		mandantenChangeMenu.setMnemonic(KeyEvent.VK_W);
+		JMenuItem mandant1MenuItem = new JMenuItem("Mandant 1");
+		mandant1MenuItem.setMnemonic(KeyEvent.VK_M);
+		mandant1MenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				// TODO: change Mandant
 			}
 		});
-		mandanten.add(changeMenuItem);
+		JMenuItem mandant2MenuItem = new JMenuItem("Mandant 2");
+		mandant2MenuItem.setMnemonic(KeyEvent.VK_M);
+		mandant2MenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				// TODO: change Mandant
+			}
+		});
+		mandantenChangeMenu.add(mandant1MenuItem);
+		mandantenChangeMenu.add(mandant2MenuItem);
+		mandanten.add(mandantenChangeMenu);
 		
 		JMenu buchungen = new JMenu("Buchungen");
 		file.setMnemonic(KeyEvent.VK_B);
