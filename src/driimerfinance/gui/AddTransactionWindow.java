@@ -26,6 +26,13 @@ public class AddTransactionWindow {
 	JFrame _frame = new JFrame("DriimerFinance - Buchung hinzufügen");
 	String[] _sollKonti = { "Foo", "Bla", "Bar", "Test" };
 	String[] _habenKonti = { "Baz", "Blubb" };
+	
+	JTextField _dateField = null;
+	JComboBox _sollField = null;
+	JComboBox _habenField = null;
+	JTextField _buchungField =null;
+	JTextField _betragField = null;
+	JTextField _belegField = null;
 
 	public AddTransactionWindow() {
 		createGUI();
@@ -46,36 +53,36 @@ public class AddTransactionWindow {
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		JLabel dateLabel = new JLabel("Datum");
-		JTextField dateField = new JTextField();
-		dateField.setPreferredSize(new Dimension(150, 20));
+		_dateField = new JTextField();
+		_dateField.setPreferredSize(new Dimension(150, 20));
 		JLabel sollLabel = new JLabel("Soll Konto");
-		JComboBox sollField = new JComboBox(_sollKonti);
-		sollField.setPreferredSize(new Dimension(150, 20));
+		_sollField = new JComboBox(_sollKonti);
+		_sollField.setPreferredSize(new Dimension(150, 20));
 		JLabel habenLabel = new JLabel("Haben Konto");
-		JComboBox habenField = new JComboBox(_habenKonti);
-		habenField.setPreferredSize(new Dimension(150, 20));
+		_habenField = new JComboBox(_habenKonti);
+		_habenField.setPreferredSize(new Dimension(150, 20));
 		JLabel buchungLabel = new JLabel("Buchungssatz");
-		JTextField buchungField = new JTextField();
-		buchungField.setPreferredSize(new Dimension(150, 20));
+		_buchungField = new JTextField();
+		_buchungField.setPreferredSize(new Dimension(150, 20));
 		JLabel betragLabel = new JLabel("Betrag");
-		JTextField betragField = new JTextField();
-		betragField.setPreferredSize(new Dimension(150, 20));
+		_betragField = new JTextField();
+		_betragField.setPreferredSize(new Dimension(150, 20));
 		JLabel belegLabel = new JLabel("Beleg Nr.");
-		JTextField belegField = new JTextField();
-		belegField.setPreferredSize(new Dimension(150, 20));
+		_belegField = new JTextField();
+		_belegField.setPreferredSize(new Dimension(150, 20));
 
 		formPanel.add(dateLabel);
-		formPanel.add(dateField);
+		formPanel.add(_dateField);
 		formPanel.add(sollLabel);
-		formPanel.add(sollField);
+		formPanel.add(_sollField);
 		formPanel.add(habenLabel);
-		formPanel.add(habenField);
+		formPanel.add(_habenField);
 		formPanel.add(buchungLabel);
-		formPanel.add(buchungField);
+		formPanel.add(_buchungField);
 		formPanel.add(betragLabel);
-		formPanel.add(betragField);
+		formPanel.add(_betragField);
 		formPanel.add(belegLabel);
-		formPanel.add(belegField);
+		formPanel.add(_belegField);
 
 		_frame.getContentPane().add(formPanel, BorderLayout.CENTER);
 	}
@@ -87,6 +94,7 @@ public class AddTransactionWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO: implement save of Buchung
+				// TODO: use _whatever variables from class scope to get text from fields
 				_frame.dispose();
 			}
 		});

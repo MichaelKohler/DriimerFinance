@@ -23,6 +23,7 @@ import driimerfinance.helpers.GUIHelper;
 public class AddMandantWindow {
 
 	JFrame _frame = new JFrame("DriimerFinance - Mandant hinzufügen");
+	JTextField _nameField = null;
 
 	public AddMandantWindow() {
 		createGUI();
@@ -43,11 +44,11 @@ public class AddMandantWindow {
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		JLabel nameLabel = new JLabel("Name");
-		JTextField nameField = new JTextField();
-		nameField.setPreferredSize(new Dimension(150, 20));
+		_nameField = new JTextField();
+		_nameField.setPreferredSize(new Dimension(150, 20));
 
 		formPanel.add(nameLabel);
-		formPanel.add(nameField);
+		formPanel.add(_nameField);
 
 		_frame.getContentPane().add(formPanel, BorderLayout.CENTER);
 	}
@@ -59,6 +60,7 @@ public class AddMandantWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO: implement save of Mandant
+				// TODO: use _nameField for getting the name
 				_frame.dispose();
 			}
 		});
