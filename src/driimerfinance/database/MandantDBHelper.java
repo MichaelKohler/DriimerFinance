@@ -10,7 +10,7 @@ import java.util.List;
 import driimerfinance.models.Mandant;
 import driimerfinance.models.User;
 
-public class DriimerDBHelper {
+public class MandantDBHelper {
 	private Connection dbconnection;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
@@ -21,7 +21,7 @@ public class DriimerDBHelper {
 	private static String password = "mysql";
 	private DBConnection db = null;
 
-	public DriimerDBHelper() {
+	public MandantDBHelper() {
 		db = new DBConnection();
 		dbconnection = db.getConnection(host, databasename, user, password);
 	}

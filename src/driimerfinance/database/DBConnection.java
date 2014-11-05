@@ -2,10 +2,7 @@ package driimerfinance.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * ...
@@ -14,8 +11,7 @@ import java.sql.Statement;
  */
 public class DBConnection {
 	private Connection connection = null;
-	private Statement statement = null;
-	private ResultSet resultSet = null;
+
 
 	public DBConnection() {
 		try {
@@ -48,17 +44,6 @@ public class DBConnection {
 	// you need to close all three to make sure
 	public void close() {
 		DBUtil.close(connection);
-	}
-
-	private void close(AutoCloseable c) throws UnsupportedOperationException {
-		try {
-			if (c != null) {
-				c.close();
-			}
-		} catch (Exception e) {
-			// don't throw now as it might leave following closables in
-			// undefined state
-		}
 	}
 
 	public void init() {
