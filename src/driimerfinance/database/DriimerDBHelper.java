@@ -74,7 +74,7 @@ public class DriimerDBHelper {
 		return user;
 	}
 
-	public void AddUser(User user) {
+	public void addUser(User user) {
 		try {
 			preparedStatement = dbconnection
 					.prepareStatement("insert into user(Name, Vorname, Password, username) values (?,?,?,?)");
@@ -91,7 +91,7 @@ public class DriimerDBHelper {
 		}
 	}
 
-	public void DeleteUser(User user) {
+	public void deleteUser(User user) {
 		try {
 			preparedStatement = dbconnection
 					.prepareStatement("delete from users where idUser=?");
@@ -103,7 +103,7 @@ public class DriimerDBHelper {
 		}
 	}
 
-	public void UpdateUser(User user) {
+	public void updateUser(User user) {
 		try {
 			preparedStatement = dbconnection
 					.prepareStatement("update user set Name=?, Vorname=?, Password=?, username=? where idUser=?");
@@ -164,7 +164,7 @@ public class DriimerDBHelper {
 		return mandant;
 	}
 
-	public void AddMandant(Mandant mandant) {
+	public void addMandant(Mandant mandant) {
 		try {
 			preparedStatement = dbconnection
 					.prepareStatement("insert into mandanten(Name, DBSchema) values (?,?)");
@@ -179,7 +179,7 @@ public class DriimerDBHelper {
 		}
 	}
 
-	public void DeleteMandant(Mandant mandant) {
+	public void deleteMandant(Mandant mandant) {
 		try {
 			preparedStatement = dbconnection
 					.prepareStatement("delete from mandanten where idmandanten=?");
@@ -191,7 +191,7 @@ public class DriimerDBHelper {
 		}
 	}
 
-	public void UpdateMandant(Mandant mandant) {
+	public void updateMandant(Mandant mandant) {
 		try {
 			preparedStatement = dbconnection
 					.prepareStatement("update mandanten set Name=?, DBSchema=? where idMandanten=?");
