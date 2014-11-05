@@ -95,10 +95,25 @@ public class MainWindow {
 			}
 		});
 		buchungen.add(buchungItem);
+		
+		JMenu accountPlan = new JMenu("Kontenplan");
+		file.setMnemonic(KeyEvent.VK_K);
+
+		JMenuItem editAccountPlan = new JMenuItem("Kontenplan editieren...");
+		editAccountPlan.setMnemonic(KeyEvent.VK_H);
+		editAccountPlan.setToolTipText("Kontenplan editieren");
+		editAccountPlan.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				AccountPlanWindow accPlanWindow = new AccountPlanWindow();
+			}
+		});
+		accountPlan.add(editAccountPlan);
 
 		menubar.add(file);
 		menubar.add(mandanten);
 		menubar.add(buchungen);
+		menubar.add(accountPlan);
 		_frame.setJMenuBar(menubar);
 	}
 }
