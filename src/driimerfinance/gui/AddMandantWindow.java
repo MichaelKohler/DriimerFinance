@@ -2,6 +2,7 @@ package driimerfinance.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import driimerfinance.helpers.GUIHelper;
 
@@ -36,13 +38,16 @@ public class AddMandantWindow {
 
 	private void addForm() {
 		JPanel formPanel = new JPanel();
+		GridLayout layout = new GridLayout(1, 2);
+		formPanel.setLayout(layout);
+		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		JLabel nameLabel = new JLabel("Name");
 		JTextField nameField = new JTextField();
 		nameField.setPreferredSize(new Dimension(150, 20));
 
-		formPanel.add(nameLabel, BorderLayout.WEST);
-		formPanel.add(nameField, BorderLayout.EAST);
+		formPanel.add(nameLabel);
+		formPanel.add(nameField);
 
 		_frame.getContentPane().add(formPanel, BorderLayout.CENTER);
 	}
