@@ -2,8 +2,11 @@ package driimerfinance;
 
 import java.util.List;
 
+import javax.swing.JFrame;
+
 import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.database.MandantDBHelper;
+import driimerfinance.gui.MainWindow;
 import driimerfinance.models.Mandant;
 import driimerfinance.models.User;
 
@@ -23,8 +26,8 @@ public class DriimerFinance {
      * @throws Exception 
      */
     public static void main(String[] args) throws Exception {
-        System.out.println("Test");
-        
+    		MainWindow mainWindow = new MainWindow();
+    	
         DriimerDBHelper driimerdb = new DriimerDBHelper();
                 
         System.out.println("Listing all Users: ");

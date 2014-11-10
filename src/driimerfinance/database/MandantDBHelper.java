@@ -48,7 +48,7 @@ public class MandantDBHelper {
 		} finally {
 			close();
 		}
-		return users;
+		return transactions;
 	}
 
 	public User getUserById(int userId) {
