@@ -2,8 +2,6 @@ package driimerfinance;
 
 import java.util.List;
 
-import javax.swing.JFrame;
-
 import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.database.MandantDBHelper;
 import driimerfinance.gui.MainWindow;
@@ -26,7 +24,7 @@ public class DriimerFinance {
      * @throws Exception 
      */
     public static void main(String[] args) throws Exception {
-    		MainWindow mainWindow = new MainWindow();
+    		new MainWindow();
     	
         DriimerDBHelper driimerdb = new DriimerDBHelper();
                 
