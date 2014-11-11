@@ -1,7 +1,5 @@
 package driimerfinance.models;
 
-import java.util.Date;
-
 /**
  * ...
  * 
@@ -9,9 +7,10 @@ import java.util.Date;
 */
 public class Transaction {
 	
-	private Date date = null;
-	private String sollKonto = null;
-	private String habenKonto = null;
+	private Integer id = null;
+	private java.sql.Date date = null;
+	private int Fk_sollKonto = 0;
+	private int Fk_habenKonto = 0;
 	private String bezeichnung = null;
 	private Integer betrag = null;
 	private Integer belegNr = null;
@@ -48,7 +47,7 @@ public class Transaction {
         
     }
     
-	private Integer id = null;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -57,28 +56,28 @@ public class Transaction {
 		this.id = id;
 	}
 
-	public Date getDate() {
+	public java.sql.Date getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(java.sql.Date date) {
 		this.date = date;
 	}
 
-	public String getSollKonto() {
-		return sollKonto;
+	public int getFk_SollKonto() {
+		return Fk_sollKonto;
 	}
 
-	public void setSollKonto(String sollKonto) {
-		this.sollKonto = sollKonto;
+	public void setFk_SollKonto(int sollKonto) {
+		this.Fk_sollKonto = sollKonto;
 	}
 
-	public String getHabenKonto() {
-		return habenKonto;
+	public int getFk_HabenKonto() {
+		return Fk_habenKonto;
 	}
 
-	public void setHabenKonto(String habenKonto) {
-		this.habenKonto = habenKonto;
+	public void setFk_HabenKonto(int habenKonto) {
+		this.Fk_habenKonto = habenKonto;
 	}
 
 	public String getBezeichnung() {

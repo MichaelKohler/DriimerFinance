@@ -42,7 +42,7 @@ public class AccountPlanWindow {
 		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AddAccountWindow();
+				new AddMandantWindow();
 			}
 		});
 		buttonPanel.add(addButton);

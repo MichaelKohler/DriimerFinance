@@ -7,11 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import driimerfinance.models.Account;
-import driimerfinance.models.Mandant;
+import driimerfinance.models.AccountType;
 import driimerfinance.models.Transaction;
-import driimerfinance.models.User;
+
 
 public class MandantDBHelper {
 	private Connection dbconnection;
@@ -31,13 +30,13 @@ public class MandantDBHelper {
 		try {
 			statement = dbconnection.createStatement();
 			// resultSet gets the result of the SQL query
-			resultSet = statement.executeQuery("select * from konto");
+			resultSet = statement.executeQuery("select * from buchung");
 			while (resultSet.next()) {
 				Transaction transaction = new Transaction();
 				transaction.setId(resultSet.getInt("idBuchung"));
 				transaction.setDate(resultSet.getDate("Datum"));
-				transaction.setSollKonto(resultSet.getString("fk_SollKonto"));
-				transaction.setHabenKonto(resultSet.getString("fk_HabenKonto"));
+				transaction.setFk_SollKonto(resultSet.getInt("fk_SollKonto"));
+				transaction.setFk_HabenKonto(resultSet.getInt("fk_HabenKonto"));
 				transaction.setBezeichnung(resultSet.getString("Bezeichnung"));
 				transaction.setBetrag(resultSet.getInt("Betrag"));
 				transaction.setBelegNr(resultSet.getInt("Beleg-Nr"));
@@ -51,38 +50,43 @@ public class MandantDBHelper {
 		return transactions;
 	}
 
-	public User getUserById(int userId) {
-		User user = new User();
+		
+	public Transaction getTransactionById(int transactionId) {
+		Transaction transaction = new Transaction();
 		try {
 			preparedStatement = dbconnection
-					.prepareStatement("select * from user where idUser=?");
-			preparedStatement.setInt(1, userId);
+					.prepareStatement("select * from buchung where idBuchung=?");
+			preparedStatement.setInt(1, transactionId);
 
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-				user.setId(resultSet.getInt("idUser"));
-				user.setName(resultSet.getString("Name"));
-				user.setVorname(resultSet.getString("Vorname"));
-				user.setPassword(resultSet.getString("Password"));
-				user.setUsername(resultSet.getString("username"));
+				transaction.setId(resultSet.getInt("idMandanten"));
+				transaction.setDate(resultSet.getDate("Datum"));
+				transaction.setFk_SollKonto(resultSet.getInt("fk_SollKonto"));
+				transaction.setFk_HabenKonto(resultSet.getInt("fk_HabenKonto"));
+				transaction.setBezeichnung(resultSet.getString("bezeichnung"));
+				transaction.setBetrag(resultSet.getInt("Betrag"));
+				transaction.setBelegNr(resultSet.getInt("Beleg-Nr"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
-		return user;
+		return transaction;
 	}
 
-	public void addUser(User user) {
+	public void addTransaction(Transaction transaction) {
 		try {
 			preparedStatement = dbconnection
-					.prepareStatement("insert into user(Name, Vorname, Password, username) values (?,?,?,?)");
-			preparedStatement.setString(1, user.getName());
-			preparedStatement.setString(2, user.getVorname());
-			preparedStatement.setString(3, user.getPassword());
-			preparedStatement.setString(4, user.getUsername());
+					.prepareStatement("insert into buchung(Datum, fk_SollKonto, fk_HabenKonto, Bezeichnung, Betrag, Beleg-Nr) values (?,?,?,?,?,?)");
+			preparedStatement.setDate(1, transaction.getDate());
+			preparedStatement.setInt(2, transaction.getFk_SollKonto());
+			preparedStatement.setInt(3, transaction.getFk_HabenKonto());
+			preparedStatement.setString(4,  transaction.getBezeichnung());
+			preparedStatement.setInt(5, transaction.getBetrag());
+			preparedStatement.setInt(6, transaction.getBelegNr());
 			preparedStatement.execute();
 
 		} catch (SQLException e) {
@@ -92,29 +96,19 @@ public class MandantDBHelper {
 		}
 	}
 
-	public void deleteUser(User user) {
+	public void updateTransaction(Transaction transaction) {
 		try {
 			preparedStatement = dbconnection
-					.prepareStatement("delete from users where idUser=?");
-			preparedStatement.setInt(1, user.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-	}
-
-	public void updateUser(User user) {
-		try {
-			preparedStatement = dbconnection
-					.prepareStatement("update user set Name=?, Vorname=?, Password=?, username=? where idUser=?");
-			preparedStatement.setString(1, user.getName());
-			preparedStatement.setString(2, user.getVorname());
-			preparedStatement.setString(3, user.getPassword());
-			preparedStatement.setString(4, user.getUsername());
-			preparedStatement.setInt(5, user.getId());
+					.prepareStatement("update buchung set Datum=?, fk_SollKonto=?, fk_HabenKonto=?, Bezeichnung=?, Betrag=?, Beleg-Nr=? where idBuchung=?");
+			preparedStatement.setDate(1, transaction.getDate());
+			preparedStatement.setInt(2, transaction.getFk_SollKonto());
+			preparedStatement.setInt(3, transaction.getFk_HabenKonto());
+			preparedStatement.setString(4, transaction.getBezeichnung());
+			preparedStatement.setInt(5, transaction.getBetrag());
+			preparedStatement.setInt(6, transaction.getBelegNr());
+			preparedStatement.setInt(7, transaction.getId());
 			preparedStatement.execute();
-
+	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -122,55 +116,74 @@ public class MandantDBHelper {
 		}
 	}
 
-	public List<Mandant> getAllMantanten() {
-		List<Mandant> mandanten = new ArrayList<Mandant>();
+	public void deleteTransaction(Transaction transaction) {
+		try {
+			preparedStatement = dbconnection
+					.prepareStatement("delete from buchung where idBuchung=?");
+			preparedStatement.setInt(1, transaction.getId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+
+	public List<Account> getAllAccounts() {
+		List<Account> accounts = new ArrayList<Account>();
 		try {
 			statement = dbconnection.createStatement();
 			// resultSet gets the result of the SQL query
-			resultSet = statement.executeQuery("select * from mandanten");
+			resultSet = statement.executeQuery("select * from konto");
 			while (resultSet.next()) {
-				Mandant mandant = new Mandant();
-				mandant.setID(resultSet.getInt("idMandanten"));
-				mandant.setName(resultSet.getString("Name"));
-				mandant.setDBSchema(resultSet.getString("DBSchema"));
-				mandanten.add(mandant);
+				Account account = new Account();
+				account.setId(resultSet.getInt("idKonto"));
+				account.setName(resultSet.getString("Name"));
+				account.setFk_AccountType(resultSet.getInt("fk_KontoTyp"));
+				account.setBalance(resultSet.getInt("Guthaben"));
+				account.setCapitalAccount(resultSet.getBoolean("Kapitalkonto"));
+				accounts.add(account);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
-		return mandanten;
+		return accounts;
 	}
-
-	public Mandant getMandantById(int mandantId) {
-		Mandant mandant = new Mandant();
+	
+	
+	public Account getAccountById(int accountId) {
+		Account account= new Account();
 		try {
 			preparedStatement = dbconnection
-					.prepareStatement("select * from mandanten where idMandanten=?");
-			preparedStatement.setInt(1, mandantId);
+					.prepareStatement("select * from konto where idKonto=?");
+			preparedStatement.setInt(1, accountId);
 
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-				mandant.setID(resultSet.getInt("idMandanten"));
-				mandant.setName(resultSet.getString("Name"));
-				mandant.setDBSchema(resultSet.getString("DBSchema"));
+				account.setId(resultSet.getInt("idKonto"));
+				account.setName(resultSet.getString("Name"));
+				account.setFk_AccountType(resultSet.getInt("fk_KontoTyp"));
+				account.setBalance(resultSet.getInt("Guthaben"));
+				account.setCapitalAccount(resultSet.getBoolean("Kapitalkonto"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
-		return mandant;
+		return account;
 	}
-
-	public void addMandant(Mandant mandant) {
+	
+	public void addAccount(Account account) {
 		try {
 			preparedStatement = dbconnection
-					.prepareStatement("insert into mandanten(Name, DBSchema) values (?,?)");
-			preparedStatement.setString(1, mandant.getName());
-			preparedStatement.setString(2, mandant.getDBSchema());
+					.prepareStatement("insert into konto(Name, fk_KontoTyp, Guthaben, Kapitalkonto) values (?,?,?,?)");
+			preparedStatement.setString(1, account.getName());
+			preparedStatement.setInt(2, account.getFk_AccountType());
+			preparedStatement.setInt(3, account.getBalance());
+			preparedStatement.setBoolean(4,  account.getCapitalAccount());
 			preparedStatement.execute();
 
 		} catch (SQLException e) {
@@ -179,35 +192,78 @@ public class MandantDBHelper {
 			close();
 		}
 	}
-
-	public void deleteMandant(Mandant mandant) {
+	
+	public void updateAccount(Account account) {
 		try {
 			preparedStatement = dbconnection
-					.prepareStatement("delete from mandanten where idmandanten=?");
-			preparedStatement.setInt(1, mandant.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-	}
-
-	public void updateMandant(Mandant mandant) {
-		try {
-			preparedStatement = dbconnection
-					.prepareStatement("update mandanten set Name=?, DBSchema=? where idMandanten=?");
-			preparedStatement.setString(1, mandant.getName());
-			preparedStatement.setString(2, mandant.getDBSchema());
-			preparedStatement.setInt(3, mandant.getId());
+					.prepareStatement("update konto set Name=?, fk_KontoTyp=?, Guthaben=?, Kapitalkonto=? where idKonto=?");
+			preparedStatement.setString(1, account.getName());
+			preparedStatement.setInt(2, account.getFk_AccountType());
+			preparedStatement.setInt(3, account.getBalance());
+			preparedStatement.setBoolean(4,  account.getCapitalAccount());
+			preparedStatement.setInt(5, account.getId());
 			preparedStatement.execute();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
 	}
+	
+	public void deleteAccount(Account account) {
+		try {
+			preparedStatement = dbconnection
+					.prepareStatement("delete from konto where idKonto=?");
+			preparedStatement.setInt(1, account.getId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+	
+	public List<AccountType> getAllAccountTypes() {
+		List<AccountType> accounttypes = new ArrayList<AccountType>();
+		try {
+			statement = dbconnection.createStatement();
+			// resultSet gets the result of the SQL query
+			resultSet = statement.executeQuery("select * from kontotyp");
+			while (resultSet.next()) {
+				AccountType accounttype = new AccountType();
+				accounttype.setId(resultSet.getInt("idKontotyp"));
+				accounttype.setName(resultSet.getString("Name"));
+				accounttypes.add(accounttype);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return accounttypes;
+	}
+	
+	
+	public AccountType getAccountTypeById(int accounttypeId) {
+		AccountType accounttype = new AccountType();
+		try {
+			preparedStatement = dbconnection
+					.prepareStatement("select * from kontotyp where idKontotyp=?");
+			preparedStatement.setInt(1, accounttypeId);
 
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				accounttype.setId(resultSet.getInt("idKontotyp"));
+				accounttype.setName(resultSet.getString("Name"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return accounttype;
+	}
+	
 	// you need to close all three (connection, statement, resultset) to make
 	// sure
 	public void closeConnection() {
