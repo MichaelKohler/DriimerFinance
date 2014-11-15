@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -60,6 +61,10 @@ public class AddMandantWindow {
 		okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (_nameField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(_frame, "Der Name muss ausgefüllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				Mandant newMandant = new Mandant();
 				newMandant.setName(_nameField.getText());
 				newMandant.createInDB();
