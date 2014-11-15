@@ -16,19 +16,11 @@ public class Transaction {
 	private Integer belegNr = null;
 	
     public Transaction() {
-        
+        // TODO: create ID automatically from DB
     }
     
     public Transaction(Account positionFrom, Account positionTo, int amount) {
 
-    }
-    
-    public void setFromAccount(Account account) {
-        
-    }
-    
-    public void setToAccount(Account account) {
-        
     }
     
     public void setAmount(int amount) {

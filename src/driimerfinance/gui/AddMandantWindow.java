@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import driimerfinance.helpers.GUIHelper;
+import driimerfinance.models.Mandant;
 
 /**
  * ...
@@ -59,8 +60,9 @@ public class AddMandantWindow {
 		okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO: implement save of Mandant
-				// TODO: use _nameField for getting the name
+				Mandant newMandant = new Mandant();
+				newMandant.setName(_nameField.getText());
+				newMandant.createInDB();
 				_frame.dispose();
 			}
 		});

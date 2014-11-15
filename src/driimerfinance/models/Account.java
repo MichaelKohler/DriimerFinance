@@ -15,7 +15,7 @@ public class Account {
 	private Boolean CapitalAccount = false;
 	
     public Account() {
-        
+        // TODO: create ID automatically from DB
     }
     
     public Account(String name) {

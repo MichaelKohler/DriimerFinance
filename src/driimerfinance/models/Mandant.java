@@ -11,7 +11,7 @@ public class Mandant {
 	private String DBSchema;
 	
 	public Mandant() {
-        
+        // TODO: create ID acc. to DB automatically
     }
 	
     public Mandant(String name) {

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import driimerfinance.helpers.GUIHelper;
+import driimerfinance.models.Account;
+import driimerfinance.models.Transaction;
 
 /**
  * ...
@@ -93,8 +96,17 @@ public class AddTransactionWindow {
 		okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO: implement save of Buchung
-				// TODO: use _whatever variables from class scope to get text from fields
+				Transaction newTrans = new Transaction();
+				java.util.Date date = new java.util.Date(_dateField.getText());
+				newTrans.setDate(new java.sql.Date(date.getTime()));
+				Account fromKonto = new Account(); // TODO: get by id
+				newTrans.setFk_SollKonto(fromKonto.getId());
+				Account toKonto = new Account(); // TODO: get by id
+				newTrans.setFk_HabenKonto(toKonto.getId());
+				newTrans.setBezeichnung(_buchungField.getText());
+				newTrans.setAmount(Integer.parseInt(_betragField.getText()));
+				newTrans.setBelegNr(Integer.parseInt(_belegField.getText()));
+				newTrans.createInDB();
 				_frame.dispose();
 			}
 		});

@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import driimerfinance.helpers.GUIHelper;
+import driimerfinance.models.Account;
 
 /**
  * ...
@@ -75,8 +76,12 @@ public class AddAccountWindow {
 		okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO: implement save of Account
-				// TODO: use _nameField and similar variables for getting the name
+				Account newAcc = new Account();
+				newAcc.setId(Integer.parseInt(_numberField.getText()));
+				newAcc.setName(_nameField.getText());
+				int typeCode = _typeField.getSelectedIndex();
+				newAcc.setFk_AccountType(typeCode);
+				newAcc.createInDB();
 				_frame.dispose();
 			}
 		});
