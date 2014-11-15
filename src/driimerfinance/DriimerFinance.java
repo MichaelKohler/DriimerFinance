@@ -26,7 +26,8 @@ public class DriimerFinance {
      */
     public static void main(String[] args) throws Exception {
     		new MainWindow();
-    	
+    		
+    		// TEST CODE BELOW
         DriimerDBHelper driimerdb = new DriimerDBHelper();
                 
         System.out.println("Listing all Users: ");
@@ -49,9 +50,6 @@ public class DriimerFinance {
         for (Transaction transaction : transactions) {
         	System.out.println("ID: " + transaction.getId() + " Datum: " + transaction.getDate() + " fk_SollKonto: " + transaction.getFk_SollKonto() + " fk_HabenKonto: " + transaction.getFk_HabenKonto() + " Bezeichnung: " + transaction.getBezeichnung() + " Betrag: " + transaction.getBetrag() + " Beleg-Nr: " + transaction.getBelegNr());
         }
-        
-        
-        
     }
     
 }

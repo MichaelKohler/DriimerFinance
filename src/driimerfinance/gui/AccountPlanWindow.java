@@ -25,11 +25,9 @@ import driimerfinance.models.Account;
 */
 public class AccountPlanWindow {
 
-	JFrame _frame = new JFrame("DriimerFinance - Kontenplan");
-	JTable _accountTable = new JTable();
-	AccountPlanWindow _parent = this;
-	String[] _headers = { "Nummer", "Name", "Typ", "Kapitalkonto" };
-	Object[][] _data = {  };
+	JFrame frame = new JFrame("DriimerFinance - Kontenplan");
+	JTable accountTable = new JTable();
+	AccountPlanWindow parent = this;
 	
     public AccountPlanWindow() {
         createGUI();
@@ -38,9 +36,9 @@ public class AccountPlanWindow {
     private void createGUI() {
     	    addForm();
 		addButtons();
-		_frame.setSize(400, 500);
-		GUIHelper.centerFrame(_frame);
-		_frame.setVisible(true);
+		frame.setSize(400, 500);
+		GUIHelper.centerFrame(frame);
+		frame.setVisible(true);
     }
     
     private void addForm() {
@@ -51,21 +49,25 @@ public class AccountPlanWindow {
 		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AddAccountWindow(_parent);
+				new AddAccountWindow(parent);
 			}
 		});
 		buttonPanel.add(addButton);
 		
 		JPanel tablePanel = new JPanel();
 		tablePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		_accountTable = new JTable(new DefaultTableModel(_data, _headers));
-		_accountTable.setPreferredScrollableViewportSize(new Dimension(400, 300));
-		_accountTable.setFillsViewportHeight(true);
-		JScrollPane scrollPane = new JScrollPane(_accountTable);
+		
+		String[] headers = { "Nummer", "Name", "Typ", "Kapitalkonto" };
+		Object[][] data = {  };
+		
+		accountTable = new JTable(new DefaultTableModel(data, headers));
+		accountTable.setPreferredScrollableViewportSize(new Dimension(400, 300));
+		accountTable.setFillsViewportHeight(true);
+		JScrollPane scrollPane = new JScrollPane(accountTable);
 		tablePanel.add(scrollPane);
 
-		_frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
-		_frame.getContentPane().add(tablePanel, BorderLayout.CENTER);
+		frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
+		frame.getContentPane().add(tablePanel, BorderLayout.CENTER);
 	}
 
 	private void addButtons() {
@@ -75,17 +77,17 @@ public class AccountPlanWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// we don't need to save this since an account plan is only a virtual entity
-				_frame.dispose();
+				frame.dispose();
 			}
 		});
 		buttonPanel.add(okButton, BorderLayout.CENTER);
-		_frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+		frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 	}
 	
 	public void addAccountToTable(Account acc) {
-		DefaultTableModel model = (DefaultTableModel) (_accountTable.getModel());
+		DefaultTableModel model = (DefaultTableModel) (accountTable.getModel());
 		Object[] newRow = { acc.getId().toString(), acc.getName(), acc.getFk_AccountType() };
 		model.addRow(newRow);
-		_frame.repaint();
+		frame.repaint();
 	}
 }

@@ -24,8 +24,8 @@ import driimerfinance.models.Mandant;
  */
 public class AddMandantWindow {
 
-	JFrame _frame = new JFrame("DriimerFinance - Mandant hinzufügen");
-	JTextField _nameField = null;
+	JFrame frame = new JFrame("DriimerFinance - Mandant hinzufügen");
+	JTextField nameField = null;
 
 	public AddMandantWindow() {
 		createGUI();
@@ -34,9 +34,9 @@ public class AddMandantWindow {
 	private void createGUI() {
 		addForm();
 		addButtons();
-		_frame.setSize(400, 100);
-		GUIHelper.centerFrame(_frame);
-		_frame.setVisible(true);
+		this.frame.setSize(400, 100);
+		GUIHelper.centerFrame(this.frame);
+		this.frame.setVisible(true);
 	}
 
 	private void addForm() {
@@ -46,13 +46,13 @@ public class AddMandantWindow {
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		JLabel nameLabel = new JLabel("Name");
-		_nameField = new JTextField();
-		_nameField.setPreferredSize(new Dimension(150, 20));
+		this.nameField = new JTextField();
+		this.nameField.setPreferredSize(new Dimension(150, 20));
 
 		formPanel.add(nameLabel);
-		formPanel.add(_nameField);
+		formPanel.add(this.nameField);
 
-		_frame.getContentPane().add(formPanel, BorderLayout.CENTER);
+		this.frame.getContentPane().add(formPanel, BorderLayout.CENTER);
 	}
 
 	private void addButtons() {
@@ -61,26 +61,26 @@ public class AddMandantWindow {
 		okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (_nameField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(_frame, "Der Name muss ausgefüllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+				if (nameField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(frame, "Der Name muss ausgefüllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				Mandant newMandant = new Mandant();
-				newMandant.setName(_nameField.getText());
+				newMandant.setName(nameField.getText());
 				newMandant.createInDB();
-				_frame.dispose();
+				frame.dispose();
 			}
 		});
 		JButton cancelButton = new JButton("Abbrechen");
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				_frame.dispose();
+				frame.dispose();
 			}
 		});
 		buttonPanel.add(okButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
-		_frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 	}
 
 }

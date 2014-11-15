@@ -14,7 +14,7 @@ import driimerfinance.helpers.GUIHelper;
  */
 public class MainWindow {
 
-	JFrame _frame = new JFrame("DriimerFinance");
+	JFrame frame = new JFrame("DriimerFinance");
 
 	public MainWindow() {
 		createGUI();
@@ -22,14 +22,14 @@ public class MainWindow {
 	}
 
 	private void createGUI() {
-		GUIHelper.centerAndSizeFrame(_frame);
+		GUIHelper.centerAndSizeFrame(this.frame);
 		addMenubar();
-		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		_frame.setVisible(true);
+		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.frame.setVisible(true);
 	}
 
 	private void addMenubar() {
-		JMenuBar menubar = MenuBarProvider.getMenuBarInstance();
-		_frame.setJMenuBar(menubar);
+		JMenuBar menubar = MenuBarSingleton.getMenuBarInstance();
+		this.frame.setJMenuBar(menubar);
 	}
 }

@@ -9,11 +9,11 @@ public class Transaction {
 	
 	private Integer id = null;
 	private java.sql.Date date = null;
-	private int Fk_sollKonto = 0;
-	private int Fk_habenKonto = 0;
-	private String bezeichnung = null;
-	private Integer betrag = null;
-	private Integer belegNr = null;
+	private int fk_fromAccount = 0;
+	private int fk_toAccount = 0;
+	private String description = null;
+	private Integer amount = null;
+	private Integer receiptNumber = null;
 	
     public Transaction() {
         // TODO: create ID automatically from DB
@@ -38,10 +38,9 @@ public class Transaction {
     public void deleteInDB() {
         
     }
-    
 	
 	public Integer getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Integer id) {
@@ -49,7 +48,7 @@ public class Transaction {
 	}
 
 	public java.sql.Date getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(java.sql.Date date) {
@@ -57,42 +56,42 @@ public class Transaction {
 	}
 
 	public int getFk_SollKonto() {
-		return Fk_sollKonto;
+		return this.fk_fromAccount;
 	}
 
 	public void setFk_SollKonto(int sollKonto) {
-		this.Fk_sollKonto = sollKonto;
+		this.fk_fromAccount = sollKonto;
 	}
 
 	public int getFk_HabenKonto() {
-		return Fk_habenKonto;
+		return this.fk_toAccount;
 	}
 
 	public void setFk_HabenKonto(int habenKonto) {
-		this.Fk_habenKonto = habenKonto;
+		this.fk_toAccount = habenKonto;
 	}
 
 	public String getBezeichnung() {
-		return bezeichnung;
+		return this.description;
 	}
 
-	public void setBezeichnung(String bezeichnung) {
-		this.bezeichnung = bezeichnung;
+	public void setBezeichnung(String description) {
+		this.description = description;
 	}
 
 	public Integer getBetrag() {
-		return betrag;
+		return this.amount;
 	}
 
 	public void setBetrag(Integer betrag) {
-		this.betrag = betrag;
+		this.amount = betrag;
 	}
 
 	public Integer getBelegNr() {
-		return belegNr;
+		return this.receiptNumber;
 	}
 
-	public void setBelegNr(Integer belegNr) {
-		this.belegNr = belegNr;
+	public void setBelegNr(Integer receipt) {
+		this.receiptNumber = receipt;
 	}
 }

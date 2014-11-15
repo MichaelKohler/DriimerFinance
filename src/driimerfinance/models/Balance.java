@@ -7,8 +7,8 @@ import java.util.ArrayList;
  * 
  * (c) 2014 Driimer Finance
 */
-public class Bilanz {
-    public Bilanz() {
+public class Balance {
+    public Balance() {
         
     }
     

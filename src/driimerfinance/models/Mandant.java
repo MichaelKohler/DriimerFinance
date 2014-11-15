@@ -6,9 +6,9 @@ package driimerfinance.models;
  * (c) 2014 Driimer Finance
 */
 public class Mandant {
-	private Integer ID;
-	private String Name;
-	private String DBSchema;
+	private Integer id;
+	private String name;
+	private String dbSchema;
 	
 	public Mandant() {
         // TODO: create ID acc. to DB automatically
@@ -19,30 +19,27 @@ public class Mandant {
     }
     	
 	public Integer getId() {
-		return ID;
+		return this.id;
 	}
 
 	public void setID(Integer iD) {
-		ID = iD;
+		this.id = iD;
 	}
 
 	public String getDBSchema() {
-		return DBSchema;
+		return this.dbSchema;
 	}
 
 	public void setDBSchema(String dBSchema) {
-		DBSchema = dBSchema;
+		this.dbSchema = dBSchema;
 	}
 
 	public String getName() {
-		return Name;
+		return this.name;
 	}
 
-
-    
-
     public void setName(String name) {
-        this.Name = name;
+        this.name = name;
     }
     
     public static void setCurrentWorkingMandant(String name) {

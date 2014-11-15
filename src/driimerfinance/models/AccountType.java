@@ -8,8 +8,8 @@ package driimerfinance.models;
 
 public class AccountType {
 	
-	private Integer Id = null;
-	private String Name = null;
+	private Integer id = null;
+	private String name = null;
 	
     public AccountType() {
         
@@ -20,19 +20,19 @@ public class AccountType {
     }
     
 	public Integer getId() {
-		return Id;
+		return this.id;
 	}
 
 	public void setId(Integer id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getName() {
-		return Name;
+		return this.name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
     public void createInDB() {

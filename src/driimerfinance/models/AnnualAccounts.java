@@ -5,12 +5,12 @@ package driimerfinance.models;
  * 
  * (c) 2014 Driimer Finance
 */
-public class Jahresabschluss {
-    public Jahresabschluss() {
+public class AnnualAccounts {
+    public AnnualAccounts() {
         
     }
     
-    public void doJahresabschluss() {
+    public void doAnnualAccounts() {
         
     }
 }

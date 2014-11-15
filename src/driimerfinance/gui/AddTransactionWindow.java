@@ -29,16 +29,16 @@ import driimerfinance.models.Transaction;
  */
 public class AddTransactionWindow {
 
-	JFrame _frame = new JFrame("DriimerFinance - Buchung hinzufügen");
-	String[] _sollKonti = { "Foo", "Bla", "Bar", "Test" };
-	String[] _habenKonti = { "Baz", "Blubb" };
+	JFrame frame = new JFrame("DriimerFinance - Buchung hinzufügen");
+	String[] fromAccounts = { "Foo", "Bla", "Bar", "Test" };
+	String[] toAccounts = { "Baz", "Blubb" };
 	
-	JTextField _dateField = null;
-	JComboBox _sollField = null;
-	JComboBox _habenField = null;
-	JTextField _buchungField =null;
-	JTextField _betragField = null;
-	JTextField _belegField = null;
+	JTextField dateField = null;
+	JComboBox sollField = null;
+	JComboBox habenField = null;
+	JTextField transactionField =null;
+	JTextField amountField = null;
+	JTextField receiptField = null;
 
 	public AddTransactionWindow() {
 		createGUI();
@@ -47,9 +47,9 @@ public class AddTransactionWindow {
 	private void createGUI() {
 		addForm();
 		addButtons();
-		_frame.setSize(400, 300);
-		GUIHelper.centerFrame(_frame);
-		_frame.setVisible(true);
+		this.frame.setSize(400, 300);
+		GUIHelper.centerFrame(this.frame);
+		this.frame.setVisible(true);
 	}
 
 	private void addForm() {
@@ -59,44 +59,44 @@ public class AddTransactionWindow {
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		JLabel dateLabel = new JLabel("Datum");
-		_dateField = new JTextField();
-		_dateField.setPreferredSize(new Dimension(150, 20));
+		this.dateField = new JTextField();
+		this.dateField.setPreferredSize(new Dimension(150, 20));
 		JLabel sollLabel = new JLabel("Soll Konto");
-		_sollField = new JComboBox(_sollKonti);
-		_sollField.setPreferredSize(new Dimension(150, 20));
+		this.sollField = new JComboBox(this.fromAccounts);
+		this.sollField.setPreferredSize(new Dimension(150, 20));
 		JLabel habenLabel = new JLabel("Haben Konto");
-		_habenField = new JComboBox(_habenKonti);
-		_habenField.setPreferredSize(new Dimension(150, 20));
+		this.habenField = new JComboBox(this.toAccounts);
+		this.habenField.setPreferredSize(new Dimension(150, 20));
 		JLabel buchungLabel = new JLabel("Buchungssatz");
-		_buchungField = new JTextField();
-		_buchungField.setPreferredSize(new Dimension(150, 20));
+		this.transactionField = new JTextField();
+		this.transactionField.setPreferredSize(new Dimension(150, 20));
 		JLabel betragLabel = new JLabel("Betrag");
-		_betragField = new JTextField();
-		_betragField.setPreferredSize(new Dimension(150, 20));
+		this.amountField = new JTextField();
+		this.amountField.setPreferredSize(new Dimension(150, 20));
 		JLabel belegLabel = new JLabel("Beleg Nr.");
-		_belegField = new JTextField();
-		_belegField.setPreferredSize(new Dimension(150, 20));
+		this.receiptField = new JTextField();
+		this.receiptField.setPreferredSize(new Dimension(150, 20));
 
 		formPanel.add(dateLabel);
-		formPanel.add(_dateField);
+		formPanel.add(this.dateField);
 		formPanel.add(sollLabel);
-		formPanel.add(_sollField);
+		formPanel.add(this.sollField);
 		formPanel.add(habenLabel);
-		formPanel.add(_habenField);
+		formPanel.add(this.habenField);
 		formPanel.add(buchungLabel);
-		formPanel.add(_buchungField);
+		formPanel.add(this.transactionField);
 		formPanel.add(betragLabel);
-		formPanel.add(_betragField);
+		formPanel.add(this.amountField);
 		formPanel.add(belegLabel);
-		formPanel.add(_belegField);
+		formPanel.add(this.receiptField);
 
-		_frame.getContentPane().add(formPanel, BorderLayout.CENTER);
+		this.frame.getContentPane().add(formPanel, BorderLayout.CENTER);
 	}
 
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() { // TODO: refactor to not have a long method
+		okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				boolean hasError = false;
@@ -104,7 +104,7 @@ public class AddTransactionWindow {
 				Transaction newTrans = new Transaction();
 				Date date = new Date();
 				try {
-					date = DateFormat.getDateInstance().parse(_dateField.getText());
+					date = DateFormat.getDateInstance().parse(dateField.getText());
 				} catch (ParseException ex) {
 					errorMessage = "Das Datum muss ein korrektes Format haben!\n";
 					hasError = true;
@@ -114,10 +114,10 @@ public class AddTransactionWindow {
 				//newTrans.setFk_SollKonto(fromKonto.getId());
 				//Account toKonto = new Account(); // TODO: get by id
 				//newTrans.setFk_HabenKonto(toKonto.getId());
-				newTrans.setBezeichnung(_buchungField.getText());
+				newTrans.setBezeichnung(transactionField.getText());
 				try {
-					newTrans.setAmount(Integer.parseInt(_betragField.getText()));
-					newTrans.setBelegNr(Integer.parseInt(_belegField.getText()));
+					newTrans.setAmount(Integer.parseInt(amountField.getText()));
+					newTrans.setBelegNr(Integer.parseInt(receiptField.getText()));
 				} catch (NumberFormatException ex) {
 					errorMessage = "Betrag und Beleg-Nr. müssen eine Zahl sein!";
 					hasError = true;
@@ -125,9 +125,9 @@ public class AddTransactionWindow {
 				
 				if (!hasError) {
 					newTrans.createInDB();
-					_frame.dispose();
+					frame.dispose();
 				} else {
-					JOptionPane.showMessageDialog(_frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -135,12 +135,12 @@ public class AddTransactionWindow {
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				_frame.dispose();
+				frame.dispose();
 			}
 		});
 		buttonPanel.add(okButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
-		_frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 	}
 
 }

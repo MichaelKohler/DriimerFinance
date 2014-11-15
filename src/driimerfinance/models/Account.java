@@ -8,11 +8,11 @@ package driimerfinance.models;
 
 public class Account {
 	
-	private Integer Id = null;
-	private String Name = null;
-	private int Fk_AccountType = 0;
-	private int Balance = 0;
-	private Boolean CapitalAccount = false;
+	private Integer id = null;
+	private String name = null;
+	private int fk_AccountType = 0;
+	private int balance = 0;
+	private Boolean capitalAccount = false;
 	
     public Account() {
         // TODO: create ID automatically from DB
@@ -23,43 +23,43 @@ public class Account {
     }
     
 	public Integer getId() {
-		return Id;
+		return this.id;
 	}
 
 	public void setId(Integer id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getName() {
-		return Name;
+		return this.name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
 	public int getFk_AccountType() {
-		return Fk_AccountType;
+		return this.fk_AccountType;
 	}
 
 	public void setFk_AccountType(int fk_AccountType) {
-		Fk_AccountType = fk_AccountType;
+		this.fk_AccountType = fk_AccountType;
 	}
 
 	public int getBalance() {
-		return Balance;
+		return this.balance;
 	}
 
 	public void setBalance(int balance) {
-		Balance = balance;
+		this.balance = balance;
 	}
 
 	public Boolean getCapitalAccount() {
-		return CapitalAccount;
+		return this.capitalAccount;
 	}
 
 	public void setCapitalAccount(Boolean capitalAccount) {
-		CapitalAccount = capitalAccount;
+		this.capitalAccount = capitalAccount;
 	}
     
     

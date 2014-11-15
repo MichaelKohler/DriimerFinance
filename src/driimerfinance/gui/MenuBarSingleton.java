@@ -13,7 +13,7 @@ import javax.swing.JMenuItem;
  * 
  * (c) 2014 Driimer Finance
 */
-public class MenuBarProvider {
+public class MenuBarSingleton {
 	private static JMenuBar menuBar;
     
     private static JMenuBar createGUI() {
@@ -33,8 +33,8 @@ public class MenuBarProvider {
 		});
 		file.add(eMenuItem);
 
-		JMenu mandanten = new JMenu("Mandanten");
-		mandanten.setMnemonic(KeyEvent.VK_F);
+		JMenu mandants = new JMenu("Mandanten");
+		mandants.setMnemonic(KeyEvent.VK_M);
 
 		JMenuItem addMenuItem = new JMenuItem("Hinzufügen...");
 		addMenuItem.setMnemonic(KeyEvent.VK_H);
@@ -45,9 +45,9 @@ public class MenuBarProvider {
 				new AddMandantWindow();
 			}
 		});
-		mandanten.add(addMenuItem);
-		JMenu mandantenChangeMenu = new JMenu("Wechseln...");
-		mandantenChangeMenu.setMnemonic(KeyEvent.VK_W);
+		mandants.add(addMenuItem);
+		JMenu mandantChangeMenu = new JMenu("Wechseln...");
+		mandantChangeMenu.setMnemonic(KeyEvent.VK_W);
 		JMenuItem mandant1MenuItem = new JMenuItem("Mandant 1");
 		mandant1MenuItem.setMnemonic(KeyEvent.VK_M);
 		mandant1MenuItem.addActionListener(new ActionListener() {
@@ -64,23 +64,23 @@ public class MenuBarProvider {
 				// TODO: change Mandant
 			}
 		});
-		mandantenChangeMenu.add(mandant1MenuItem);
-		mandantenChangeMenu.add(mandant2MenuItem);
-		mandanten.add(mandantenChangeMenu);
+		mandantChangeMenu.add(mandant1MenuItem);
+		mandantChangeMenu.add(mandant2MenuItem);
+		mandants.add(mandantChangeMenu);
 		
-		JMenu buchungen = new JMenu("Buchungen");
-		file.setMnemonic(KeyEvent.VK_B);
+		JMenu transactions = new JMenu("Buchungen");
+		transactions.setMnemonic(KeyEvent.VK_B);
 
-		JMenuItem buchungItem = new JMenuItem("Buchung hinzufügen...");
-		buchungItem.setMnemonic(KeyEvent.VK_H);
-		buchungItem.setToolTipText("Buchung hinzufügen");
-		buchungItem.addActionListener(new ActionListener() {
+		JMenuItem transactionItem = new JMenuItem("Buchung hinzufügen...");
+		transactionItem.setMnemonic(KeyEvent.VK_H);
+		transactionItem.setToolTipText("Buchung hinzufügen");
+		transactionItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				new AddTransactionWindow();
 			}
 		});
-		buchungen.add(buchungItem);
+		transactions.add(transactionItem);
 		
 		JMenu accountPlan = new JMenu("Kontenplan");
 		file.setMnemonic(KeyEvent.VK_K);
@@ -97,8 +97,8 @@ public class MenuBarProvider {
 		accountPlan.add(editAccountPlan);
 
 		bar.add(file);
-		bar.add(mandanten);
-		bar.add(buchungen);
+		bar.add(mandants);
+		bar.add(transactions);
 		bar.add(accountPlan);
 		return bar;
     }

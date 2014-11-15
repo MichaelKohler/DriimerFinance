@@ -7,8 +7,8 @@ import java.util.ArrayList;
  * 
  * (c) 2014 Driimer Finance
 */
-public class BilanzViewer extends TwoColumnsViewer {
-    public BilanzViewer() {
+public class BalanceViewer extends TwoColumnsViewer {
+    public BalanceViewer() {
         super();
     }
     

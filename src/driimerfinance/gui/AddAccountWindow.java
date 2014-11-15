@@ -25,26 +25,26 @@ import driimerfinance.models.Account;
 */
 public class AddAccountWindow {
 
-	JFrame _frame = new JFrame("DriimerFinance - Konto hinzufügen");
-	AccountPlanWindow _parent = null;
+	JFrame frame = new JFrame("DriimerFinance - Konto hinzufügen");
+	AccountPlanWindow parent = null;
 	
-	String[] _types = { "Test1", "Test2" };
+	String[] types = { "Test1", "Test2" };
 	
-	JTextField _numberField = null;
-	JTextField _nameField = null;
-	JComboBox _typeField = null;
+	JTextField numberField = null;
+	JTextField nameField = null;
+	JComboBox typeField = null;
 	
     public AddAccountWindow(AccountPlanWindow accPlanWin) {
-    	    _parent = accPlanWin;
+    	    this.parent = accPlanWin;
         createGUI();
     }
     
     private void createGUI() {
         addForm();
 		addButtons();
-		_frame.setSize(400, 200);
-		GUIHelper.centerFrame(_frame);
-		_frame.setVisible(true);
+		this.frame.setSize(400, 200);
+		GUIHelper.centerFrame(this.frame);
+		this.frame.setVisible(true);
     }
     
     private void addForm() {
@@ -54,23 +54,23 @@ public class AddAccountWindow {
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		JLabel numberLabel = new JLabel("Nummer");
-		_numberField = new JTextField();
-		_numberField.setPreferredSize(new Dimension(150, 20));
+		this.numberField = new JTextField();
+		this.numberField.setPreferredSize(new Dimension(150, 20));
 		JLabel nameLabel = new JLabel("Name");
-		_nameField = new JTextField();
-		_nameField.setPreferredSize(new Dimension(150, 20));
+		this.nameField = new JTextField();
+		this.nameField.setPreferredSize(new Dimension(150, 20));
 		JLabel typeLabel = new JLabel("Typ");
-		_typeField = new JComboBox(_types);
-		_typeField.setPreferredSize(new Dimension(150, 20));
+		this.typeField = new JComboBox(types);
+		this.typeField.setPreferredSize(new Dimension(150, 20));
 
 		formPanel.add(numberLabel);
-		formPanel.add(_numberField);
+		formPanel.add(this.numberField);
 		formPanel.add(nameLabel);
-		formPanel.add(_nameField);
+		formPanel.add(this.nameField);
 		formPanel.add(typeLabel);
-		formPanel.add(_typeField);
+		formPanel.add(this.typeField);
 
-		_frame.getContentPane().add(formPanel, BorderLayout.CENTER);
+		this.frame.getContentPane().add(formPanel, BorderLayout.CENTER);
 	}
 
 	private void addButtons() {
@@ -81,32 +81,32 @@ public class AddAccountWindow {
 			public void actionPerformed(ActionEvent e) {
 				Account newAcc = new Account();
 				try {
-					newAcc.setId(Integer.parseInt(_numberField.getText()));
+					newAcc.setId(Integer.parseInt(numberField.getText()));
 				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(_frame, "Die Konto-Nr. muss eine Nummer sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Die Konto-Nr. muss eine Nummer sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				if (_nameField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(_frame, "Der Name muss ausgefüllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+				if (nameField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(frame, "Der Name muss ausgefüllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				newAcc.setName(_nameField.getText());
-				int typeCode = _typeField.getSelectedIndex();
+				newAcc.setName(nameField.getText());
+				int typeCode = typeField.getSelectedIndex();
 				newAcc.setFk_AccountType(typeCode);
 				newAcc.createInDB();
-				_parent.addAccountToTable(newAcc);
-				_frame.dispose();
+				parent.addAccountToTable(newAcc);
+				frame.dispose();
 			}
 		});
 		JButton cancelButton = new JButton("Abbrechen");
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				_frame.dispose();
+				frame.dispose();
 			}
 		});
 		buttonPanel.add(okButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
-		_frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 	}
 }

@@ -7,22 +7,29 @@ package driimerfinance.models;
 */
 public class User {
 	private Integer id = null;
-	private String Name = null;
-	private String Vorname = null;
-	private String Username = null;
-	private String Password = null;
+	private String name = null;
+	private String firstName = null;
+	private String username = null;
+	private String password = null;
 	
+    public User() {
+    }
+    
+    public User(String name, String password) {
+        this.setName(name);
+        this.setPassword(password);
+    }
 	
 	public String getVorname() {
-		return Vorname;
+		return this.firstName;
 	}
 
-	public void setVorname(String vorname) {
-		Vorname = vorname;
+	public void setVorname(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public Integer getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Integer id) {
@@ -30,39 +37,27 @@ public class User {
 	}
 
 	public String getUsername() {
-		return Username;
+		return this.username;
 	}
 
 	public void setUsername(String username) {
-		Username = username;
+		this.username = username;
 	}
 
 	public String getName() {
-		return Name;
+		return this.name;
 	}
 
 	public String getPassword() {
-		return Password;
+		return this.password;
 	}
-
-
-	
-	
-    public User() {
-        
-    }
-    
-    public User(String name, String password) {
-        this.setName(name);
-        this.setPassword(password);
-    }
     
     public void setName(String name) {
-        this.Name = name;
+        this.name = name;
     }
     
     public void setPassword(String password) {
-        this.Password = password;
+        this.password = password;
     }
     
     public void createInDB() {
