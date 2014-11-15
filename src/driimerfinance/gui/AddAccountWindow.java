@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,6 +34,7 @@ public class AddAccountWindow {
 	JTextField numberField = null;
 	JTextField nameField = null;
 	JComboBox typeField = null;
+	JCheckBox isCapAccount = null;
 	
     public AddAccountWindow(AccountPlanWindow accPlanWin) {
     	    this.parent = accPlanWin;
@@ -49,7 +51,7 @@ public class AddAccountWindow {
     
     private void addForm() {
 		JPanel formPanel = new JPanel();
-		GridLayout layout = new GridLayout(3, 2);
+		GridLayout layout = new GridLayout(4, 2);
 		formPanel.setLayout(layout);
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -62,6 +64,8 @@ public class AddAccountWindow {
 		JLabel typeLabel = new JLabel("Typ");
 		this.typeField = new JComboBox(types);
 		this.typeField.setPreferredSize(new Dimension(150, 20));
+		JLabel capLabel = new JLabel("Kapitalkonto?");
+		this.isCapAccount = new JCheckBox();
 
 		formPanel.add(numberLabel);
 		formPanel.add(this.numberField);
@@ -69,6 +73,8 @@ public class AddAccountWindow {
 		formPanel.add(this.nameField);
 		formPanel.add(typeLabel);
 		formPanel.add(this.typeField);
+		formPanel.add(capLabel);
+		formPanel.add(this.isCapAccount);
 
 		this.frame.getContentPane().add(formPanel, BorderLayout.CENTER);
 	}
@@ -93,6 +99,7 @@ public class AddAccountWindow {
 				newAcc.setName(nameField.getText());
 				int typeCode = typeField.getSelectedIndex();
 				newAcc.setFk_AccountType(typeCode);
+				newAcc.setCapitalAccount(isCapAccount.isSelected());
 				newAcc.createInDB();
 				parent.addAccountToTable(newAcc);
 				frame.dispose();
