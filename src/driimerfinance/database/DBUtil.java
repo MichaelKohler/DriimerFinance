@@ -5,8 +5,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Useful DB helper methods
+ */
 public class DBUtil {
 
+	/**
+     * Closes the connection to the database.
+     * 
+     * @param connection specifies the connection to be closed
+     * @return void
+     */
 	public static void close(Connection connection) {
 		if (connection != null) {
 			try {
@@ -26,6 +35,12 @@ public class DBUtil {
 		}
 	}
 
+	/**
+     * Closes a statement on the database.
+     * 
+     * @param statement which needs to be closed
+     * @return void
+     */
 	public static void close(Statement statement) {
 		if (statement != null) {
 			try {
@@ -45,6 +60,12 @@ public class DBUtil {
 		}
 	}
 
+	/**
+     * Closes a ResultSet
+     * 
+     * @param resultSet to be closed
+     * @return void
+     */
 	public static void close(ResultSet resultSet) {
 		if (resultSet != null) {
 			try {

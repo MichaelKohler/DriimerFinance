@@ -11,7 +11,9 @@ import driimerfinance.models.Account;
 import driimerfinance.models.AccountType;
 import driimerfinance.models.Transaction;
 
-
+/**
+ * Helpful methods to work with the mandant database
+ */
 public class MandantDBHelper {
 	private Connection dbconnection;
 	private Statement statement = null;
@@ -19,12 +21,25 @@ public class MandantDBHelper {
 	private ResultSet resultSet = null;
 	private DBConnection db = null;
 
+	/**
+	 * Initializes the connection.
+	 * 
+	 * @param host to connect to
+	 * @param databasename to use
+	 * @param user login for this database
+	 * @param password of the database's user
+	 */
 	public MandantDBHelper(String host, String databasename,
 			String user, String password) {
 		db = new DBConnection();
 		dbconnection = db.getConnection(host, databasename, user, password);
 	}
 
+	/**
+     * Getter: Returns the transactions of this mandant in the database
+     * 
+     * @return list of all transactions
+     */
 	public List<Transaction> getAllTransactions() {
 		List<Transaction> transactions = new ArrayList<Transaction>();
 		try {
@@ -50,7 +65,11 @@ public class MandantDBHelper {
 		return transactions;
 	}
 
-		
+	/**
+     * Getter: Returns the transaction by id of this mandant in the database
+     * 
+     * @return transaction with the given id
+     */
 	public Transaction getTransactionById(int transactionId) {
 		Transaction transaction = new Transaction();
 		try {
@@ -77,6 +96,11 @@ public class MandantDBHelper {
 		return transaction;
 	}
 
+	/**
+	 * Adds a transaction to the database.
+	 * 
+	 * @param transaction to add
+	 */
 	public void addTransaction(Transaction transaction) {
 		try {
 			preparedStatement = dbconnection
@@ -96,6 +120,11 @@ public class MandantDBHelper {
 		}
 	}
 
+	/**
+     * Updates a transaction in the database.
+     * 
+     * @param transaction to update
+     */
 	public void updateTransaction(Transaction transaction) {
 		try {
 			preparedStatement = dbconnection
@@ -116,6 +145,11 @@ public class MandantDBHelper {
 		}
 	}
 
+	/**
+	 * Deletes a transaction from the database.
+	 * 
+	 * @param transaction to delete
+	 */
 	public void deleteTransaction(Transaction transaction) {
 		try {
 			preparedStatement = dbconnection
@@ -128,6 +162,11 @@ public class MandantDBHelper {
 		}
 	}
 
+	/**
+     * Getter: Returns the accounts of this mandant in the database
+     * 
+     * @return list of all accounts
+     */
 	public List<Account> getAllAccounts() {
 		List<Account> accounts = new ArrayList<Account>();
 		try {
@@ -151,7 +190,11 @@ public class MandantDBHelper {
 		return accounts;
 	}
 	
-	
+	/**
+     * Getter: Returns the account with this id of this mandant in the database
+     * 
+     * @return account found or a new account
+     */
 	public Account getAccountById(int accountId) {
 		Account account= new Account();
 		try {
@@ -176,6 +219,11 @@ public class MandantDBHelper {
 		return account;
 	}
 	
+	/**
+	 * Adds an account to this mandant's database.
+	 * 
+	 * @param account to add
+	 */
 	public void addAccount(Account account) {
 		try {
 			preparedStatement = dbconnection
@@ -193,6 +241,11 @@ public class MandantDBHelper {
 		}
 	}
 	
+	/**
+     * Updates an account in the database.
+     * 
+     * @param account to update
+     */
 	public void updateAccount(Account account) {
 		try {
 			preparedStatement = dbconnection
@@ -210,6 +263,11 @@ public class MandantDBHelper {
 		}
 	}
 	
+	/**
+	 * Deletes an account from this mandant's database.
+	 * 
+	 * @param account to delete
+	 */
 	public void deleteAccount(Account account) {
 		try {
 			preparedStatement = dbconnection
@@ -222,6 +280,11 @@ public class MandantDBHelper {
 		}
 	}
 	
+	/**
+     * Getter: Returns the account types of this mandant in the database
+     * 
+     * @return list of all account types
+     */
 	public List<AccountType> getAllAccountTypes() {
 		List<AccountType> accounttypes = new ArrayList<AccountType>();
 		try {
@@ -242,7 +305,11 @@ public class MandantDBHelper {
 		return accounttypes;
 	}
 	
-	
+	/**
+     * Getter: Returns the account type by id of this mandant in the database
+     * 
+     * @return transaction type by id
+     */
 	public AccountType getAccountTypeById(int accounttypeId) {
 		AccountType accounttype = new AccountType();
 		try {
@@ -264,13 +331,17 @@ public class MandantDBHelper {
 		return accounttype;
 	}
 	
-	// you need to close all three (connection, statement, resultset) to make
-	// sure
+	/**
+	 * Closes the database connection.
+	 */
 	public void closeConnection() {
 		close();
 		db.close();
 	}
 
+	/**
+	 * Closes database related connections.
+	 */
 	private void close() {
 		DBUtil.close(statement);
 		DBUtil.close(resultSet);

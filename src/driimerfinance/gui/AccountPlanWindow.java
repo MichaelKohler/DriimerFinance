@@ -19,7 +19,7 @@ import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 
 /**
- * ...
+ * Account plan overview
  * 
  * (c) 2014 Driimer Finance
 */
@@ -29,10 +29,16 @@ public class AccountPlanWindow {
 	JTable accountTable = new JTable();
 	AccountPlanWindow parent = this;
 	
+	/**
+	 * Constructor
+	 */
     public AccountPlanWindow() {
         createGUI();
     }
     
+    /**
+     * Creates the GUI
+     */
     private void createGUI() {
     	    addForm();
 		addButtons();
@@ -41,6 +47,9 @@ public class AccountPlanWindow {
 		frame.setVisible(true);
     }
     
+    /**
+     * Adds the content of the window.
+     */
     private void addForm() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -70,6 +79,9 @@ public class AccountPlanWindow {
 		frame.getContentPane().add(tablePanel, BorderLayout.CENTER);
 	}
 
+    /**
+     * Adds the button on the bottom of the frame.
+     */
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");
@@ -84,6 +96,11 @@ public class AccountPlanWindow {
 		frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 	}
 	
+	/**
+	 * Adds the new account to the account table.
+	 * 
+	 * @param acc to add to the table
+	 */
 	public void addAccountToTable(Account acc) {
 		DefaultTableModel model = (DefaultTableModel) (accountTable.getModel());
 		Object[] newRow = { acc.getId().toString(), acc.getName(), acc.getFk_AccountType() };

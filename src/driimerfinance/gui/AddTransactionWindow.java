@@ -23,7 +23,7 @@ import driimerfinance.models.Account;
 import driimerfinance.models.Transaction;
 
 /**
- * ...
+ * Add a new transaction with this window.
  * 
  * (c) 2014 Driimer Finance
  */
@@ -40,10 +40,16 @@ public class AddTransactionWindow {
 	JTextField amountField = null;
 	JTextField receiptField = null;
 
+	/**
+	 * Constructor
+	 */
 	public AddTransactionWindow() {
 		createGUI();
 	}
 
+	/**
+     * Creates the GUI
+     */
 	private void createGUI() {
 		addForm();
 		addButtons();
@@ -52,6 +58,9 @@ public class AddTransactionWindow {
 		this.frame.setVisible(true);
 	}
 
+	/**
+	 * Adds the form
+	 */
 	private void addForm() {
 		JPanel formPanel = new JPanel();
 		GridLayout layout = new GridLayout(6, 2);
@@ -93,6 +102,9 @@ public class AddTransactionWindow {
 		this.frame.getContentPane().add(formPanel, BorderLayout.CENTER);
 	}
 
+	/**
+     * Adds the buttons on the bottom of the frame.
+     */
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");

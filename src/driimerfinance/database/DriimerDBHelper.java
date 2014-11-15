@@ -10,6 +10,9 @@ import java.util.List;
 import driimerfinance.models.Mandant;
 import driimerfinance.models.User;
 
+/**
+ * Useful helper methods for DB access and DB related tasks.
+ */
 public class DriimerDBHelper {
 	private Connection dbconnection;
 	private Statement statement = null;
@@ -21,11 +24,19 @@ public class DriimerDBHelper {
 	private static String password = "mysql";
 	private DBConnection db = null;
 
+	/**
+	 * Constructor to initialize the Helper. It initializes the DB connection with the given properties.
+	 */
 	public DriimerDBHelper() {
 		db = new DBConnection();
 		dbconnection = db.getConnection(host, databasename, user, password);
 	}
 
+	/**
+     * Helper method to get all users from the database.
+     * 
+     * @return user list of all users in the database
+     */
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<User>();
 		try {
@@ -49,6 +60,12 @@ public class DriimerDBHelper {
 		return users;
 	}
 
+	/**
+     * Finds a user by id specified.
+     * 
+     * @param id to search
+     * @return user which was found or an empty user
+     */
 	public User getUserById(int userId) {
 		User user = new User();
 		try {
@@ -73,6 +90,12 @@ public class DriimerDBHelper {
 		return user;
 	}
 
+	/**
+     * Adds a user to the database.
+     * 
+     * @param user to be added
+     * @return void
+     */
 	public void addUser(User user) {
 		try {
 			preparedStatement = dbconnection
@@ -90,6 +113,12 @@ public class DriimerDBHelper {
 		}
 	}
 
+	/**
+     * Deletes a user on the database.
+     * 
+     * @param user to be deleted
+     * @return void
+     */
 	public void deleteUser(User user) {
 		try {
 			preparedStatement = dbconnection
@@ -102,6 +131,12 @@ public class DriimerDBHelper {
 		}
 	}
 
+	/**
+     * Updates a specific user on the database.
+     * 
+     * @param user to be updated
+     * @return void
+     */
 	public void updateUser(User user) {
 		try {
 			preparedStatement = dbconnection
@@ -120,6 +155,11 @@ public class DriimerDBHelper {
 		}
 	}
 
+	/**
+     * Returns all available mandants from the database.
+     * 
+     * @return list of all mandants
+     */
 	public List<Mandant> getAllMantanten() {
 		List<Mandant> mandanten = new ArrayList<Mandant>();
 		try {
@@ -141,6 +181,12 @@ public class DriimerDBHelper {
 		return mandanten;
 	}
 
+	/**
+     * Searches a mandant on the database with a given id.
+     * 
+     * @param id to search
+     * @return found mandant if existing or new mandant
+     */
 	public Mandant getMandantById(int mandantId) {
 		Mandant mandant = new Mandant();
 		try {
@@ -163,6 +209,12 @@ public class DriimerDBHelper {
 		return mandant;
 	}
 
+	/**
+     * Adds a mandant to the database.
+     * 
+     * @param mandant to be added
+     * @return void
+     */
 	public void addMandant(Mandant mandant) {
 		try {
 			preparedStatement = dbconnection
@@ -178,6 +230,12 @@ public class DriimerDBHelper {
 		}
 	}
 
+	/**
+     * Deletes a mandant from the database.
+     * 
+     * @param mandant to be deleted
+     * @return void
+     */
 	public void deleteMandant(Mandant mandant) {
 		try {
 			preparedStatement = dbconnection
@@ -190,6 +248,12 @@ public class DriimerDBHelper {
 		}
 	}
 
+	/**
+     * Updates a specific mandant on the database.
+     * 
+     * @param mandant to be updated
+     * @return void
+     */
 	public void updateMandant(Mandant mandant) {
 		try {
 			preparedStatement = dbconnection
@@ -206,13 +270,21 @@ public class DriimerDBHelper {
 		}
 	}
 
-	// you need to close all three (connection, statement, resultset) to make
-	// sure
+	/**
+     * Closes all open database connections.
+     * 
+     * @return void
+     */
 	public void closeConnection() {
 		close();
 		db.close();
 	}
 
+	/**
+     * Closes all database related connections.
+     *
+     * @return void
+     */
 	private void close() {
 		DBUtil.close(statement);
 		DBUtil.close(resultSet);

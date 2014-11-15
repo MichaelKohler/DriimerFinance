@@ -20,7 +20,7 @@ import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 
 /**
- * ...
+ * Form to add an account.
  * 
  * (c) 2014 Driimer Finance
 */
@@ -36,11 +36,19 @@ public class AddAccountWindow {
 	JComboBox typeField = null;
 	JCheckBox isCapAccount = null;
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param account plan window to attach to
+	 */
     public AddAccountWindow(AccountPlanWindow accPlanWin) {
     	    this.parent = accPlanWin;
         createGUI();
     }
     
+    /**
+     * Creates the GUI
+     */
     private void createGUI() {
         addForm();
 		addButtons();
@@ -49,6 +57,9 @@ public class AddAccountWindow {
 		this.frame.setVisible(true);
     }
     
+    /**
+     * Adds the content
+     */
     private void addForm() {
 		JPanel formPanel = new JPanel();
 		GridLayout layout = new GridLayout(4, 2);
@@ -79,6 +90,9 @@ public class AddAccountWindow {
 		this.frame.getContentPane().add(formPanel, BorderLayout.CENTER);
 	}
 
+    /**
+     * Adds the buttons on the bottom of the frame
+     */
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");

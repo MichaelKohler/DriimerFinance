@@ -22,7 +22,7 @@ public class DriimerFinance {
      * and starting the Main graphical screen.
      * 
      * @param args the command line arguments
-     * @throws Exception 
+     * @throws Exception this is only used for the test code -- to be removed
      */
     public static void main(String[] args) throws Exception {
     		new MainWindow();

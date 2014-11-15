@@ -18,7 +18,7 @@ import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Mandant;
 
 /**
- * ...
+ * Add a new mandant form
  * 
  * (c) 2014 Driimer Finance
  */
@@ -27,10 +27,16 @@ public class AddMandantWindow {
 	JFrame frame = new JFrame("DriimerFinance - Mandant hinzufügen");
 	JTextField nameField = null;
 
+	/**
+	 * Constructor
+	 */
 	public AddMandantWindow() {
 		createGUI();
 	}
 
+	/**
+     * Creates the GUI
+     */
 	private void createGUI() {
 		addForm();
 		addButtons();
@@ -39,6 +45,9 @@ public class AddMandantWindow {
 		this.frame.setVisible(true);
 	}
 
+	/**
+	 * Adds the content.
+	 */
 	private void addForm() {
 		JPanel formPanel = new JPanel();
 		GridLayout layout = new GridLayout(1, 2);
@@ -55,6 +64,9 @@ public class AddMandantWindow {
 		this.frame.getContentPane().add(formPanel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Adds the buttons on the bottom of the frame.
+	 */
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");

@@ -6,11 +6,18 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 /**
- * ...
+ * GUI related helper methods.
  * 
  * (c) 2014 Driimer Finance
  */
 public class GUIHelper {
+	
+	/**
+     * Centeres the frame on the user's screen and sets the size of it to a reasonable size.
+     * 
+     * @param JFrame to be configured
+     * @return void
+     */
 	public static void centerAndSizeFrame(JFrame frame) {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int height = screenSize.height;
@@ -19,6 +26,12 @@ public class GUIHelper {
 		frame.setLocationRelativeTo(null);
 	}
 
+	/**
+     * Centers a JFrame on the user's screen.
+     * 
+     * @param JFrame to be centered
+     * @return void
+     */
 	public static void centerFrame(JFrame frame) {
 		frame.setLocationRelativeTo(null);
 	}

@@ -9,13 +9,16 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 /**
- * ...
+ * Singleton which returns a new menu bar or the existing one. This is included in different windows.
  * 
  * (c) 2014 Driimer Finance
 */
 public class MenuBarSingleton {
 	private static JMenuBar menuBar;
     
+	/**
+     * Creates the GUI
+     */
     private static JMenuBar createGUI() {
     	    JMenuBar bar = new JMenuBar();
     	
@@ -103,6 +106,11 @@ public class MenuBarSingleton {
 		return bar;
     }
     
+    /**
+     * Returns the singleton's instance.
+     * 
+     * @return singleton with the menu bar
+     */
     public static JMenuBar getMenuBarInstance() {
     	    if (menuBar != null) {
             return menuBar;
