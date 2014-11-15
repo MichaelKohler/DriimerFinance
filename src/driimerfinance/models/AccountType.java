@@ -6,7 +6,7 @@ package driimerfinance.models;
  * (c) 2014 Driimer Finance
 */
 
-public class AccountType {
+public class AccountType implements IModel {
 	
 	private Integer id = null;
 	private String name = null;

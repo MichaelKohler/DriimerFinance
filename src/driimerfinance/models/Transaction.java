@@ -5,7 +5,7 @@ package driimerfinance.models;
  * 
  * (c) 2014 Driimer Finance
 */
-public class Transaction {
+public class Transaction implements IModel {
 	
 	private Integer id = null;
 	private java.sql.Date date = null;

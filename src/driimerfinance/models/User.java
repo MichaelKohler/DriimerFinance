@@ -5,7 +5,7 @@ package driimerfinance.models;
  * 
  * (c) 2014 Driimer Finance
 */
-public class User {
+public class User implements IModel {
 	private Integer id = null;
 	private String name = null;
 	private String firstName = null;

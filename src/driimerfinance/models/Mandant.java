@@ -5,7 +5,7 @@ package driimerfinance.models;
  * 
  * (c) 2014 Driimer Finance
 */
-public class Mandant {
+public class Mandant implements IModel {
 	private Integer id;
 	private String name;
 	private String dbSchema;
