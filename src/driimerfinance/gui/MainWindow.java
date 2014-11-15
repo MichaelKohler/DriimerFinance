@@ -1,5 +1,7 @@
 package driimerfinance.gui;
 
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
@@ -16,11 +18,13 @@ public class MainWindow {
 
 	public MainWindow() {
 		createGUI();
+		Toolkit.getDefaultToolkit().setDynamicLayout(true);
 	}
 
 	private void createGUI() {
 		GUIHelper.centerAndSizeFrame(_frame);
 		addMenubar();
+		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		_frame.setVisible(true);
 	}
 
