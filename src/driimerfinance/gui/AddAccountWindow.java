@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -77,7 +78,16 @@ public class AddAccountWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Account newAcc = new Account();
-				newAcc.setId(Integer.parseInt(_numberField.getText()));
+				try {
+					newAcc.setId(Integer.parseInt(_numberField.getText()));
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(_frame, "Die Konto-Nr. muss eine Nummer sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if (_nameField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(_frame, "Der Name muss ausgefüllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				newAcc.setName(_nameField.getText());
 				int typeCode = _typeField.getSelectedIndex();
 				newAcc.setFk_AccountType(typeCode);
