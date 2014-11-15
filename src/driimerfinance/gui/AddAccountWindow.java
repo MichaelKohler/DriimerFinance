@@ -26,6 +26,7 @@ import driimerfinance.models.Account;
 public class AddAccountWindow {
 
 	JFrame _frame = new JFrame("DriimerFinance - Konto hinzufügen");
+	AccountPlanWindow _parent = null;
 	
 	String[] _types = { "Test1", "Test2" };
 	
@@ -33,7 +34,8 @@ public class AddAccountWindow {
 	JTextField _nameField = null;
 	JComboBox _typeField = null;
 	
-    public AddAccountWindow() {
+    public AddAccountWindow(AccountPlanWindow accPlanWin) {
+    	    _parent = accPlanWin;
         createGUI();
     }
     
@@ -92,6 +94,7 @@ public class AddAccountWindow {
 				int typeCode = _typeField.getSelectedIndex();
 				newAcc.setFk_AccountType(typeCode);
 				newAcc.createInDB();
+				_parent.addAccountToTable(newAcc);
 				_frame.dispose();
 			}
 		});
