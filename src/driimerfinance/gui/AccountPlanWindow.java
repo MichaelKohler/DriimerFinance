@@ -28,7 +28,7 @@ public class AccountPlanWindow {
 	JTable _accountTable = new JTable();
 	AccountPlanWindow _parent = this;
 	String[] _headers = { "Nummer", "Name", "Typ", "Kapitalkonto" };
-	Object[][] _data = { { "Test", "Test", "Test", "x" } };
+	Object[][] _data = {  };
 	
     public AccountPlanWindow() {
         createGUI();
