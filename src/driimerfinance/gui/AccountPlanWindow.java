@@ -53,7 +53,7 @@ public class AccountPlanWindow {
     private void addForm() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		JButton addButton = new JButton("Konto hinzufügen");
+		JButton addButton = new JButton("Konto hinzuf\u00fcgen");
 		addButton.setPreferredSize(new Dimension(400, 20));
 		addButton.addActionListener(new ActionListener() {
 			@Override

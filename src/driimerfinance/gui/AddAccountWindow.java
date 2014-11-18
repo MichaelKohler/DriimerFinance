@@ -26,7 +26,7 @@ import driimerfinance.models.Account;
 */
 public class AddAccountWindow {
 
-	JFrame frame = new JFrame("DriimerFinance - Konto hinzufügen");
+	JFrame frame = new JFrame("DriimerFinance - Konto hinzuf\u00fcgen");
 	AccountPlanWindow parent = null;
 	
 	String[] types = { "Test1", "Test2" };
@@ -107,7 +107,7 @@ public class AddAccountWindow {
 					return;
 				}
 				if (nameField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(frame, "Der Name muss ausgefüllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Der Name muss ausgef\u00fcllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				newAcc.setName(nameField.getText());

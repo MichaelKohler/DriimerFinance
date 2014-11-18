@@ -39,9 +39,9 @@ public class MenuBarSingleton {
 		JMenu mandants = new JMenu("Mandanten");
 		mandants.setMnemonic(KeyEvent.VK_M);
 
-		JMenuItem addMenuItem = new JMenuItem("Hinzufügen...");
+		JMenuItem addMenuItem = new JMenuItem("Hinzuf\u00fcgen...");
 		addMenuItem.setMnemonic(KeyEvent.VK_H);
-		addMenuItem.setToolTipText("Mandant hinzufügen");
+		addMenuItem.setToolTipText("Mandant hinzuf\u00fcgen");
 		addMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
@@ -74,9 +74,9 @@ public class MenuBarSingleton {
 		JMenu transactions = new JMenu("Buchungen");
 		transactions.setMnemonic(KeyEvent.VK_B);
 
-		JMenuItem transactionItem = new JMenuItem("Buchung hinzufügen...");
+		JMenuItem transactionItem = new JMenuItem("Buchung hinzuf\u00fcgen...");
 		transactionItem.setMnemonic(KeyEvent.VK_H);
-		transactionItem.setToolTipText("Buchung hinzufügen");
+		transactionItem.setToolTipText("Buchung hinzuf\u00fcgen");
 		transactionItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {

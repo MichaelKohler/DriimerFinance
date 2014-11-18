@@ -29,7 +29,7 @@ import driimerfinance.models.Transaction;
  */
 public class AddTransactionWindow {
 
-	JFrame frame = new JFrame("DriimerFinance - Buchung hinzufügen");
+	JFrame frame = new JFrame("DriimerFinance - Buchung hinzuf\u00fcgen");
 	String[] fromAccounts = { "Foo", "Bla", "Bar", "Test" };
 	String[] toAccounts = { "Baz", "Blubb" };
 	
@@ -131,7 +131,7 @@ public class AddTransactionWindow {
 					newTrans.setAmount(Integer.parseInt(amountField.getText()));
 					newTrans.setBelegNr(Integer.parseInt(receiptField.getText()));
 				} catch (NumberFormatException ex) {
-					errorMessage = "Betrag und Beleg-Nr. müssen eine Zahl sein!";
+					errorMessage = "Betrag und Beleg-Nr. m\u00fcssen eine Zahl sein!";
 					hasError = true;
 				}
 				
