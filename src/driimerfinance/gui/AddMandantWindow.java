@@ -24,7 +24,7 @@ import driimerfinance.models.Mandant;
  */
 public class AddMandantWindow {
 
-	JFrame frame = new JFrame("DriimerFinance - Mandant hinzufügen");
+	JFrame frame = new JFrame("DriimerFinance - Mandant hinzuf\u00fcgen");
 	JTextField nameField = null;
 
 	/**
@@ -74,7 +74,7 @@ public class AddMandantWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (nameField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(frame, "Der Name muss ausgefüllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Der Name muss ausgef\u00fcllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				Mandant newMandant = new Mandant();
