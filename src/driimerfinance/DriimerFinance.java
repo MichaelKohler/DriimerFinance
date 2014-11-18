@@ -16,6 +16,8 @@ import driimerfinance.models.User;
  * (c) 2014 Driimer Finance
 */
 public class DriimerFinance {
+	
+	//random comment
 
     /**
      * The main method starts everything. This includes initializing settings
@@ -27,6 +29,7 @@ public class DriimerFinance {
     public static void main(String[] args) throws Exception {
     		new MainWindow();
     		
+    	    		
     		// TEST CODE BELOW
         DriimerDBHelper driimerdb = new DriimerDBHelper();
                 
