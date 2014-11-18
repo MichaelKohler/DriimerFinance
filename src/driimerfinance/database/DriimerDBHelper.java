@@ -29,7 +29,7 @@ public class DriimerDBHelper {
 	 */
 	public DriimerDBHelper() {
 		db = new DBConnection();
-		dbconnection = db.getConnection(host, databasename, user, password);
+		dbconnection = db.createConnection(host, databasename, user, password);
 	}
 
 	/**

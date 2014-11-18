@@ -32,7 +32,7 @@ public class MandantDBHelper {
 	public MandantDBHelper(String host, String databasename,
 			String user, String password) {
 		db = new DBConnection();
-		dbconnection = db.getConnection(host, databasename, user, password);
+		dbconnection = db.createConnection(host, databasename, user, password);
 	}
 
 	/**

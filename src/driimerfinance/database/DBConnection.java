@@ -32,7 +32,7 @@ public class DBConnection {
      * @param password password of the db user
      * @return connection returns the connection once established
      */
-	private Connection createConnection(String host, String databasename,
+	public Connection createConnection(String host, String databasename,
 			String user, String password) {
 		try {
 			// setup the connection with the DB.
@@ -57,8 +57,7 @@ public class DBConnection {
      * @param password password of the db user
      * @return the established connection if one is established, otherwise null
      */
-	public Connection getConnection(String host, String databasename,
-			String user, String password) {
+	public Connection getConnection() {
 		return this.connection;
 	}
 
