@@ -38,6 +38,11 @@ public class DriimerFinance {
         for(User user : users) {
         	System.out.println("ID: " + user.getId() + " Name: " + user.getName() + " Vorname: " + user.getVorname() + " username: " + user.getUsername() + " Password: " + user.getPassword());
         }
+        Mandant testmandant = new Mandant();
+        testmandant.setName("stampfli");
+        testmandant.setDBSchema("stampfli");
+        testmandant.createInDB();
+        //driimerdb.addMandant(testmandant);
         
         
         System.out.println("Listing all Clients: ");
@@ -46,6 +51,8 @@ public class DriimerFinance {
         	System.out.println("ID: " + mandant.getId() + " Name: " + mandant.getName() + " DBSchema: " + mandant.getDBSchema());
         }
         
+
+        
         driimerdb.closeConnection();
         
         MandantDBHelper dbhelper = new MandantDBHelper("localhost", "mandant", "root", "mysql");
@@ -53,6 +60,6 @@ public class DriimerFinance {
         for (Transaction transaction : transactions) {
         	System.out.println("ID: " + transaction.getId() + " Datum: " + transaction.getDate() + " fk_SollKonto: " + transaction.getFk_SollKonto() + " fk_HabenKonto: " + transaction.getFk_HabenKonto() + " Bezeichnung: " + transaction.getBezeichnung() + " Betrag: " + transaction.getBetrag() + " Beleg-Nr: " + transaction.getBelegNr());
         }
-    }
+     }
     
 }

@@ -286,8 +286,12 @@ public class DriimerDBHelper {
      * @return void
      */
 	private void close() {
-		DBUtil.close(statement);
-		DBUtil.close(resultSet);
+		if (statement != null) {
+			DBUtil.close(statement);
+		}
+		if (resultSet != null) {
+			DBUtil.close(resultSet);
+		}
 	}
 
 }

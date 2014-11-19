@@ -1,5 +1,9 @@
 package driimerfinance.models;
 
+import java.util.List;
+
+import driimerfinance.database.DriimerDBHelper;
+
 /**
  * Defines a mandant (client) to work for.
  * 
@@ -99,7 +103,9 @@ public class Mandant implements IModel {
      * @return void
      */
     public void createInDB() {
-        
+    	DriimerDBHelper driimerdb = new DriimerDBHelper();
+    	driimerdb.addMandant(this);
+    	driimerdb.closeConnection();
     }
     
     /**
