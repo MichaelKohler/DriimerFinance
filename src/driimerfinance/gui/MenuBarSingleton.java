@@ -54,9 +54,9 @@ public class MenuBarSingleton {
 		});
 		mandants.add(addMenuItem);
 		
-		JMenuItem editMandant = new JMenuItem("Editieren");
+		JMenuItem editMandant = new JMenuItem("Editieren/L\u00f6schen");
 		editMandant.setMnemonic(KeyEvent.VK_E);
-		editMandant.setToolTipText("Mandant editieren");
+		editMandant.setToolTipText("Mandant editieren oder l\u00f6schen");
 		editMandant.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
