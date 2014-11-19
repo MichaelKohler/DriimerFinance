@@ -38,10 +38,10 @@ public class DriimerFinance {
         for(User user : users) {
         	System.out.println("ID: " + user.getId() + " Name: " + user.getName() + " Vorname: " + user.getVorname() + " username: " + user.getUsername() + " Password: " + user.getPassword());
         }
-        Mandant testmandant = new Mandant();
-        testmandant.setName("stampfli");
-        testmandant.setDBSchema("stampfli");
-        testmandant.createInDB();
+        //Mandant testmandant = new Mandant();
+        //testmandant.setName("stampfli");
+        //testmandant.setDBSchema("stampfli");
+        //testmandant.createInDB();
         //driimerdb.addMandant(testmandant);
         
         

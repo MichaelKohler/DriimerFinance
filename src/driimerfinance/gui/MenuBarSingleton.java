@@ -53,6 +53,18 @@ public class MenuBarSingleton {
 			}
 		});
 		mandants.add(addMenuItem);
+		
+		JMenuItem editMandant = new JMenuItem("Editieren");
+		editMandant.setMnemonic(KeyEvent.VK_E);
+		editMandant.setToolTipText("Mandant editieren");
+		editMandant.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				new EditMandantWindow();
+			}
+		});
+		mandants.add(editMandant);
+		
 		JMenu mandantChangeMenu = new JMenu("Wechseln...");
 		mandantChangeMenu.setMnemonic(KeyEvent.VK_W);
 		
