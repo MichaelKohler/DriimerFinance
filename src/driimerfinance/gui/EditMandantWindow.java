@@ -83,7 +83,32 @@ public class EditMandantWindow {
 	 * Adds the buttons on the bottom of the frame.
 	 */
 	private void addButtons() {
-
+		JPanel buttonPanel = new JPanel();
+		JButton deleteButton = new JButton("Mandant l\u00f6schen");
+		deleteButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		JButton editButton = new JButton("Mandant editieren");
+		editButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		JButton cancelButton = new JButton("Abbrechen");
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		buttonPanel.add(deleteButton, BorderLayout.WEST);
+		buttonPanel.add(editButton, BorderLayout.CENTER);
+		buttonPanel.add(cancelButton, BorderLayout.EAST);
+		frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 	}
 
 }
