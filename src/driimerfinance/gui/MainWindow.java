@@ -11,11 +11,8 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.sun.javafx.tk.Toolkit;
 
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Mandant;
