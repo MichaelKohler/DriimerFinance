@@ -230,7 +230,11 @@ public class MandantDBHelper {
 		}
 		return account;
 	}
-	
+	/**
+     * Getter: Returns the account with this name of this mandant in the database
+     * 
+     * @return account found or a new account
+     */
 	public Account getAccountByName(String accountName) {
 		Account account= new Account();
 		try {
