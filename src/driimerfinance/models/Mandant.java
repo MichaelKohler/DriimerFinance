@@ -1,5 +1,6 @@
 package driimerfinance.models;
 
+import java.text.Normalizer;
 import java.util.List;
 
 import driimerfinance.database.DriimerDBHelper;
@@ -65,7 +66,11 @@ public class Mandant implements IModel {
      * @return void
      */
 	public void setDBSchema(String dBSchema) {
-		this.dbSchema = dBSchema;
+//		This will separate all of the accent marks from the characters.
+		String temp = Normalizer.normalize(dBSchema, Normalizer.Form.NFD);
+//		Then, you just need to compare each character against being a letter and throw out the ones that aren't.
+		temp = temp.replaceAll("[^\\p{ASCII}]", "");
+		this.dbSchema = temp;
 	}
 
 	/**

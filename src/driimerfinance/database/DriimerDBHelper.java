@@ -241,7 +241,7 @@ public class DriimerDBHelper {
 	}
 
 	/**
-     * Deletes a mandant from the database.
+     * calls deleteMandantById()
      * 
      * @param mandant to be deleted
      * @return void
@@ -251,7 +251,7 @@ public class DriimerDBHelper {
 	}
 	
 	/**
-     * Deletes a mandant from the database.
+     * Deletes a mandant from the database and calls deleteMandantDatabase()
      * 
      * @param Id of the mandant to be deleted
      * @return void
@@ -319,6 +319,13 @@ public class DriimerDBHelper {
 		}
 	}
 	
+	/**
+     * Creates a new Database for the mandant
+     * 
+     * @param Id of the mandant to be deleted
+     * @return void
+     */
+	
 	public void createMandantDatabase(String schemaName) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -358,7 +365,12 @@ public class DriimerDBHelper {
 			}
 		}
 	}
-	
+	/**
+     * Deletes the mandants Database
+     * 
+     * @param Id of the mandant to be deleted
+     * @return void
+     */
 	public void deleteMandantDatabase(String schemaName) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
