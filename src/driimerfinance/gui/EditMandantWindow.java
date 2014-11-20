@@ -49,7 +49,7 @@ public class EditMandantWindow {
 	private void createGUI() {
 		addForm();
 		addButtons();
-		this.frame.setSize(400, 100);
+		this.frame.setSize(420, 200);
 		GUIHelper.centerFrame(this.frame);
 		this.frame.setVisible(true);
 	}
