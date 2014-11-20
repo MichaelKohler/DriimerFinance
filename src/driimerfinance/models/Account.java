@@ -14,7 +14,7 @@ public class Account implements IModel {
 	private Integer id = null;
 	private String name = null;
 	private int fk_AccountType = 0;
-	private int balance = 0;
+	private double balance = 0;
 	private Boolean capitalAccount = false;
 	
 	/**
@@ -95,7 +95,7 @@ public class Account implements IModel {
      * 
      * @return id
      */
-	public int getBalance() {
+	public double getBalance() {
 		return this.balance;
 	}
 

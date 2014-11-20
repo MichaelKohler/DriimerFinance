@@ -121,7 +121,7 @@ public class MandantDBHelper {
 			preparedStatement.setInt(2, transaction.getFk_SollKonto());
 			preparedStatement.setInt(3, transaction.getFk_HabenKonto());
 			preparedStatement.setString(4,  transaction.getBezeichnung());
-			preparedStatement.setInt(5, transaction.getBetrag());
+			preparedStatement.setDouble(5, transaction.getBetrag());
 			preparedStatement.setInt(6, transaction.getBelegNr());
 			preparedStatement.execute();
 
@@ -145,7 +145,7 @@ public class MandantDBHelper {
 			preparedStatement.setInt(2, transaction.getFk_SollKonto());
 			preparedStatement.setInt(3, transaction.getFk_HabenKonto());
 			preparedStatement.setString(4, transaction.getBezeichnung());
-			preparedStatement.setInt(5, transaction.getBetrag());
+			preparedStatement.setDouble(5, transaction.getBetrag());
 			preparedStatement.setInt(6, transaction.getBelegNr());
 			preparedStatement.setInt(7, transaction.getId());
 			preparedStatement.execute();
@@ -270,7 +270,7 @@ public class MandantDBHelper {
 					.prepareStatement("insert into konto(Name, fk_KontoTyp, Guthaben, Kapitalkonto) values (?,?,?,?)");
 			preparedStatement.setString(1, account.getName());
 			preparedStatement.setInt(2, account.getFk_AccountType());
-			preparedStatement.setInt(3, account.getBalance());
+			preparedStatement.setDouble(3, account.getBalance());
 			preparedStatement.setBoolean(4,  account.getCapitalAccount());
 			preparedStatement.execute();
 
@@ -292,7 +292,7 @@ public class MandantDBHelper {
 					.prepareStatement("update konto set Name=?, fk_KontoTyp=?, Guthaben=?, Kapitalkonto=? where idKonto=?");
 			preparedStatement.setString(1, account.getName());
 			preparedStatement.setInt(2, account.getFk_AccountType());
-			preparedStatement.setInt(3, account.getBalance());
+			preparedStatement.setDouble(3, account.getBalance());
 			preparedStatement.setBoolean(4,  account.getCapitalAccount());
 			preparedStatement.setInt(5, account.getId());
 			preparedStatement.execute();

@@ -14,7 +14,7 @@ public class Transaction implements IModel {
 	private int fk_fromAccount = 0;
 	private int fk_toAccount = 0;
 	private String description = null;
-	private Integer amount = null;
+	private double amount = 0;
 	private Integer receiptNumber = null;
 	
 	/**
@@ -147,7 +147,7 @@ public class Transaction implements IModel {
      * 
      * @return amount
      */
-	public Integer getBetrag() {
+	public double getBetrag() {
 		return this.amount;
 	}
 
@@ -157,7 +157,7 @@ public class Transaction implements IModel {
      * @param amount to set
      * @return void
      */
-	public void setBetrag(Integer betrag) {
+	public void setBetrag(double betrag) {
 		this.amount = betrag;
 	}
 
