@@ -35,8 +35,8 @@ public class BalanceViewer {
      * Creates the GUI.
      */
     private void createGUI() {
-    	    GUIHelper.centerAndSizeFrame(this.frame);
-		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	    GUIHelper.centerFrame(this.frame);
+    	    this.frame.setSize(500, 400);
 		this.frame.setVisible(true);
 		
 		JPanel tablePanel = new JPanel();
@@ -46,7 +46,7 @@ public class BalanceViewer {
 		Object[][] data = {  }; // TODO: call getData and transform it
 		
 		JTable accountTable = new JTable(new DefaultTableModel(data, headers));
-		accountTable.setPreferredScrollableViewportSize(new Dimension(400, 300));
+		accountTable.setPreferredScrollableViewportSize(new Dimension(500, 400));
 		accountTable.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(accountTable);
 		tablePanel.add(scrollPane);

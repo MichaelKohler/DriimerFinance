@@ -112,7 +112,7 @@ public class MenuBarSingleton {
 		transactions.add(journalItem);
 		
 		JMenu accountPlan = new JMenu("Kontenplan");
-		file.setMnemonic(KeyEvent.VK_K);
+		accountPlan.setMnemonic(KeyEvent.VK_K);
 
 		JMenuItem editAccountPlan = new JMenuItem("Kontenplan editieren...");
 		editAccountPlan.setMnemonic(KeyEvent.VK_H);
@@ -124,11 +124,41 @@ public class MenuBarSingleton {
 			}
 		});
 		accountPlan.add(editAccountPlan);
+		
+		JMenu erMenu = new JMenu("ER");
+		erMenu.setMnemonic(KeyEvent.VK_E);
+
+		JMenuItem showERItem = new JMenuItem("ER anzeigen...");
+		showERItem.setMnemonic(KeyEvent.VK_E);
+		showERItem.setToolTipText("Erfolgsrechnung anzeigen");
+		showERItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				new ERViewer();
+			}
+		});
+		erMenu.add(showERItem);
+		
+		JMenu balanceMenu = new JMenu("Balance");
+		balanceMenu.setMnemonic(KeyEvent.VK_B);
+
+		JMenuItem showBalanceItem = new JMenuItem("Bilanz anzeigen...");
+		showBalanceItem.setMnemonic(KeyEvent.VK_B);
+		showBalanceItem.setToolTipText("Bilanz anzeigen");
+		showBalanceItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				new BalanceViewer();
+			}
+		});
+		balanceMenu.add(showBalanceItem);
 
 		bar.add(file);
 		bar.add(mandants);
 		bar.add(transactions);
 		bar.add(accountPlan);
+		bar.add(erMenu);
+		bar.add(balanceMenu);
 		return bar;
     }
     
