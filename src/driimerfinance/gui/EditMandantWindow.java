@@ -33,6 +33,8 @@ public class EditMandantWindow {
 
 	JFrame frame = new JFrame("DriimerFinance - Mandant editieren");
 	JTable mandantTable = new JTable();
+	JPanel tablePanel = new JPanel();
+	DriimerDBHelper driimerdb = new DriimerDBHelper();
 
 	/**
 	 * Constructor
@@ -56,7 +58,7 @@ public class EditMandantWindow {
 	 * Adds the content.
 	 */
 	private void addForm() {
-		JPanel tablePanel = new JPanel();
+		
 		tablePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		String[] headers = { "Nummer", "Name" };
 		Object[][] data = {  };
@@ -66,7 +68,7 @@ public class EditMandantWindow {
 		JScrollPane scrollPane = new JScrollPane(mandantTable);
 		tablePanel.add(scrollPane);
 		
-		DriimerDBHelper driimerdb = new DriimerDBHelper();
+		
 		
 		List<Mandant> mandanten = driimerdb.getAllMantanten();
 		for ( Mandant mandant : mandanten) {
@@ -76,7 +78,6 @@ public class EditMandantWindow {
 		}
 			
 		frame.getContentPane().add(tablePanel, BorderLayout.CENTER);
-		
 	}
 
 	/**
@@ -85,10 +86,24 @@ public class EditMandantWindow {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton deleteButton = new JButton("Mandant l\u00f6schen");
+		
+		
 		deleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				int selRow = 0;
+				selRow = mandantTable.getSelectedRow();
+				//if there is a row selected
+				if ( selRow != -1 ) {
+					DefaultTableModel model = (DefaultTableModel)mandantTable.getModel();
+					//get mandantid from table model
+					int mandantId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
+					
+					//get the mandant from database and delete it. (in database as well as in the table)
+					Mandant mandant = driimerdb.getMandantById(mandantId);
+					driimerdb.deleteMandant(mandant);
+					model.removeRow(selRow);
+				}
 			}
 		});
 		JButton editButton = new JButton("Mandant editieren");

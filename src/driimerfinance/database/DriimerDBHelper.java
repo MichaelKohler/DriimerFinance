@@ -238,9 +238,11 @@ public class DriimerDBHelper {
      */
 	public void deleteMandant(Mandant mandant) {
 		try {
+			System.out.println("removing mandant " + mandant.getName() + " from database");
 			preparedStatement = dbconnection
 					.prepareStatement("delete from mandanten where idmandanten=?");
 			preparedStatement.setInt(1, mandant.getId());
+			preparedStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
