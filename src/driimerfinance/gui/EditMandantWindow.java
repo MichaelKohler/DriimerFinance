@@ -100,8 +100,7 @@ public class EditMandantWindow {
 					int mandantId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
 					
 					//get the mandant from database and delete it. (in database as well as in the table)
-					Mandant mandant = driimerdb.getMandantById(mandantId);
-					driimerdb.deleteMandant(mandant);
+					driimerdb.deleteMandantById(mandantId);
 					model.removeRow(selRow);
 				}
 			}
