@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import driimerfinance.models.Account;
 import driimerfinance.models.AccountType;
 import driimerfinance.models.Transaction;
@@ -115,8 +116,7 @@ public class MandantDBHelper {
 	 */
 	public void addTransaction(Transaction transaction) {
 		try {
-			preparedStatement = dbconnection
-					.prepareStatement("insert into buchung(Datum, fk_SollKonto, fk_HabenKonto, Bezeichnung, Betrag, Beleg-Nr) values (?,?,?,?,?,?)");
+			preparedStatement = dbconnection.prepareStatement("insert into buchung(Datum, fk_SollKonto, fk_HabenKonto, Bezeichnung, Betrag, `Beleg-Nr`) values (?,?,?,?,?,?)");
 			preparedStatement.setDate(1, transaction.getDate());
 			preparedStatement.setInt(2, transaction.getFk_SollKonto());
 			preparedStatement.setInt(3, transaction.getFk_HabenKonto());
@@ -411,8 +411,12 @@ public class MandantDBHelper {
 	 * Closes database related connections.
 	 */
 	private void close() {
-		DBUtil.close(statement);
-		DBUtil.close(resultSet);
+		if (statement != null) {
+			DBUtil.close(statement);
+		}
+		if (resultSet != null) {
+			DBUtil.close(resultSet);
+		}
 	}
 
 }
