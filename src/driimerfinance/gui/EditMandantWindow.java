@@ -62,7 +62,14 @@ public class EditMandantWindow {
 		tablePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		String[] headers = { "Nummer", "Name" };
 		Object[][] data = {  };
-		mandantTable = new JTable(new DefaultTableModel(data, headers));
+		mandantTable = new JTable(new DefaultTableModel(data, headers) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		});
 		mandantTable.setPreferredScrollableViewportSize(new Dimension(400, 300));
 		mandantTable.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(mandantTable);
