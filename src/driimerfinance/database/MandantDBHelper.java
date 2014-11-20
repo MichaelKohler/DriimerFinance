@@ -140,7 +140,7 @@ public class MandantDBHelper {
 	public void updateTransaction(Transaction transaction) {
 		try {
 			preparedStatement = dbconnection
-					.prepareStatement("update buchung set Datum=?, fk_SollKonto=?, fk_HabenKonto=?, Bezeichnung=?, Betrag=?, Beleg-Nr=? where idBuchung=?");
+					.prepareStatement("update buchung set Datum=?, fk_SollKonto=?, fk_HabenKonto=?, Bezeichnung=?, Betrag=?, `Beleg-Nr`=? where idBuchung=?");
 			preparedStatement.setDate(1, transaction.getDate());
 			preparedStatement.setInt(2, transaction.getFk_SollKonto());
 			preparedStatement.setInt(3, transaction.getFk_HabenKonto());
