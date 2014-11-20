@@ -26,10 +26,10 @@ public class MandantDBHelper {
 	 * Changes the connection to the desired mandant
 	 */
 	public MandantDBHelper() {
-		String host = Globals.host;
-		String user = Globals.user;
-		String databasename = Globals.databasename;
-		String password = Globals.password;
+		String host = Globals.getInstance().host;
+		String user = Globals.getInstance().user;
+		String databasename = Globals.getInstance().databasename;
+		String password = Globals.getInstance().password;
 		db = new DBConnection();
 		dbconnection = db.createConnection(host, databasename, user, password);
 	}
