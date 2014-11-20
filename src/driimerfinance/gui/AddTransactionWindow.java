@@ -115,17 +115,14 @@ public class AddTransactionWindow {
 				String errorMessage = "";
 				Transaction newTrans = new Transaction();
 				Date date = new Date();
-				try {
-					date = DateFormat.getDateInstance().parse(dateField.getText());
-				} catch (ParseException ex) {
-					errorMessage = "Das Datum muss ein korrektes Format haben!\n";
+				String regex = "[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{4}";
+				if (!dateField.getText().matches(regex)) {
+					errorMessage = "Das Datum muss ein korrektes Format haben! (z.B. 02.01.2014)\n";
 					hasError = true;
 				}
 				newTrans.setDate(new java.sql.Date(date.getTime()));
-				//Account fromKonto = new Account(); // TODO: get by id
-				//newTrans.setFk_SollKonto(fromKonto.getId());
-				//Account toKonto = new Account(); // TODO: get by id
-				//newTrans.setFk_HabenKonto(toKonto.getId());
+				newTrans.setFk_SollKonto(sollField.getSelectedIndex() + 1);
+				newTrans.setFk_HabenKonto(habenField.getSelectedIndex() + 1);
 				newTrans.setBezeichnung(transactionField.getText());
 				try {
 					newTrans.setAmount(Integer.parseInt(amountField.getText()));

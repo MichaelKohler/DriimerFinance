@@ -7,7 +7,7 @@ package driimerfinance.database;
 */
 public class Globals {
 	public static String host = "localhost";
-	public static String  databasename = "mandant";
+	public static String  databasename = "Mandant";
 	public static String user = "root";
 	public static String password = "mysql";
 	

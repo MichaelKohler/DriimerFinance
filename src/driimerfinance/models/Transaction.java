@@ -42,7 +42,7 @@ public class Transaction implements IModel {
      * @return void
      */
     public void setAmount(int amount) {
-        
+        this.amount = amount;
     }
     
     
