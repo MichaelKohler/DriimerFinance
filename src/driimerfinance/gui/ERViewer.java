@@ -35,18 +35,18 @@ public class ERViewer {
      * Creates the GUI.
      */
     private void createGUI() {
-    	    GUIHelper.centerFrame(this.frame);
     	    this.frame.setSize(500, 400);
+    	    GUIHelper.centerFrame(this.frame);
 		this.frame.setVisible(true);
 		
 		JPanel tablePanel = new JPanel();
 		tablePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 		String[] headers = { "Aufwand", "Ertrag" };
-		Object[][] data = {  }; // TODO: call getData and transform it
+		Object[][] data = prepareData();
 		
 		JTable accountTable = new JTable(new DefaultTableModel(data, headers));
-		accountTable.setPreferredScrollableViewportSize(new Dimension(500, 400));
+		accountTable.setPreferredScrollableViewportSize(new Dimension(490, 390));
 		accountTable.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(accountTable);
 		tablePanel.add(scrollPane);
@@ -54,17 +54,62 @@ public class ERViewer {
     }
     
     /**
-     * Crawls the database to get the data used for the ER.
+     * Prepares the data for display.
+     * 
+     * @return data for display
+     */
+    private Object[][] prepareData() {
+        List<Account> spending = getSpendingData();
+        List<Account> earning = getEarningData();
+        
+        int maxLength = spending.size() >= earning.size() ? spending.size() : earning.size();
+        int columns = 2;
+        Object[][] rows = new Object[maxLength][columns];
+        for (int i = 0; i < maxLength; i++) {
+        	    String nameActive = "";
+        	    if (i < spending.size()) {
+        	    	    nameActive = spending.get(i).getName();
+        	    }
+        	    String namePassive = "";
+        	    if (i < earning.size()) {
+    	    	        namePassive = earning.get(i).getName();
+    	        }
+        	    Object[] names = { nameActive, namePassive };
+        	    rows[i] = names;
+        }
+        return rows;
+    }
+    
+    /**
+     * Crawls the database to get the data used for the spending ER.
      * 
      * @return data for the ER
      */
-    private List<Account> getData() {
+    private List<Account> getSpendingData() {
         MandantDBHelper helper = new MandantDBHelper();
         List<Account> allAccounts = helper.getAllAccounts();
         List<Account> filteredAccounts = new ArrayList<Account>();
         for (Account account : allAccounts) {
         	    int typ = account.getFk_AccountType();
-        	    if (typ == 3 || typ == 4) {
+        	    if (typ == 3) {
+        	    	    filteredAccounts.add(account);
+        	    }
+        }
+        return filteredAccounts;
+    }
+    
+    /**
+     * Crawls the database to get the data used for the earning ER.
+     * 
+     * @return data for the ER
+     */
+    private List<Account> getEarningData() {
+        MandantDBHelper helper = new MandantDBHelper();
+        List<Account> allAccounts = helper.getAllAccounts();
+        List<Account> filteredAccounts = new ArrayList<Account>();
+        for (Account account : allAccounts) {
+        	    int typ = account.getFk_AccountType();
+        	    if (typ == 4) {
         	    	    filteredAccounts.add(account);
         	    }
         }

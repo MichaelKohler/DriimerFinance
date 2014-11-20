@@ -35,18 +35,18 @@ public class BalanceViewer {
      * Creates the GUI.
      */
     private void createGUI() {
-    	    GUIHelper.centerFrame(this.frame);
     	    this.frame.setSize(500, 400);
+    	    GUIHelper.centerFrame(this.frame);
 		this.frame.setVisible(true);
 		
 		JPanel tablePanel = new JPanel();
 		tablePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 		String[] headers = { "Aktiven", "Passiven" };
-		Object[][] data = {  }; // TODO: call getData and transform it
+		Object[][] data = prepareData();
 		
 		JTable accountTable = new JTable(new DefaultTableModel(data, headers));
-		accountTable.setPreferredScrollableViewportSize(new Dimension(500, 400));
+		accountTable.setPreferredScrollableViewportSize(new Dimension(490, 390));
 		accountTable.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(accountTable);
 		tablePanel.add(scrollPane);
@@ -54,17 +54,62 @@ public class BalanceViewer {
     }
     
     /**
-     * Crawls the database to get the data used for the balance.
+     * Prepares the data for display.
+     * 
+     * @return data for display
+     */
+    private Object[][] prepareData() {
+        List<Account> active = getActiveData();
+        List<Account> passive = getPassiveData();
+        
+        int maxLength = active.size() >= passive.size() ? active.size() : passive.size();
+        int columns = 2;
+        Object[][] rows = new Object[maxLength][columns];
+        for (int i = 0; i < maxLength; i++) {
+        	    String nameActive = "";
+        	    if (i < active.size()) {
+        	    	    nameActive = active.get(i).getName();
+        	    }
+        	    String namePassive = "";
+        	    if (i < passive.size()) {
+    	    	        namePassive = passive.get(i).getName();
+    	        }
+        	    Object[] names = { nameActive, namePassive };
+        	    rows[i] = names;
+        }
+        return rows;
+    }
+    
+    /**
+     * Crawls the database to get the data used for the active balance.
      * 
      * @return data for the balance
      */
-    private List<Account> getData() {
+    private List<Account> getActiveData() {
         MandantDBHelper helper = new MandantDBHelper();
         List<Account> allAccounts = helper.getAllAccounts();
         List<Account> filteredAccounts = new ArrayList<Account>();
         for (Account account : allAccounts) {
         	    int typ = account.getFk_AccountType();
-        	    if (typ == 1 || typ == 2) {
+        	    if (typ == 1) {
+        	    	    filteredAccounts.add(account);
+        	    }
+        }
+        return filteredAccounts;
+    }
+    
+    /**
+     * Crawls the database to get the data used for the passive balance.
+     * 
+     * @return data for the balance
+     */
+    private List<Account> getPassiveData() {
+        MandantDBHelper helper = new MandantDBHelper();
+        List<Account> allAccounts = helper.getAllAccounts();
+        List<Account> filteredAccounts = new ArrayList<Account>();
+        for (Account account : allAccounts) {
+        	    int typ = account.getFk_AccountType();
+        	    if (typ == 2) {
         	    	    filteredAccounts.add(account);
         	    }
         }

@@ -125,10 +125,10 @@ public class MenuBarSingleton {
 		});
 		accountPlan.add(editAccountPlan);
 		
-		JMenu erMenu = new JMenu("ER");
+		JMenu erMenu = new JMenu("Erfolgsrechnung");
 		erMenu.setMnemonic(KeyEvent.VK_E);
 
-		JMenuItem showERItem = new JMenuItem("ER anzeigen...");
+		JMenuItem showERItem = new JMenuItem("Erfolgsreichnung anzeigen...");
 		showERItem.setMnemonic(KeyEvent.VK_E);
 		showERItem.setToolTipText("Erfolgsrechnung anzeigen");
 		showERItem.addActionListener(new ActionListener() {
@@ -139,7 +139,7 @@ public class MenuBarSingleton {
 		});
 		erMenu.add(showERItem);
 		
-		JMenu balanceMenu = new JMenu("Balance");
+		JMenu balanceMenu = new JMenu("Bilanz");
 		balanceMenu.setMnemonic(KeyEvent.VK_B);
 
 		JMenuItem showBalanceItem = new JMenuItem("Bilanz anzeigen...");
