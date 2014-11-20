@@ -40,7 +40,7 @@ public class AddMandantWindow {
 	private void createGUI() {
 		addForm();
 		addButtons();
-		this.frame.setSize(400, 100);
+		this.frame.setSize(500, 125);
 		GUIHelper.centerFrame(this.frame);
 		this.frame.setVisible(true);
 	}
