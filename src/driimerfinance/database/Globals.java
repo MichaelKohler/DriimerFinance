@@ -6,10 +6,10 @@ package driimerfinance.database;
  * (c) 2014 Driimer Finance
 */
 public class Globals {
-	public static String host = "";
-	public static String  databasename = "";
-	public static String user = "";
-	public static String password = "";
+	public static String host = "localhost";
+	public static String  databasename = "mandant";
+	public static String user = "root";
+	public static String password = "mysql";
 	
 	/**
 	 * changes the mandant in the background

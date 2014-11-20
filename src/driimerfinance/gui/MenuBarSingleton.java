@@ -100,6 +100,17 @@ public class MenuBarSingleton {
 		});
 		transactions.add(transactionItem);
 		
+		JMenuItem journalItem = new JMenuItem("Buchungsjournal");
+		journalItem.setMnemonic(KeyEvent.VK_H);
+		journalItem.setToolTipText("Buchungsjournal");
+		journalItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				new JournalWindow();
+			}
+		});
+		transactions.add(journalItem);
+		
 		JMenu accountPlan = new JMenu("Kontenplan");
 		file.setMnemonic(KeyEvent.VK_K);
 
