@@ -16,6 +16,7 @@ import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
+import driimerfinance.models.Balance;
 
 /**
  * Shows the Balance in a two column view.
@@ -60,8 +61,9 @@ public class BalanceViewer {
      * @return data for display
      */
     private Object[][] prepareData() {
-        List<Account> active = getActiveData();
-        List<Account> passive = getPassiveData();
+    	    Balance balance = new Balance();
+        List<Account> active = balance.getActivePositions();
+        List<Account> passive = balance.getPassivePositions();
         
         int maxLength = active.size() >= passive.size() ? active.size() : passive.size();
         int columns = 4;
@@ -91,41 +93,5 @@ public class BalanceViewer {
         rows[maxLength] = emptyRow;
         rows[maxLength+1] = totalsRow;
         return rows;
-    }
-    
-    /**
-     * Crawls the database to get the data used for the active balance.
-     * 
-     * @return data for the balance
-     */
-    private List<Account> getActiveData() {
-        MandantDBHelper helper = new MandantDBHelper();
-        List<Account> allAccounts = helper.getAllAccounts();
-        List<Account> filteredAccounts = new ArrayList<Account>();
-        for (Account account : allAccounts) {
-        	    int typ = account.getFk_AccountType();
-        	    if (typ == 1) {
-        	    	    filteredAccounts.add(account);
-        	    }
-        }
-        return filteredAccounts;
-    }
-    
-    /**
-     * Crawls the database to get the data used for the passive balance.
-     * 
-     * @return data for the balance
-     */
-    private List<Account> getPassiveData() {
-        MandantDBHelper helper = new MandantDBHelper();
-        List<Account> allAccounts = helper.getAllAccounts();
-        List<Account> filteredAccounts = new ArrayList<Account>();
-        for (Account account : allAccounts) {
-        	    int typ = account.getFk_AccountType();
-        	    if (typ == 2) {
-        	    	    filteredAccounts.add(account);
-        	    }
-        }
-        return filteredAccounts;
     }
 }

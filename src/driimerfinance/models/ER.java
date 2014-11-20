@@ -1,6 +1,9 @@
 package driimerfinance.models;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import driimerfinance.database.MandantDBHelper;
 
 /**
  * Erfolgsrechnung
@@ -21,8 +24,17 @@ public class ER {
      * 
      * @return list of all spending positions
      */
-    public ArrayList<Transaction> getSpendingPositions() {
-        return new ArrayList<Transaction>();
+    public List<Account> getSpendingPositions() {
+    	    MandantDBHelper helper = new MandantDBHelper();
+        List<Account> allAccounts = helper.getAllAccounts();
+        List<Account> filteredAccounts = new ArrayList<Account>();
+        for (Account account : allAccounts) {
+        	    int typ = account.getFk_AccountType();
+        	    if (typ == 3) {
+        	    	    filteredAccounts.add(account);
+        	    }
+        }
+        return filteredAccounts;
     }
     
     /**
@@ -30,7 +42,16 @@ public class ER {
      * 
      * @return list of all earning positions
      */
-    public ArrayList<Transaction> getEarningPositions() {
-        return new ArrayList<Transaction>();
+    public List<Account> getEarningPositions() {
+        MandantDBHelper helper = new MandantDBHelper();
+        List<Account> allAccounts = helper.getAllAccounts();
+        List<Account> filteredAccounts = new ArrayList<Account>();
+        for (Account account : allAccounts) {
+        	    int typ = account.getFk_AccountType();
+        	    if (typ == 4) {
+        	    	    filteredAccounts.add(account);
+        	    }
+        }
+        return filteredAccounts;
     }
 }
