@@ -7,7 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 import driimerfinance.models.Transaction;
@@ -30,8 +33,8 @@ import driimerfinance.models.Transaction;
 public class AddTransactionWindow {
 
 	JFrame frame = new JFrame("DriimerFinance - Buchung hinzuf\u00fcgen");
-	String[] fromAccounts = { "Foo", "Bla", "Bar", "Test" };
-	String[] toAccounts = { "Baz", "Blubb" };
+	ArrayList<String> fromAccounts = new ArrayList<String>();
+	ArrayList<String> toAccounts = new ArrayList<String>();
 	
 	JTextField dateField = null;
 	JComboBox sollField = null;
@@ -44,7 +47,20 @@ public class AddTransactionWindow {
 	 * Constructor
 	 */
 	public AddTransactionWindow() {
+	    setData();
 		createGUI();
+	}
+	
+	/**
+     * Gets the necessary data from the DB
+     */
+	private void setData() {
+		MandantDBHelper helper = new MandantDBHelper();
+		List<Account> accs = helper.getAllAccounts();
+		for (Account acc : accs) {
+			this.fromAccounts.add(acc.getName());
+			this.toAccounts.add(acc.getName());
+		}
 	}
 
 	/**
@@ -71,10 +87,10 @@ public class AddTransactionWindow {
 		this.dateField = new JTextField();
 		this.dateField.setPreferredSize(new Dimension(150, 20));
 		JLabel sollLabel = new JLabel("Soll Konto");
-		this.sollField = new JComboBox(this.fromAccounts);
+		this.sollField = new JComboBox(this.fromAccounts.toArray());
 		this.sollField.setPreferredSize(new Dimension(150, 20));
 		JLabel habenLabel = new JLabel("Haben Konto");
-		this.habenField = new JComboBox(this.toAccounts);
+		this.habenField = new JComboBox(this.toAccounts.toArray());
 		this.habenField.setPreferredSize(new Dimension(150, 20));
 		JLabel buchungLabel = new JLabel("Buchungssatz");
 		this.transactionField = new JTextField();
@@ -121,8 +137,11 @@ public class AddTransactionWindow {
 					hasError = true;
 				}
 				newTrans.setDate(new java.sql.Date(date.getTime()));
-				newTrans.setFk_SollKonto(sollField.getSelectedIndex() + 1);
-				newTrans.setFk_HabenKonto(habenField.getSelectedIndex() + 1);
+				MandantDBHelper helper = new MandantDBHelper();
+				Account sollAccount = helper.getAccountByName(fromAccounts.get(sollField.getSelectedIndex()));
+				newTrans.setFk_SollKonto(sollAccount.getId());
+				Account habenAccount = helper.getAccountByName(toAccounts.get(habenField.getSelectedIndex()));
+				newTrans.setFk_HabenKonto(habenAccount.getId());
 				newTrans.setBezeichnung(transactionField.getText());
 				try {
 					newTrans.setAmount(Integer.parseInt(amountField.getText()));
