@@ -1,12 +1,20 @@
 package driimerfinance.database;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import driimerfinance.models.Mandant;
 import driimerfinance.models.User;
 
@@ -222,6 +230,8 @@ public class DriimerDBHelper {
 			preparedStatement.setString(1, mandant.getName());
 			preparedStatement.setString(2, mandant.getDBSchema());
 			preparedStatement.execute();
+			
+			createMandantDatabase(mandant.getDBSchema());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -311,6 +321,48 @@ public class DriimerDBHelper {
 		}
 		if (resultSet != null) {
 			DBUtil.close(resultSet);
+		}
+	}
+	
+	public void createMandantDatabase(String schemaName) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection connection = null;
+			
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/mysql" + "?user=root&password=mysql");
+			
+			Statement statement = connection.createStatement();
+			statement.executeUpdate("CREATE DATABASE " + schemaName);
+			
+			Connection updateConnection = null;
+			updateConnection = DriverManager.getConnection("jdbc:mysql://localhost/" + schemaName + "?user=root&password=mysql");
+			ScriptRunner runner = new ScriptRunner(updateConnection, false, true);
+			InputStream in = getClass().getResourceAsStream("/driimerfinance/database/DBSchema.txt");
+			runner.runScript(new InputStreamReader(in, "utf-8"));
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (statement != null ) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			
 		}
 	}
 

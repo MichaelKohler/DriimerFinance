@@ -50,9 +50,7 @@ public class DriimerFinance {
         for(Mandant mandant : mandanten) {
         	System.out.println("ID: " + mandant.getId() + " Name: " + mandant.getName() + " DBSchema: " + mandant.getDBSchema());
         }
-        
-
-        
+        //driimerdb.createMandantDatabase("mueller");
         driimerdb.closeConnection();
         
         MandantDBHelper dbhelper = new MandantDBHelper("localhost", "mandant", "root", "mysql");
