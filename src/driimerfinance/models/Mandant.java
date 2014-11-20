@@ -114,7 +114,9 @@ public class Mandant implements IModel {
      * @return void
      */
     public void updateInDB() {
-        
+    	DriimerDBHelper driimerdb = new DriimerDBHelper();
+    	driimerdb.updateMandant(this);
+    	driimerdb.closeConnection();
     }
     
     /**
@@ -123,6 +125,8 @@ public class Mandant implements IModel {
      * @return void
      */
     public void deleteInDB() {
-        
+    	DriimerDBHelper driimerdb = new DriimerDBHelper();
+    	driimerdb.deleteMandant(this);
+    	driimerdb.closeConnection();
     }
 }
