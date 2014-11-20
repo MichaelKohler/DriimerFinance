@@ -33,7 +33,6 @@ public class JournalWindow extends OneColumnViewer {
 	 */
     public JournalWindow() {
         createGUI();
-        GUIHelper.centerAndSizeFrame(this.frame);
     }
     
     /**
@@ -41,7 +40,7 @@ public class JournalWindow extends OneColumnViewer {
      */
     private void createGUI() {
         addTable();
-        this.frame.setSize(420, 200);
+        this.frame.setSize(650, 500);
 		GUIHelper.centerFrame(this.frame);
 		this.frame.setVisible(true);
     }
@@ -51,17 +50,14 @@ public class JournalWindow extends OneColumnViewer {
 	 * Adds the content.
 	 */
 	private void addTable() {
-		
 		tablePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		String[] headers = { "Datum", "Soll-Konto", "Haben-Konto", "Buchungssatz", "Betrag", "Beleg-Nr" };
 		Object[][] data = {  };
 		transactionTable = new JTable(new DefaultTableModel(data, headers));
-		transactionTable.setPreferredScrollableViewportSize(new Dimension(400, 300));
+		transactionTable.setPreferredScrollableViewportSize(new Dimension(640, 490));
 		transactionTable.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(transactionTable);
 		tablePanel.add(scrollPane);
-		
-		
 		
 		List<Transaction> transactions = db.getAllTransactions();
 		for ( Transaction transaction : transactions) {
