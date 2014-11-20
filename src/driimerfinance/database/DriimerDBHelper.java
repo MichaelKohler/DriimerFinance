@@ -247,16 +247,7 @@ public class DriimerDBHelper {
      * @return void
      */
 	public void deleteMandant(Mandant mandant) {
-		try {
-			preparedStatement = dbconnection
-					.prepareStatement("delete from mandanten where idmandanten=?");
-			preparedStatement.setInt(1, mandant.getId());
-			preparedStatement.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
+		deleteMandantById(mandant.getId());
 	}
 	
 	/**
@@ -267,10 +258,14 @@ public class DriimerDBHelper {
      */
 	public void deleteMandantById(int mandantId) {
 		try {
+			Mandant mandant = getMandantById(mandantId);
+			deleteMandantDatabase(mandant.getDBSchema());
 			preparedStatement = dbconnection
 					.prepareStatement("delete from mandanten where idmandanten=?");
 			preparedStatement.setInt(1, mandantId);
 			preparedStatement.execute();
+
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -361,9 +356,33 @@ public class DriimerDBHelper {
 					e.printStackTrace();
 				}
 			}
-			
-			
 		}
+	}
+	
+	public void deleteMandantDatabase(String schemaName) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection connection = null;
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/" + schemaName + "?user=root&password=mysql");
+			Statement statement = connection.createStatement();
+			statement.executeUpdate("DROP DATABASE " + schemaName);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (statement != null ) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
 	}
 
 }
