@@ -1,5 +1,7 @@
 package driimerfinance.helpers;
 
+import java.text.NumberFormat;
+
 /**
  * Useful methods for financial tasks.
  * 
@@ -8,12 +10,14 @@ package driimerfinance.helpers;
 public class FinanceHelper {
 	
 	/**
-     * Creates a connection to the specified host and connects to the database.
+     * Creates a formatted string from the number input.
      * 
-     * @param unformated number string
+     * @param double number to convert
      * @return a formatted number to be put on display for the user
      */
-    public static String formatAmount(String unformatted) {
-        return "";
+    public static String formatAmount(double number) {
+	    	NumberFormat numberFormatter = NumberFormat.getCurrencyInstance();
+	    	String formattedString = numberFormatter.format(number);
+	    	return formattedString;
     }
 }

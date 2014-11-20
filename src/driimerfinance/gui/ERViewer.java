@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import driimerfinance.database.MandantDBHelper;
+import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 
@@ -42,7 +43,7 @@ public class ERViewer {
 		JPanel tablePanel = new JPanel();
 		tablePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
-		String[] headers = { "Aufwand", "Ertrag" };
+		String[] headers = { "Aufwand", "Betrag", "Ertrag", "Betrag" };
 		Object[][] data = prepareData();
 		
 		JTable accountTable = new JTable(new DefaultTableModel(data, headers));
@@ -63,20 +64,32 @@ public class ERViewer {
         List<Account> earning = getEarningData();
         
         int maxLength = spending.size() >= earning.size() ? spending.size() : earning.size();
-        int columns = 2;
-        Object[][] rows = new Object[maxLength][columns];
+        int columns = 4;
+        Object[][] rows = new Object[maxLength+2][columns];
+        double totalSpending = 0;
+        double totalEarning = 0;
         for (int i = 0; i < maxLength; i++) {
-        	    String nameActive = "";
+        	    String nameSpending = "";
+        	    String balanceSpending = "";
         	    if (i < spending.size()) {
-        	    	    nameActive = spending.get(i).getName();
+        	    	    nameSpending = spending.get(i).getName();
+        	    	    balanceSpending = FinanceHelper.formatAmount(spending.get(i).getBalance());
+        	    	    totalSpending += spending.get(i).getBalance();
         	    }
-        	    String namePassive = "";
+        	    String nameEarning = "";
+        	    String balanceEarning = "";
         	    if (i < earning.size()) {
-    	    	        namePassive = earning.get(i).getName();
+        	    	    nameEarning = earning.get(i).getName();
+        	    	    balanceEarning = FinanceHelper.formatAmount(earning.get(i).getBalance());
+        	    	    totalEarning += earning.get(i).getBalance();
     	        }
-        	    Object[] names = { nameActive, namePassive };
+        	    Object[] names = { nameSpending, balanceSpending, nameEarning, balanceEarning };
         	    rows[i] = names;
         }
+        Object[] emptyRow = { "", "", "", "" };
+        Object[] totalsRow = { "Total", FinanceHelper.formatAmount(totalSpending), "Total", FinanceHelper.formatAmount(totalEarning) };
+        rows[maxLength] = emptyRow;
+        rows[maxLength+1] = totalsRow;
         return rows;
     }
     
