@@ -1,5 +1,7 @@
 package driimerfinance.models;
 
+import driimerfinance.database.DriimerDBHelper;
+
 /**
  * User model for the login to the system.
  * 
@@ -130,7 +132,9 @@ public class User implements IModel {
      * @return void
      */
     public void createInDB() {
-        
+    	DriimerDBHelper driimerdb = new DriimerDBHelper();
+    	driimerdb.addUser(this);
+    	driimerdb.closeConnection();
     }
     
     /**
@@ -139,7 +143,9 @@ public class User implements IModel {
      * @return void
      */
     public void updateInDB() {
-        
+    	DriimerDBHelper driimerdb = new DriimerDBHelper();
+    	driimerdb.updateUser(this);
+    	driimerdb.closeConnection();
     }
     
     /**
@@ -148,6 +154,8 @@ public class User implements IModel {
      * @return void
      */
     public void deleteInDB() {
-        
+    	DriimerDBHelper driimerdb = new DriimerDBHelper();
+    	driimerdb.deleteUser(this);
+    	driimerdb.closeConnection();
     }
 }

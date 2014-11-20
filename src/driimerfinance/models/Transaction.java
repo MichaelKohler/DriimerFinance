@@ -1,5 +1,7 @@
 package driimerfinance.models;
 
+import driimerfinance.database.MandantDBHelper;
+
 /**
  * Used for Transactions within one mandant.
  * 
@@ -43,32 +45,7 @@ public class Transaction implements IModel {
         
     }
     
-    /**
-     * Stores a new object in the database.
-     * 
-     * @return void
-     */
-    public void createInDB() {
-        
-    }
     
-    /**
-     * Updates the object in the database if already existing.
-     * 
-     * @return void
-     */
-    public void updateInDB() {
-        
-    }
-    
-    /**
-     * Deletes the object from the database.
-     * 
-     * @return void
-     */
-    public void deleteInDB() {
-        
-    }
 	
     /**
      * Getter: Returns the object's id
@@ -202,4 +179,38 @@ public class Transaction implements IModel {
 	public void setBelegNr(Integer receipt) {
 		this.receiptNumber = receipt;
 	}
+	
+	/**
+     * Stores a new object in the database.
+     * 
+     * @return void
+     */
+    public void createInDB() {
+    	MandantDBHelper db = new MandantDBHelper();
+    	db.addTransaction(this);
+    	db.closeConnection();
+    }
+    
+    /**
+     * Updates the object in the database if already existing.
+     * 
+     * @return void
+     */
+    public void updateInDB() {
+    	MandantDBHelper db = new MandantDBHelper();
+    	db.updateTransaction(this);
+    	db.closeConnection();
+    }
+    
+    /**
+     * Deletes the object from the database.
+     * 
+     * @return void
+     */
+    public void deleteInDB() {
+    	MandantDBHelper db = new MandantDBHelper();
+    	db.deleteTransaction(this);
+    	db.closeConnection();
+        
+    }
 }

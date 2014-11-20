@@ -344,6 +344,62 @@ public class MandantDBHelper {
 	}
 	
 	/**
+	 * Adds an accounttype to this mandant's database.
+	 * 
+	 * @param accounttype to add
+	 */
+	public void addAccountType(AccountType accounttype) {
+		try {
+			preparedStatement = dbconnection
+					.prepareStatement("insert into kontotyp(idKontotyp, Name) values (?,?)");
+			preparedStatement.setInt(1, accounttype.getId());
+			preparedStatement.setString(2, accounttype.getName());
+			preparedStatement.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+	
+	/**
+     * Updates an accounttype in the database.
+     * 
+     * @param accounttype to update
+     */
+	public void updateAccountType(AccountType accounttype) {
+		try {
+			preparedStatement = dbconnection
+					.prepareStatement("update accounttype set name=? where idKonto=?");
+			preparedStatement.setString(1, accounttype.getName());
+			preparedStatement.setInt(2, accounttype.getId());
+			preparedStatement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+	
+	/**
+	 * Deletes an accounttype from this mandant's database.
+	 * 
+	 * @param accounttype to delete
+	 */
+	public void deleteAccountType(AccountType accounttype) {
+		try {
+			preparedStatement = dbconnection
+					.prepareStatement("delete from kontotyp where idKontotyp=?");
+			preparedStatement.setInt(1, accounttype.getId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+	
+	/**
 	 * Closes the database connection.
 	 */
 	public void closeConnection() {

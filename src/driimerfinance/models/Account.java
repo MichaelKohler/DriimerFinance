@@ -1,5 +1,8 @@
 package driimerfinance.models;
 
+import driimerfinance.database.DriimerDBHelper;
+import driimerfinance.database.MandantDBHelper;
+
 /**
  * Account Model. Every account should be an Account.
  * 
@@ -131,7 +134,9 @@ public class Account implements IModel {
      * @return void
      */
     public void createInDB() {
-        
+        MandantDBHelper db = new MandantDBHelper();
+        db.addAccount(this);
+        db.closeConnection();
     }
     
     /**
@@ -140,7 +145,9 @@ public class Account implements IModel {
      * @return void
      */
     public void updateInDB() {
-        
+        MandantDBHelper db = new MandantDBHelper();
+        db.updateAccount(this);
+        db.closeConnection();
     }
     
     /**
@@ -149,6 +156,8 @@ public class Account implements IModel {
      * @return void
      */
     public void deleteInDB() {
-        
+    	MandantDBHelper db = new MandantDBHelper();
+    	db.deleteAccount(this);
+    	db.closeConnection();
     }
 }

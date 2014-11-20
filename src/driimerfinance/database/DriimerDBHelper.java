@@ -249,6 +249,12 @@ public class DriimerDBHelper {
 		}
 	}
 	
+	/**
+     * Deletes a mandant from the database.
+     * 
+     * @param Id of the mandant to be deleted
+     * @return void
+     */
 	public void deleteMandantById(int mandantId) {
 		try {
 			preparedStatement = dbconnection

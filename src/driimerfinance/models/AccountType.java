@@ -1,5 +1,7 @@
 package driimerfinance.models;
 
+import driimerfinance.database.MandantDBHelper;
+
 /**
  * ...
  * 
@@ -71,7 +73,9 @@ public class AccountType implements IModel {
      * @return void
      */
     public void createInDB() {
-        
+    	MandantDBHelper db = new MandantDBHelper();
+    	db.addAccountType(this);
+    	db.closeConnection();
     }
     
     /**
@@ -80,7 +84,9 @@ public class AccountType implements IModel {
      * @return void
      */
     public void updateInDB() {
-        
+    	MandantDBHelper db = new MandantDBHelper();
+    	db.updateAccountType(this);
+    	db.closeConnection();
     }
     
     /**
@@ -89,6 +95,9 @@ public class AccountType implements IModel {
      * @return void
      */
     public void deleteInDB() {
+    	MandantDBHelper db = new MandantDBHelper();
+    	db.deleteAccountType(this);
+    	db.closeConnection();
         
     }
 }
