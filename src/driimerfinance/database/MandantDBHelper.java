@@ -231,6 +231,30 @@ public class MandantDBHelper {
 		return account;
 	}
 	
+	public Account getAccountByName(String accountName) {
+		Account account= new Account();
+		try {
+			preparedStatement = dbconnection
+					.prepareStatement("select * from konto where Name=?");
+			preparedStatement.setString(1, accountName);
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				account.setId(resultSet.getInt("idKonto"));
+				account.setName(resultSet.getString("Name"));
+				account.setFk_AccountType(resultSet.getInt("fk_KontoTyp"));
+				account.setBalance(resultSet.getInt("Guthaben"));
+				account.setCapitalAccount(resultSet.getBoolean("Kapitalkonto"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return account;
+	}
+	
 	/**
 	 * Adds an account to this mandant's database.
 	 * 
