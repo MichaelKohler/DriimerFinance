@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,8 +18,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
+import driimerfinance.models.AccountType;
 
 /**
  * Form to add an account.
@@ -29,7 +33,7 @@ public class AddAccountWindow {
 	JFrame frame = new JFrame("DriimerFinance - Konto hinzuf\u00fcgen");
 	AccountPlanWindow parent = null;
 	
-	String[] types = { "Test1", "Test2" };
+	ArrayList<String> types = new ArrayList<String>();
 	
 	JTextField numberField = null;
 	JTextField nameField = null;
@@ -43,9 +47,21 @@ public class AddAccountWindow {
 	 */
     public AddAccountWindow(AccountPlanWindow accPlanWin) {
     	    this.parent = accPlanWin;
+        getData();
         createGUI();
     }
     
+    /**
+     * Gets the types from the DB
+     */
+    private void getData() {
+        MandantDBHelper helper = new MandantDBHelper();
+        List<AccountType> allTypes = helper.getAllAccountTypes();
+        for (AccountType type : allTypes) {
+            types.add(type.getName());
+        }
+    }
+
     /**
      * Creates the GUI
      */
@@ -73,7 +89,7 @@ public class AddAccountWindow {
 		this.nameField = new JTextField();
 		this.nameField.setPreferredSize(new Dimension(150, 20));
 		JLabel typeLabel = new JLabel("Typ");
-		this.typeField = new JComboBox(types);
+		this.typeField = new JComboBox(types.toArray());
 		this.typeField.setPreferredSize(new Dimension(150, 20));
 		JLabel capLabel = new JLabel("Kapitalkonto?");
 		this.isCapAccount = new JCheckBox();
