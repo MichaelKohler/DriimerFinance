@@ -130,6 +130,7 @@ public class EditMandantWindow {
 		buttonPanel.add(editButton, BorderLayout.CENTER);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+		this.frame.getRootPane().setDefaultButton(cancelButton);
 	}
 
 }

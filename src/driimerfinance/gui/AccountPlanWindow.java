@@ -94,6 +94,7 @@ public class AccountPlanWindow {
 		});
 		buttonPanel.add(okButton, BorderLayout.CENTER);
 		frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+		this.frame.getRootPane().setDefaultButton(okButton);
 	}
 	
 	/**

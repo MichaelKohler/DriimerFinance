@@ -169,6 +169,7 @@ public class AddTransactionWindow {
 		buttonPanel.add(okButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+		this.frame.getRootPane().setDefaultButton(okButton);
 	}
 
 }

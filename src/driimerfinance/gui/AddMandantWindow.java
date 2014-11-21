@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -26,6 +27,7 @@ public class AddMandantWindow {
 
 	JFrame frame = new JFrame("DriimerFinance - Mandant hinzuf\u00fcgen");
 	JTextField nameField = null;
+
 
 	/**
 	 * Constructor
@@ -94,6 +96,6 @@ public class AddMandantWindow {
 		buttonPanel.add(okButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+		this.frame.getRootPane().setDefaultButton(okButton);
 	}
-
 }
