@@ -5,9 +5,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import com.sun.corba.se.spi.ior.MakeImmutable;
 
 import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.models.Mandant;
@@ -72,15 +75,7 @@ public class MenuBarSingleton {
 		
 		List<Mandant> mandanten = driimerdb.getAllMantanten();
 		for ( Mandant mandant : mandanten) {
-			JMenuItem menuItem = new JMenuItem(mandant.getName());
-			menuItem.setMnemonic(KeyEvent.VK_M);
-			menuItem.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent event) {
-					// TODO: change Mandant
-				}
-			});
-			
+			JMenuItem menuItem = makeMenuItem(mandant);
 			mandantChangeMenu.add(menuItem);
 			mandants.add(mandantChangeMenu);
 		}
@@ -162,6 +157,18 @@ public class MenuBarSingleton {
 		return bar;
     }
     
+    public static JMenuItem makeMenuItem(final Mandant mandant) {
+		JMenuItem menuItem = new JMenuItem(mandant.getName());
+		menuItem.setMnemonic(KeyEvent.VK_M);
+		menuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				mandant.setCurrentWorkingMandant();
+			}
+		});
+		return menuItem;
+	}
+    
     /**
      * Returns the singleton's instance.
      * 
@@ -175,4 +182,6 @@ public class MenuBarSingleton {
     	    	    return createGUI();
     	    }
     }
+    
+
 }
