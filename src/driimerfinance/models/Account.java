@@ -1,6 +1,5 @@
 package driimerfinance.models;
 
-import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.database.MandantDBHelper;
 
 /**

@@ -3,12 +3,9 @@ package driimerfinance.models;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.Normalizer;
-import java.util.List;
 import java.util.Properties;
 
 import driimerfinance.database.DriimerDBHelper;

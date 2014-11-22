@@ -3,10 +3,8 @@ package driimerfinance;
 import java.util.List;
 
 import driimerfinance.database.DriimerDBHelper;
-import driimerfinance.database.MandantDBHelper;
 import driimerfinance.gui.MainWindow;
 import driimerfinance.models.Mandant;
-import driimerfinance.models.Transaction;
 import driimerfinance.models.User;
 
 
