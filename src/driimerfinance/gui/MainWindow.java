@@ -6,17 +6,22 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import driimerfinance.helpers.GUIHelper;
+import driimerfinance.models.Account;
 import driimerfinance.models.Mandant;
+import driimerfinance.models.Transaction;
 import driimerfinance.database.DriimerDBHelper;
+import driimerfinance.database.MandantDBHelper;
 
 /**
  * This is the main screen of the application.
@@ -65,10 +70,20 @@ public class MainWindow {
 		DriimerDBHelper driimerdb = new DriimerDBHelper();
 		List<Mandant> mandanten = driimerdb.getAllMantanten();
 		for ( Mandant mandant : mandanten ) {
-			JButton manantButton = new JButton(mandant.getName());
+			JButton manantButton = makeButton(mandant);
 			formPanel.add(manantButton);
-			
-		this.frame.getContentPane().add(formPanel, BorderLayout.CENTER);
+			this.frame.getContentPane().add(formPanel, BorderLayout.CENTER);
 		}
+	}
+	
+	private JButton makeButton(final Mandant mandant) {
+		JButton button = new JButton(mandant.getName());
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mandant.setCurrentWorkingMandant();
+			}
+		});
+		return button;
 	}
 }

@@ -1,5 +1,10 @@
 package driimerfinance.database;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import driimerfinance.models.Account;
 import driimerfinance.models.AccountType;
@@ -26,10 +32,28 @@ public class MandantDBHelper {
 	 * Changes the connection to the desired mandant
 	 */
 	public MandantDBHelper() {
-		String host = Globals.getInstance().host;
-		String user = Globals.getInstance().user;
-		String databasename = Globals.getInstance().databasename;
-		String password = Globals.getInstance().password;
+		Properties prop = new Properties();
+		InputStream in;
+		try {
+			URL url = getClass().getResource("database.properties");
+			in = getClass().getResourceAsStream("database.properties");
+			System.out.println(url);
+			prop.load(in);
+			in.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String host = prop.getProperty("host");
+		String user = prop.getProperty("user");
+		String databasename = prop.getProperty("databasename");
+		String password = prop.getProperty("password");
+		
+		System.out.println("Host: " + host);
+		System.out.println("User: " + user);
+		System.out.println("Databasename: " + databasename);
+		System.out.println("Password: " + password);
 		db = new DBConnection();
 		dbconnection = db.createConnection(host, databasename, user, password);
 	}

@@ -1,7 +1,15 @@
 package driimerfinance.models;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.Normalizer;
 import java.util.List;
+import java.util.Properties;
 
 import driimerfinance.database.DriimerDBHelper;
 
@@ -98,8 +106,24 @@ public class Mandant implements IModel {
      * @param mandant to change to
      * @return void
      */
-    public static void setCurrentWorkingMandant(String name) {
-        
+    public void setCurrentWorkingMandant() {
+    	Properties prop = new Properties();
+		//InputStream in;
+		try {
+			URL url = getClass().getResource("../../driimerfinance/database/database.properties");
+			System.out.println("URL: " + url);
+			prop.load(new FileInputStream(url.toURI().getPath()));
+			prop.setProperty("databasename", this.getDBSchema());
+			prop.store(new FileOutputStream(url.toURI().getPath()), null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
     }
     
     /**

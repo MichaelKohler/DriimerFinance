@@ -11,10 +11,8 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.GUIHelper;
-import driimerfinance.models.Mandant;
 import driimerfinance.models.Transaction;
 
 /**
@@ -28,6 +26,9 @@ public class JournalWindow extends OneColumnViewer {
 	JTable transactionTable = new JTable();
 	JPanel tablePanel = new JPanel();
 	MandantDBHelper db = new MandantDBHelper();
+	
+	
+	
 	/**
 	 * Constructor
 	 */
