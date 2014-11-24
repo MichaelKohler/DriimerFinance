@@ -4,9 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.List;
+
+import javax.swing.Box;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.SwingConstants;
+
 import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.models.Mandant;
 
@@ -17,14 +21,16 @@ import driimerfinance.models.Mandant;
 */
 public class MenuBarSingleton {
 	private static JMenuBar menuBar;
+	private static JMenu mandants = new JMenu("Mandant: ");
     
 	/**
      * Creates the GUI
      */
     private static JMenuBar createGUI() {
-    	    JMenuBar bar = new JMenuBar();
     	
-    	    JMenu file = new JMenu("File");
+    	JMenuBar bar = new JMenuBar();
+    	
+    	JMenu file = new JMenu("File");
 		file.setMnemonic(KeyEvent.VK_F);
 
 		JMenuItem eMenuItem = new JMenuItem("Exit");
@@ -38,9 +44,11 @@ public class MenuBarSingleton {
 		});
 		file.add(eMenuItem);
 
-		JMenu mandants = new JMenu("Mandanten");
 		mandants.setMnemonic(KeyEvent.VK_M);
-
+		
+		mandants.setText("Mandant: test");
+		
+		
 		JMenuItem addMenuItem = new JMenuItem("Hinzuf\u00fcgen...");
 		addMenuItem.setMnemonic(KeyEvent.VK_H);
 		addMenuItem.setToolTipText("Mandant hinzuf\u00fcgen");
@@ -70,7 +78,7 @@ public class MenuBarSingleton {
 		
 		List<Mandant> mandanten = driimerdb.getAllMantanten();
 		for ( Mandant mandant : mandanten) {
-			JMenuItem menuItem = makeMenuItem(mandant);
+			JMenuItem menuItem = makeMenuItem(mandant,mandants);
 			mandantChangeMenu.add(menuItem);
 			mandants.add(mandantChangeMenu);
 		}
@@ -144,21 +152,24 @@ public class MenuBarSingleton {
 		balanceMenu.add(showBalanceItem);
 
 		bar.add(file);
-		bar.add(mandants);
+		
 		bar.add(transactions);
 		bar.add(accountPlan);
 		bar.add(erMenu);
 		bar.add(balanceMenu);
+		bar.add(Box.createGlue());
+		bar.add(mandants);
 		return bar;
     }
     
-    public static JMenuItem makeMenuItem(final Mandant mandant) {
+    public static JMenuItem makeMenuItem(final Mandant mandant, final JMenu jmenu) {
 		JMenuItem menuItem = new JMenuItem(mandant.getName());
 		menuItem.setMnemonic(KeyEvent.VK_M);
 		menuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				mandant.setCurrentWorkingMandant();
+				jmenu.setText("Mandant: " + mandant.getName());
 			}
 		});
 		return menuItem;

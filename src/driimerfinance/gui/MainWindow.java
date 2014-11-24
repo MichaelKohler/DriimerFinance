@@ -5,11 +5,14 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Mandant;
 import driimerfinance.database.DriimerDBHelper;
@@ -73,6 +76,10 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mandant.setCurrentWorkingMandant();
+//				JMenuBar menubar = MenuBarSingleton.getMenuBarInstance();
+//				JMenu mandantmenu = menubar.getMenu(menubar.getMenuCount()-1);
+//				mandantmenu.setText("Mandant: " + mandant.getName());
+//				System.out.println("setting buttontext: Mandant: " + mandant.getName());
 			}
 		});
 		return button;
