@@ -103,6 +103,7 @@ public class EditMandantWindow {
 					//get the mandant from database and delete it. (in database as well as in the table)
 					driimerdb.deleteMandantById(mandantId);
 					model.removeRow(selRow);
+					MainWindowSingleton.getMainWindowInstance().reload();
 				}
 			}
 		});
