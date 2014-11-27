@@ -15,22 +15,23 @@ import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.models.Mandant;
 
 /**
- * Singleton which returns a new menu bar or the existing one. This is included in different windows.
+ * Singleton which returns a new menu bar or the existing one. This is included
+ * in different windows.
  * 
  * (c) 2014 Driimer Finance
-*/
+ */
 public class MenuBarSingleton {
 	private static JMenuBar menuBar;
 	private static JMenu mandants = new JMenu("Mandant: ");
-    
+
 	/**
-     * Creates the GUI
-     */
-    private static JMenuBar createGUI() {
-    	
-    	JMenuBar bar = new JMenuBar();
-    	
-    	JMenu file = new JMenu("File");
+	 * Creates the GUI
+	 */
+	private static JMenuBar createGUI() {
+
+		JMenuBar bar = new JMenuBar();
+
+		JMenu file = new JMenu("File");
 		file.setMnemonic(KeyEvent.VK_F);
 
 		JMenuItem eMenuItem = new JMenuItem("Exit");
@@ -45,10 +46,9 @@ public class MenuBarSingleton {
 		file.add(eMenuItem);
 
 		mandants.setMnemonic(KeyEvent.VK_M);
-		
+
 		mandants.setText("Mandant: test");
-		
-		
+
 		JMenuItem addMenuItem = new JMenuItem("Hinzuf\u00fcgen...");
 		addMenuItem.setMnemonic(KeyEvent.VK_H);
 		addMenuItem.setToolTipText("Mandant hinzuf\u00fcgen");
@@ -59,7 +59,7 @@ public class MenuBarSingleton {
 			}
 		});
 		mandants.add(addMenuItem);
-		
+
 		JMenuItem editMandant = new JMenuItem("Editieren/L\u00f6schen");
 		editMandant.setMnemonic(KeyEvent.VK_E);
 		editMandant.setToolTipText("Mandant editieren oder l\u00f6schen");
@@ -70,20 +70,20 @@ public class MenuBarSingleton {
 			}
 		});
 		mandants.add(editMandant);
-		
+
 		JMenu mandantChangeMenu = new JMenu("Wechseln...");
 		mandantChangeMenu.setMnemonic(KeyEvent.VK_W);
-		
+
 		DriimerDBHelper driimerdb = new DriimerDBHelper();
-		
+
 		List<Mandant> mandanten = driimerdb.getAllMantanten();
-		for ( Mandant mandant : mandanten) {
-			JMenuItem menuItem = makeMenuItem(mandant,mandants);
+		for (Mandant mandant : mandanten) {
+			JMenuItem menuItem = makeMenuItem(mandant, mandants);
 			mandantChangeMenu.add(menuItem);
 			mandants.add(mandantChangeMenu);
 		}
 		mandants.add(mandantChangeMenu);
-		
+
 		JMenu transactions = new JMenu("Buchungen");
 		transactions.setMnemonic(KeyEvent.VK_B);
 
@@ -97,7 +97,7 @@ public class MenuBarSingleton {
 			}
 		});
 		transactions.add(transactionItem);
-		
+
 		JMenuItem journalItem = new JMenuItem("Buchungsjournal");
 		journalItem.setMnemonic(KeyEvent.VK_H);
 		journalItem.setToolTipText("Buchungsjournal");
@@ -108,7 +108,7 @@ public class MenuBarSingleton {
 			}
 		});
 		transactions.add(journalItem);
-		
+
 		JMenu accountPlan = new JMenu("Kontenplan");
 		accountPlan.setMnemonic(KeyEvent.VK_K);
 
@@ -122,7 +122,7 @@ public class MenuBarSingleton {
 			}
 		});
 		accountPlan.add(editAccountPlan);
-		
+
 		JMenu erMenu = new JMenu("Erfolgsrechnung");
 		erMenu.setMnemonic(KeyEvent.VK_E);
 
@@ -136,7 +136,7 @@ public class MenuBarSingleton {
 			}
 		});
 		erMenu.add(showERItem);
-		
+
 		JMenu balanceMenu = new JMenu("Bilanz");
 		balanceMenu.setMnemonic(KeyEvent.VK_B);
 
@@ -152,7 +152,7 @@ public class MenuBarSingleton {
 		balanceMenu.add(showBalanceItem);
 
 		bar.add(file);
-		
+
 		bar.add(transactions);
 		bar.add(accountPlan);
 		bar.add(erMenu);
@@ -160,9 +160,10 @@ public class MenuBarSingleton {
 		bar.add(Box.createGlue());
 		bar.add(mandants);
 		return bar;
-    }
-    
-    public static JMenuItem makeMenuItem(final Mandant mandant, final JMenu jmenu) {
+	}
+
+	public static JMenuItem makeMenuItem(final Mandant mandant,
+			final JMenu jmenu) {
 		JMenuItem menuItem = new JMenuItem(mandant.getName());
 		menuItem.setMnemonic(KeyEvent.VK_M);
 		menuItem.addActionListener(new ActionListener() {
@@ -174,20 +175,19 @@ public class MenuBarSingleton {
 		});
 		return menuItem;
 	}
-    
-    /**
-     * Returns the singleton's instance.
-     * 
-     * @return singleton with the menu bar
-     */
-    public static JMenuBar getMenuBarInstance() {
-    	    if (menuBar != null) {
-            return menuBar;
-    	    }
-    	    else {
-    	    	    return createGUI();
-    	    }
-    }
-    
+
+	/**
+	 * Returns the singleton's instance.
+	 * 
+	 * @return singleton with the menu bar
+	 */
+	public static JMenuBar getMenuBarInstance() {
+		if (menuBar != null) {
+			return menuBar;
+		} else {
+			menuBar = createGUI();
+			return menuBar;
+		}
+	}
 
 }

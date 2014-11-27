@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import driimerfinance.models.AccountType;
 import driimerfinance.models.Mandant;
 import driimerfinance.models.User;
 
@@ -31,7 +32,8 @@ public class DriimerDBHelper {
 	private DBConnection db = null;
 
 	/**
-	 * Constructor to initialize the Helper. It initializes the DB connection with the given properties.
+	 * Constructor to initialize the Helper. It initializes the DB connection
+	 * with the given properties.
 	 */
 	public DriimerDBHelper() {
 		db = new DBConnection();
@@ -39,10 +41,10 @@ public class DriimerDBHelper {
 	}
 
 	/**
-     * Helper method to get all users from the database.
-     * 
-     * @return user list of all users in the database
-     */
+	 * Helper method to get all users from the database.
+	 * 
+	 * @return user list of all users in the database
+	 */
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<User>();
 		try {
@@ -67,11 +69,12 @@ public class DriimerDBHelper {
 	}
 
 	/**
-     * Finds a user by id specified.
-     * 
-     * @param id to search
-     * @return user which was found or an empty user
-     */
+	 * Finds a user by id specified.
+	 * 
+	 * @param id
+	 *            to search
+	 * @return user which was found or an empty user
+	 */
 	public User getUserById(int userId) {
 		User user = new User();
 		try {
@@ -97,11 +100,12 @@ public class DriimerDBHelper {
 	}
 
 	/**
-     * Adds a user to the database.
-     * 
-     * @param user to be added
-     * @return void
-     */
+	 * Adds a user to the database.
+	 * 
+	 * @param user
+	 *            to be added
+	 * @return void
+	 */
 	public void addUser(User user) {
 		try {
 			preparedStatement = dbconnection
@@ -120,11 +124,12 @@ public class DriimerDBHelper {
 	}
 
 	/**
-     * Deletes a user on the database.
-     * 
-     * @param user to be deleted
-     * @return void
-     */
+	 * Deletes a user on the database.
+	 * 
+	 * @param user
+	 *            to be deleted
+	 * @return void
+	 */
 	public void deleteUser(User user) {
 		try {
 			preparedStatement = dbconnection
@@ -138,11 +143,12 @@ public class DriimerDBHelper {
 	}
 
 	/**
-     * Updates a specific user on the database.
-     * 
-     * @param user to be updated
-     * @return void
-     */
+	 * Updates a specific user on the database.
+	 * 
+	 * @param user
+	 *            to be updated
+	 * @return void
+	 */
 	public void updateUser(User user) {
 		try {
 			preparedStatement = dbconnection
@@ -162,10 +168,10 @@ public class DriimerDBHelper {
 	}
 
 	/**
-     * Returns all available mandants from the database.
-     * 
-     * @return list of all mandants
-     */
+	 * Returns all available mandants from the database.
+	 * 
+	 * @return list of all mandants
+	 */
 	public List<Mandant> getAllMantanten() {
 		List<Mandant> mandanten = new ArrayList<Mandant>();
 		try {
@@ -188,11 +194,12 @@ public class DriimerDBHelper {
 	}
 
 	/**
-     * Searches a mandant on the database with a given id.
-     * 
-     * @param id to search
-     * @return found mandant if existing or new mandant
-     */
+	 * Searches a mandant on the database with a given id.
+	 * 
+	 * @param id
+	 *            to search
+	 * @return found mandant if existing or new mandant
+	 */
 	public Mandant getMandantById(int mandantId) {
 		Mandant mandant = new Mandant();
 		try {
@@ -216,11 +223,12 @@ public class DriimerDBHelper {
 	}
 
 	/**
-     * Adds a mandant to the database.
-     * 
-     * @param mandant to be added
-     * @return void
-     */
+	 * Adds a mandant to the database.
+	 * 
+	 * @param mandant
+	 *            to be added
+	 * @return void
+	 */
 	public void addMandant(Mandant mandant) {
 		try {
 			preparedStatement = dbconnection
@@ -228,9 +236,8 @@ public class DriimerDBHelper {
 			preparedStatement.setString(1, mandant.getName());
 			preparedStatement.setString(2, mandant.getDBSchema());
 			preparedStatement.execute();
-			
-			createMandantDatabase(mandant.getDBSchema());
 
+			createMandantDatabase(mandant.getDBSchema());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -239,21 +246,23 @@ public class DriimerDBHelper {
 	}
 
 	/**
-     * calls deleteMandantById()
-     * 
-     * @param mandant to be deleted
-     * @return void
-     */
+	 * calls deleteMandantById()
+	 * 
+	 * @param mandant
+	 *            to be deleted
+	 * @return void
+	 */
 	public void deleteMandant(Mandant mandant) {
 		deleteMandantById(mandant.getId());
 	}
-	
+
 	/**
-     * Deletes a mandant from the database and calls deleteMandantDatabase()
-     * 
-     * @param Id of the mandant to be deleted
-     * @return void
-     */
+	 * Deletes a mandant from the database and calls deleteMandantDatabase()
+	 * 
+	 * @param Id
+	 *            of the mandant to be deleted
+	 * @return void
+	 */
 	public void deleteMandantById(int mandantId) {
 		try {
 			Mandant mandant = getMandantById(mandantId);
@@ -263,7 +272,6 @@ public class DriimerDBHelper {
 			preparedStatement.setInt(1, mandantId);
 			preparedStatement.execute();
 
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -272,11 +280,12 @@ public class DriimerDBHelper {
 	}
 
 	/**
-     * Updates a specific mandant on the database.
-     * 
-     * @param mandant to be updated
-     * @return void
-     */
+	 * Updates a specific mandant on the database.
+	 * 
+	 * @param mandant
+	 *            to be updated
+	 * @return void
+	 */
 	public void updateMandant(Mandant mandant) {
 		try {
 			preparedStatement = dbconnection
@@ -294,20 +303,20 @@ public class DriimerDBHelper {
 	}
 
 	/**
-     * Closes all open database connections.
-     * 
-     * @return void
-     */
+	 * Closes all open database connections.
+	 * 
+	 * @return void
+	 */
 	public void closeConnection() {
 		close();
 		db.close();
 	}
 
 	/**
-     * Closes all database related connections.
-     *
-     * @return void
-     */
+	 * Closes all database related connections.
+	 *
+	 * @return void
+	 */
 	private void close() {
 		if (statement != null) {
 			DBUtil.close(statement);
@@ -316,30 +325,37 @@ public class DriimerDBHelper {
 			DBUtil.close(resultSet);
 		}
 	}
-	
+
 	/**
-     * Creates a new Database for the mandant
-     * 
-     * @param Id of the mandant to be deleted
-     * @return void
-     */
-	
+	 * Creates a new Database for the mandant
+	 * 
+	 * @param Id
+	 *            of the mandant to be deleted
+	 * @return void
+	 */
+
 	public void createMandantDatabase(String schemaName) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = null;
-			
-			connection = DriverManager.getConnection("jdbc:mysql://localhost/mysql" + "?user=root&password=mysql");
-			
+
+			connection = DriverManager
+					.getConnection("jdbc:mysql://localhost/mysql"
+							+ "?user=root&password=mysql");
+
 			Statement statement = connection.createStatement();
 			statement.executeUpdate("CREATE DATABASE " + schemaName);
-			
+
 			Connection updateConnection = null;
-			updateConnection = DriverManager.getConnection("jdbc:mysql://localhost/" + schemaName + "?user=root&password=mysql");
-			ScriptRunner runner = new ScriptRunner(updateConnection, false, true);
-			InputStream in = getClass().getResourceAsStream("/driimerfinance/database/DBSchema.txt");
+			updateConnection = DriverManager
+					.getConnection("jdbc:mysql://localhost/" + schemaName
+							+ "?user=root&password=mysql");
+			ScriptRunner runner = new ScriptRunner(updateConnection, false,
+					true);
+			InputStream in = getClass().getResourceAsStream(
+					"/driimerfinance/database/DBSchema.txt");
 			runner.runScript(new InputStreamReader(in, "utf-8"));
-			
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -353,7 +369,7 @@ public class DriimerDBHelper {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (statement != null ) {
+			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
@@ -363,17 +379,20 @@ public class DriimerDBHelper {
 			}
 		}
 	}
+
 	/**
-     * Deletes the mandants Database
-     * 
-     * @param Id of the mandant to be deleted
-     * @return void
-     */
+	 * Deletes the mandants Database
+	 * 
+	 * @param Id
+	 *            of the mandant to be deleted
+	 * @return void
+	 */
 	public void deleteMandantDatabase(String schemaName) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = null;
-			connection = DriverManager.getConnection("jdbc:mysql://localhost/" + schemaName + "?user=root&password=mysql");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/"
+					+ schemaName + "?user=root&password=mysql");
 			Statement statement = connection.createStatement();
 			statement.executeUpdate("DROP DATABASE " + schemaName);
 		} catch (ClassNotFoundException e) {
@@ -383,7 +402,7 @@ public class DriimerDBHelper {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (statement != null ) {
+			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
@@ -392,7 +411,7 @@ public class DriimerDBHelper {
 				}
 			}
 		}
-		
+
 	}
 
 }

@@ -20,6 +20,11 @@ CREATE TABLE IF NOT EXISTS `Kontotyp` (
   PRIMARY KEY (`idKontotyp`))
 ENGINE = InnoDB;
 
+INSERT INTO `Kontotyp` (`idKontotyp`, `Name`) VALUES (1, 'Aktiv');
+INSERT INTO `Kontotyp` (`idKontotyp`, `Name`) VALUES (2, 'Passiv');
+INSERT INTO `Kontotyp` (`idKontotyp`, `Name`) VALUES (3, 'Ertrag');
+INSERT INTO `Kontotyp` (`idKontotyp`, `Name`) VALUES (4, 'Aufwand');
+
 
 -- -----------------------------------------------------
 -- Table `Konto`

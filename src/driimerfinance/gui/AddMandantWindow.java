@@ -82,6 +82,7 @@ public class AddMandantWindow {
 				newMandant.setName(nameField.getText());
 				newMandant.setDBSchema(nameField.getText());
 				newMandant.createInDB();
+				MainWindowSingleton.getMainWindowInstance().reload();
 				frame.dispose();
 			}
 		});

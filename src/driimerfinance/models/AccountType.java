@@ -29,6 +29,17 @@ public class AccountType implements IModel {
         this.setName(name);
     }
     
+    
+    /**
+     * Constructor which initialies an object with a given name and id
+     * 
+     * @param name to give
+     */
+    public AccountType(int id, String name) {
+    	this.setId(id);
+        this.setName(name);
+    }
+    
     /**
      * Getter: Returns the object's id
      * 
