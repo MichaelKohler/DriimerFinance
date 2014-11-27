@@ -1,5 +1,7 @@
 package driimerfinance.models;
 
+import java.text.SimpleDateFormat;
+
 import driimerfinance.database.MandantDBHelper;
 
 /**
@@ -73,6 +75,12 @@ public class Transaction implements IModel {
      */
 	public java.sql.Date getDate() {
 		return this.date;
+	}
+	
+	public String getStringDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");  
+		String dateString = sdf.format(date);
+		return dateString;
 	}
 
 	/**

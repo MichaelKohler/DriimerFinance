@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import driimerfinance.models.Account;
 import driimerfinance.models.AccountType;
+import driimerfinance.models.Mandant;
 import driimerfinance.models.Transaction;
 
 /**
@@ -185,10 +186,15 @@ public class MandantDBHelper {
 	 * @param transaction to delete
 	 */
 	public void deleteTransaction(Transaction transaction) {
-		try {
+		deleteTransactionById(transaction.getId());
+	}
+	
+	public void deleteTransactionById(int transactionId) {
+		try {			
 			preparedStatement = dbconnection
-					.prepareStatement("delete from buchung where idBuchung=?");
-			preparedStatement.setInt(1, transaction.getId());
+					.prepareStatement("delete from buchung where idbuchung=?");
+			preparedStatement.setInt(1, transactionId);
+			preparedStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -5,9 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,9 +28,9 @@ import driimerfinance.models.Transaction;
  * 
  * (c) 2014 Driimer Finance
  */
-public class AddTransactionWindow {
-
-	JFrame frame = new JFrame("DriimerFinance - Buchung hinzuf\u00fcgen");
+public class EditTransactionWindow {
+	JournalWindow parent = null;
+	JFrame frame = new JFrame("DriimerFinance - Buchung bearbeiten");
 	ArrayList<String> fromAccounts = new ArrayList<String>();
 	ArrayList<String> toAccounts = new ArrayList<String>();
 	
@@ -47,8 +44,9 @@ public class AddTransactionWindow {
 	/**
 	 * Constructor
 	 */
-	public AddTransactionWindow() {
-	    setData();
+	public EditTransactionWindow(JournalWindow jouWin) {
+		this.parent = jouWin;
+		setData();
 		createGUI();
 	}
 	
@@ -131,19 +129,12 @@ public class AddTransactionWindow {
 				boolean hasError = false;
 				String errorMessage = "";
 				Transaction newTrans = new Transaction();
+				Date date = new Date();
 				String regex = "[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{4}";
 				if (!dateField.getText().matches(regex)) {
 					errorMessage = "Das Datum muss ein korrektes Format haben! (z.B. 02.01.2014)\n";
 					hasError = true;
 				}
-				Date date = new Date();
-				DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-				try {
-			         date = formatter.parse(dateField.getText());
-			      }
-			      catch(ParseException e1) {
-			         e1.printStackTrace();
-			      }
 				newTrans.setDate(new java.sql.Date(date.getTime()));
 				MandantDBHelper helper = new MandantDBHelper();
 				Account sollAccount = helper.getAccountByName(fromAccounts.get(sollField.getSelectedIndex()));
@@ -161,6 +152,7 @@ public class AddTransactionWindow {
 				
 				if (!hasError) {
 					newTrans.createInDB();
+					parent.refreshTable();
 					frame.dispose();
 				} else {
 					JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
