@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
+import driimerfinance.models.AccountType;
 
 /**
  * Account plan overview
@@ -86,7 +87,13 @@ public class AccountPlanWindow {
 		MandantDBHelper helper = new MandantDBHelper();
 		List<Account> allAccounts = helper.getAllAccounts();
 		Object[][] rows = new Object[allAccounts.size()][4];
-		
+		for (int i = 0; i < allAccounts.size(); i++) {
+			Account acc = allAccounts.get(i);
+			AccountType type = new AccountType();
+			type.setId(acc.getFk_AccountType());
+			Object[] row = { acc.getId(), acc.getName(), type.getTypeAsString(), acc.getCapitalAccount() };
+			rows[i] = row;
+		}
 		return rows;
 	}
 
