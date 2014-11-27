@@ -77,10 +77,9 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mandant.setCurrentWorkingMandant();
-//				JMenuBar menubar = MenuBarSingleton.getMenuBarInstance();
-//				JMenu mandantmenu = menubar.getMenu(menubar.getMenuCount()-1);
-//				mandantmenu.setText("Mandant: " + mandant.getName());
-//				System.out.println("setting buttontext: Mandant: " + mandant.getName());
+ 				JMenuBar menubar = MenuBarSingleton.getMenuBarInstance();
+				JMenu mandantmenu = menubar.getMenu(menubar.getMenuCount()-1);
+				mandantmenu.setText("Mandant: " + mandant.getName());
 			}
 		});
 		return button;
