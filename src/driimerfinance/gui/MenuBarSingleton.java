@@ -47,7 +47,7 @@ public class MenuBarSingleton {
 
 		mandants.setMnemonic(KeyEvent.VK_M);
 
-		mandants.setText("Mandant: test");
+		mandants.setText("Kein Mandant ausgew\u00e4hlt");
 
 		JMenuItem addMenuItem = new JMenuItem("Hinzuf\u00fcgen...");
 		addMenuItem.setMnemonic(KeyEvent.VK_H);
