@@ -11,7 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
+import javax.print.attribute.standard.DateTimeAtProcessing;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -20,6 +22,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.GUIHelper;
@@ -43,6 +49,7 @@ public class AddTransactionWindow {
 	JTextField transactionField =null;
 	JTextField amountField = null;
 	JTextField receiptField = null;
+	JDatePickerImpl datePicker = null;
 
 	/**
 	 * Constructor
@@ -84,6 +91,16 @@ public class AddTransactionWindow {
 		formPanel.setLayout(layout);
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
+		
+		//DatePicker
+		UtilDateModel model = new UtilDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		
 		JLabel dateLabel = new JLabel("Datum");
 		this.dateField = new JTextField();
 		this.dateField.setPreferredSize(new Dimension(150, 20));
@@ -104,7 +121,8 @@ public class AddTransactionWindow {
 		this.receiptField.setPreferredSize(new Dimension(150, 20));
 
 		formPanel.add(dateLabel);
-		formPanel.add(this.dateField);
+		//formPanel.add(this.dateField);
+		formPanel.add(datePicker);
 		formPanel.add(sollLabel);
 		formPanel.add(this.sollField);
 		formPanel.add(habenLabel);
@@ -132,19 +150,12 @@ public class AddTransactionWindow {
 				String errorMessage = "";
 				Transaction newTrans = new Transaction();
 				String regex = "[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{4}";
-				if (!dateField.getText().matches(regex)) {
-					errorMessage = "Das Datum muss ein korrektes Format haben! (z.B. 02.01.2014)\n";
-					hasError = true;
-				}
-				Date date = new Date();
-				DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-				try {
-			         date = formatter.parse(dateField.getText());
-			      }
-			      catch(ParseException e1) {
-			         e1.printStackTrace();
-			      }
-				newTrans.setDate(new java.sql.Date(date.getTime()));
+				//System.out.println((java.sql.Date) datePicker.getModel().getValue());
+//				System.out.println(new java.sql.Date((java.util.Date) datePicker.getModel().getValue()));
+				java.util.Date selectedDate = (Date) datePicker.getModel().getValue();
+				System.out.println(selectedDate.getTime());
+				newTrans.setDate(new java.sql.Date(selectedDate.getTime()));
+				System.out.println("Transaktionsdatum :" + newTrans.getDate());
 				MandantDBHelper helper = new MandantDBHelper();
 				Account sollAccount = helper.getAccountByName(fromAccounts.get(sollField.getSelectedIndex()));
 				newTrans.setFk_SollKonto(sollAccount.getId());
