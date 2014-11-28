@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,6 +18,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.GUIHelper;
@@ -40,6 +45,7 @@ public class EditTransactionWindow {
 	JTextField transactionField =null;
 	JTextField amountField = null;
 	JTextField receiptField = null;
+	JDatePickerImpl datePicker = null;
 
 	/**
 	 * Constructor
@@ -81,6 +87,14 @@ public class EditTransactionWindow {
 		GridLayout layout = new GridLayout(6, 2);
 		formPanel.setLayout(layout);
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
+		UtilDateModel model = new UtilDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 
 		JLabel dateLabel = new JLabel("Datum");
 		this.dateField = new JTextField();
@@ -102,7 +116,8 @@ public class EditTransactionWindow {
 		this.receiptField.setPreferredSize(new Dimension(150, 20));
 
 		formPanel.add(dateLabel);
-		formPanel.add(this.dateField);
+		//formPanel.add(this.dateField);
+		formPanel.add(this.datePicker);
 		formPanel.add(sollLabel);
 		formPanel.add(this.sollField);
 		formPanel.add(habenLabel);
@@ -131,11 +146,16 @@ public class EditTransactionWindow {
 				Transaction newTrans = new Transaction();
 				Date date = new Date();
 				String regex = "[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{4}";
-				if (!dateField.getText().matches(regex)) {
-					errorMessage = "Das Datum muss ein korrektes Format haben! (z.B. 02.01.2014)\n";
+				//System.out.println((java.sql.Date) datePicker.getModel().getValue());
+//				System.out.println(new java.sql.Date((java.util.Date) datePicker.getModel().getValue()));
+				java.util.Date selectedDate = (Date) datePicker.getModel().getValue();
+				
+				if (selectedDate != null) {
+					newTrans.setDate(new java.sql.Date(selectedDate.getTime()));
+				} else {
+					errorMessage = "Datum muss ausgef\u00fcllt sein!";
 					hasError = true;
 				}
-				newTrans.setDate(new java.sql.Date(date.getTime()));
 				MandantDBHelper helper = new MandantDBHelper();
 				Account sollAccount = helper.getAccountByName(fromAccounts.get(sollField.getSelectedIndex()));
 				newTrans.setFk_SollKonto(sollAccount.getId());
@@ -146,7 +166,7 @@ public class EditTransactionWindow {
 					newTrans.setAmount(Integer.parseInt(amountField.getText()));
 					newTrans.setBelegNr(Integer.parseInt(receiptField.getText()));
 				} catch (NumberFormatException ex) {
-					errorMessage = "Betrag und Beleg-Nr. m\u00fcssen eine Zahl sein!";
+					errorMessage += "\nBetrag und Beleg-Nr. m\u00fcssen eine Zahl sein!";
 					hasError = true;
 				}
 				
