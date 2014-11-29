@@ -4,6 +4,7 @@ import java.util.List;
 
 import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.gui.MainWindow;
+import driimerfinance.gui.LoginWindow;
 import driimerfinance.gui.MainWindowSingleton;
 import driimerfinance.models.Mandant;
 import driimerfinance.models.User;
@@ -26,7 +27,8 @@ public class DriimerFinance {
      * @throws Exception this is only used for the test code -- to be removed
      */
     public static void main(String[] args) throws Exception {
-//    		new MainWindow();
+   	
+ //    		new MainWindow();
     		MainWindowSingleton.getMainWindowInstance();
 
     		// TEST CODE BELOW
