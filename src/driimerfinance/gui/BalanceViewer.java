@@ -2,13 +2,18 @@ package driimerfinance.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
 import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
@@ -27,6 +32,7 @@ public class BalanceViewer {
 	 */
     public BalanceViewer() {
         createGUI();
+        addButtons();
     }
     
     /**
@@ -50,6 +56,27 @@ public class BalanceViewer {
 		tablePanel.add(scrollPane);
 		this.frame.getContentPane().add(tablePanel, BorderLayout.CENTER);
     }
+    
+	private void addButtons() {
+		JPanel buttonPanel = new JPanel();
+		JButton PDFExportButton = new JButton("PDF Export");
+		PDFExportButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		JButton cancelButton = new JButton("Abbrechen");
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		buttonPanel.add(PDFExportButton, BorderLayout.WEST);
+		buttonPanel.add(cancelButton, BorderLayout.EAST);
+		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+		this.frame.getRootPane().setDefaultButton(cancelButton);
+	}
     
     /**
      * Prepares the data for display.
