@@ -1,13 +1,20 @@
 package driimerfinance.services;
 
+import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.swing.JTable;
 
+
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
 /**
@@ -37,19 +44,37 @@ public class PDFExporter {
 	}
 
 
-	public void createPdf(String filename, Object object) throws DocumentException, IOException {
+	public void createPdf( Object object) throws DocumentException, IOException {
 		if (object instanceof JTable){
-			// step 1
-			Document document = new Document();
-			// step 2
-			PdfWriter.getInstance(document, new FileOutputStream(filename));
-			// step 3
-			document.open();
-			// step 4
-			document.add(new Paragraph("Hello World!"));
-			// step 5
-			document.close();
+			JTable table = (JTable) object;
+			Document document = new Document(PageSize.A4.rotate());  
+		    try {  
+		      PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(outputPaht));  
+		  
+		      document.open();
+		      document.addTitle("Buchungsjournal");
+		      document.addSubject("Subject");
+		      document.addKeywords("keyword1, keyword2, keyword3");
+		      document.addAuthor("Martin Müller");
+		      document.addCreator("Martin Müller");
+		      PdfContentByte cb = writer.getDirectContent();  
+		  
+		      cb.saveState();  
+		      Graphics2D g2 = cb.createGraphicsShapes(500, 500);  
+		  
+		      Shape oldClip = g2.getClip();  
+		      g2.clipRect(0, 0, 500, 500);  
+		  
+		      
+			  table.print(g2);  
+		      g2.setClip(oldClip);  
+		  
+		      g2.dispose();  
+		      cb.restoreState();  
+		    } catch (Exception e) {  
+		      System.err.println(e.getMessage());  
+		    }  
+		    document.close();  
+		  }  
 		}
-
-	}
 }
