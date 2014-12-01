@@ -108,7 +108,7 @@ public class JournalWindow extends OneColumnViewer {
 			}
 		});
 		
-		JButton deleteButton = new JButton("Buchung löschen");
+		JButton deleteButton = new JButton("Buchung l\u00f6schen");
 		deleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
