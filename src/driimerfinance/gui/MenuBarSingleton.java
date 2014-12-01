@@ -3,9 +3,11 @@ package driimerfinance.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.List;
 
 import javax.swing.Box;
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -13,6 +15,7 @@ import javax.swing.SwingConstants;
 
 import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.models.Mandant;
+import driimerfinance.services.RawDataExporter;
 
 /**
  * Singleton which returns a new menu bar or the existing one. This is included
@@ -34,6 +37,28 @@ public class MenuBarSingleton {
 		JMenu file = new JMenu("File");
 		file.setMnemonic(KeyEvent.VK_F);
 
+		JMenuItem exportMenuItem = new JMenuItem("Export Raw Data..");
+		exportMenuItem.setMnemonic(KeyEvent.VK_E);
+		exportMenuItem.setToolTipText("Applikation schliessen");
+		exportMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				String path = "";
+				final JFileChooser fc = new JFileChooser();
+				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int returnValue = fc.showOpenDialog(menuBar);
+			    if (returnValue == JFileChooser.APPROVE_OPTION) {
+			        File file = fc.getSelectedFile();
+			        path = file.getAbsolutePath();
+			        System.out.println(path);
+			    } else {
+			            return;
+			    }
+				new RawDataExporter().exportToFile(path);
+			}
+		});
+		file.add(exportMenuItem);
+		
 		JMenuItem eMenuItem = new JMenuItem("Exit");
 		eMenuItem.setMnemonic(KeyEvent.VK_E);
 		eMenuItem.setToolTipText("Applikation schliessen");
@@ -46,7 +71,6 @@ public class MenuBarSingleton {
 		file.add(eMenuItem);
 
 		mandants.setMnemonic(KeyEvent.VK_M);
-
 		mandants.setText("Kein Mandant ausgew\u00e4hlt");
 
 		JMenuItem addMenuItem = new JMenuItem("Hinzuf\u00fcgen...");

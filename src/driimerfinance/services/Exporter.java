@@ -15,15 +15,6 @@ public abstract class Exporter {
     }
     
     /**
-     * Crawls the database to get all data for the export.
-     * 
-     * @return void
-     */
-    public void getDataToExport() {
-        
-    }
-    
-    /**
      * Exports the crawled data to a file on the file system.
      * 
      * @param path to the desired file
