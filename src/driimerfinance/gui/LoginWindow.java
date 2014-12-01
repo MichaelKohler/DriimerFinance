@@ -1,8 +1,13 @@
 package driimerfinance.gui;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -40,7 +45,12 @@ public class LoginWindow {
 		this.frame.setIconImage(icon.getImage());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel() {
+			public void paintComponent(Graphics g) {  
+			Image img = Toolkit.getDefaultToolkit().getImage(new File("images/driimer.jpg").getAbsolutePath());
+			g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);  
+			}
+		};
 		frame.add(panel);
 		placeComponents(panel);
 		frame.setVisible(true);
@@ -82,3 +92,4 @@ public class LoginWindow {
 	}
 	
 }
+
