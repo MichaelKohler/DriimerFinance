@@ -32,4 +32,9 @@ public abstract class Exporter {
     public void exportToFile(String filename) {
         
     }
+
+	public void setDataToExport(Object input) {
+		// TODO Auto-generated method stub
+		
+	}
 }

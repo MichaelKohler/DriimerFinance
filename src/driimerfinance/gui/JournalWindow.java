@@ -25,6 +25,7 @@ import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 import driimerfinance.models.Transaction;
+import driimerfinance.services.PDFExporter;
 
 /**
  * Journal overview window
@@ -92,6 +93,13 @@ public class JournalWindow extends OneColumnViewer {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		
+		JButton PDFExportButton = new JButton("PDF Export");
+		PDFExportButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PDFExporter pdf = new PDFExporter();				
+			}
+		});
 		JButton editButton = new JButton("Buchung bearbeiten");
 		editButton.addActionListener(new ActionListener() {
 			@Override
@@ -150,6 +158,7 @@ public class JournalWindow extends OneColumnViewer {
 			}
 		});
 		
+		buttonPanel.add(PDFExportButton, BorderLayout.WEST);
 		buttonPanel.add(editButton, BorderLayout.WEST);
 		buttonPanel.add(deleteButton, BorderLayout.CENTER);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);

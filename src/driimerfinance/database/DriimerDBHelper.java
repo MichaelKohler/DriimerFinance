@@ -98,6 +98,33 @@ public class DriimerDBHelper {
 		}
 		return user;
 	}
+	
+	
+	/**
+	 * Finds a users Password by id specified.
+	 * 
+	 * @param id to search
+	 * @return String of Password found or an empty String
+	 */
+	public String getUserPasswordById(int userId) {
+		String password = null;
+		try {
+			preparedStatement = dbconnection
+					.prepareStatement("select Password from user where idUser=?");
+			preparedStatement.setInt(1, userId);
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				 password = resultSet.getString("Password");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return password;
+	}
 
 	/**
 	 * Adds a user to the database.
