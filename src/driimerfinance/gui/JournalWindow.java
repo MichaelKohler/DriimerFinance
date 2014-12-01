@@ -21,7 +21,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import driimerfinance.database.MandantDBHelper;
+import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
+import driimerfinance.models.Account;
 import driimerfinance.models.Transaction;
 
 /**
@@ -73,10 +75,14 @@ public class JournalWindow extends OneColumnViewer {
 		JScrollPane scrollPane = new JScrollPane(transactionTable);
 		tablePanel.add(scrollPane);
 		
+		MandantDBHelper helper = new MandantDBHelper();
 		List<Transaction> transactions = db.getAllTransactions();
 		for ( Transaction transaction : transactions) {
 			DefaultTableModel model = (DefaultTableModel) (transactionTable.getModel());
-			Object[] newRow = { transaction.getId().toString(), transaction.getStringDate(), transaction.getFk_SollKonto(), transaction.getFk_HabenKonto(), transaction.getBezeichnung(), transaction.getBetrag(), transaction.getBelegNr() };
+			Account sollAccount = helper.getAccountById(transaction.getFk_SollKonto());
+			Account habenAccount = helper.getAccountById(transaction.getFk_HabenKonto());
+			Object[] newRow = { transaction.getId().toString(), transaction.getStringDate(), sollAccount.getName(), habenAccount.getName(),
+					                        transaction.getBezeichnung(), FinanceHelper.formatAmount(transaction.getBetrag()), transaction.getBelegNr() };
 			model.addRow(newRow);
 		}
 			
@@ -94,14 +100,15 @@ public class JournalWindow extends OneColumnViewer {
 				selRow = transactionTable.getSelectedRow();
 				//if there is a row selected
 				if ( selRow != -1 ) {
+					MandantDBHelper helper = new MandantDBHelper();
 					DefaultTableModel model = (DefaultTableModel)transactionTable.getModel();
 					//get transaction data from table model
 					int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
 					String date = model.getValueAt(selRow, 1).toString();
-					int fk_fromAccount = Integer.parseInt(model.getValueAt(selRow, 2).toString());
-					int fk_toAccount = Integer.parseInt(model.getValueAt(selRow, 3).toString());
+					int fk_fromAccount = helper.getAccountByName(model.getValueAt(selRow, 2).toString()).getId();
+					int fk_toAccount = helper.getAccountByName(model.getValueAt(selRow, 3).toString()).getId();
 					String description = model.getValueAt(selRow, 4).toString();
-					double amount = Double.parseDouble(model.getValueAt(selRow, 5).toString());
+					double amount = FinanceHelper.unformatAmount(model.getValueAt(selRow, 5).toString());
 					int receiptNumber = Integer.parseInt(model.getValueAt(selRow, 6).toString());
 					new EditTransactionWindow(parent);
 				}
