@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -26,6 +27,7 @@ import driimerfinance.database.DriimerDBHelper;
 public class MainWindow {
 
 	JFrame frame = new JFrame("DriimerFinance");
+	ImageIcon icon = new ImageIcon("images/DF.png");
 	
 	/**
 	 * Constructor
@@ -41,6 +43,7 @@ public class MainWindow {
 		GUIHelper.centerAndSizeFrame(this.frame);
 		addMenubar();
 		addForm();
+		this.frame.setIconImage(icon.getImage());
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setVisible(true);    
 	}
