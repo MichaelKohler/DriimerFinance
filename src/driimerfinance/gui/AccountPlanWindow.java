@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,6 +28,7 @@ import driimerfinance.models.AccountType;
 public class AccountPlanWindow {
 
 	JFrame frame = new JFrame("DriimerFinance - Kontenplan");
+	ImageIcon icon = new ImageIcon("images/DF.png");
 	JTable accountTable = new JTable();
 	AccountPlanWindow parent = this;
 
@@ -45,6 +47,7 @@ public class AccountPlanWindow {
 		addButtons();
 		frame.setSize(400, 500);
 		GUIHelper.centerFrame(frame);
+		this.frame.setIconImage(icon.getImage());
 		frame.setVisible(true);
 	}
 

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -31,6 +32,7 @@ import driimerfinance.models.AccountType;
 public class AddAccountWindow {
 
 	JFrame frame = new JFrame("DriimerFinance - Konto hinzuf\u00fcgen");
+	ImageIcon icon = new ImageIcon("images/DF.png");
 	AccountPlanWindow parent = null;
 	
 	ArrayList<String> types = new ArrayList<String>();
@@ -70,6 +72,7 @@ public class AddAccountWindow {
 		addButtons();
 		this.frame.setSize(400, 200);
 		GUIHelper.centerFrame(this.frame);
+		this.frame.setIconImage(icon.getImage());
 		this.frame.setVisible(true);
     }
     

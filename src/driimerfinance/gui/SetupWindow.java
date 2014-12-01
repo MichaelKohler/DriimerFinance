@@ -1,5 +1,7 @@
 package driimerfinance.gui;
 
+import javax.swing.ImageIcon;
+
 /**
  * Used at the beginning to install the software.
  * 
@@ -7,6 +9,7 @@ package driimerfinance.gui;
 */
 public class SetupWindow {
 	
+	ImageIcon icon = new ImageIcon("images/DF.png");
 	/**
 	 * Constructor
 	 */

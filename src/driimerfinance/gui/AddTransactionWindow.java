@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.print.attribute.standard.DateTimeAtProcessing;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -40,6 +41,7 @@ import driimerfinance.models.Transaction;
 public class AddTransactionWindow {
 
 	JFrame frame = new JFrame("DriimerFinance - Buchung hinzuf\u00fcgen");
+	ImageIcon icon = new ImageIcon("images/DF.png");
 	ArrayList<String> fromAccounts = new ArrayList<String>();
 	ArrayList<String> toAccounts = new ArrayList<String>();
 	
@@ -79,6 +81,7 @@ public class AddTransactionWindow {
 		addButtons();
 		this.frame.setSize(400, 300);
 		GUIHelper.centerFrame(this.frame);
+		this.frame.setIconImage(icon.getImage());
 		this.frame.setVisible(true);
 	}
 

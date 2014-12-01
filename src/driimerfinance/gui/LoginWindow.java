@@ -27,6 +27,7 @@ import driimerfinance.helpers.GUIHelper;
 public class LoginWindow {
 	
 	JFrame frame = new JFrame("Login Window");
+	ImageIcon icon = new ImageIcon("images/DF.png");
 	
 	/**
 	 * Constructor
@@ -40,6 +41,7 @@ public class LoginWindow {
      */
     private void createGUI() {
 		GUIHelper.centerAndSizeFrame(this.frame);
+		this.frame.setIconImage(icon.getImage());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel panel = new JPanel();

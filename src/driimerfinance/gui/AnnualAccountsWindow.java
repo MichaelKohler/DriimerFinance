@@ -1,5 +1,7 @@
 package driimerfinance.gui;
 
+import javax.swing.ImageIcon;
+
 /**
  * Jahresabschluss overview window
  * 
@@ -7,6 +9,7 @@ package driimerfinance.gui;
 */
 public class AnnualAccountsWindow {
 	
+	ImageIcon icon = new ImageIcon("images/DF.png");
 	/**
 	 * Constructor
 	 */

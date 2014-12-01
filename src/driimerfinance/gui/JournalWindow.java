@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -31,6 +32,7 @@ import driimerfinance.models.Transaction;
 public class JournalWindow extends OneColumnViewer {
 	
 	JFrame frame = new JFrame("Buchungsjournal");
+	ImageIcon icon = new ImageIcon("images/DF.png");
 	JTable transactionTable = new JTable();
 	JPanel tablePanel = new JPanel();
 	MandantDBHelper db = new MandantDBHelper();
@@ -53,6 +55,7 @@ public class JournalWindow extends OneColumnViewer {
         addButtons();
         this.frame.setSize(650, 500);
 		GUIHelper.centerFrame(this.frame);
+		this.frame.setIconImage(icon.getImage());
 		this.frame.setVisible(true);
     }
     
