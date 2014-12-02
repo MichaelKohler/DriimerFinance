@@ -30,9 +30,11 @@ public class FinanceHelper {
     public static double unformatAmount(String formattedNumber) {
         NumberFormat numberFormatter = NumberFormat.getCurrencyInstance();
         String currencyName = numberFormatter.getCurrency().getCurrencyCode();
+        System.out.println(currencyName);
         formattedNumber = formattedNumber.replace(currencyName, "");
         formattedNumber = formattedNumber.replace("'", "");
         String unformattedStringNumber = formattedNumber.replace(",", "");
+        System.out.println(unformattedStringNumber);
         double number = Double.parseDouble(unformattedStringNumber);
         return number;
     }

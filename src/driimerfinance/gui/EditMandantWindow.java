@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -99,14 +100,26 @@ public class EditMandantWindow {
 				selRow = mandantTable.getSelectedRow();
 				//if there is a row selected
 				if ( selRow != -1 ) {
-					DefaultTableModel model = (DefaultTableModel)mandantTable.getModel();
-					//get mandantid from table model
-					int mandantId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
-					
-					//get the mandant from database and delete it. (in database as well as in the table)
-					driimerdb.deleteMandantById(mandantId);
-					model.removeRow(selRow);
-					MainWindowSingleton.getMainWindowInstance().reload();
+					Object[] options = {"Ja", "Nein"};
+					int eingabe = JOptionPane.showOptionDialog(
+									null,
+									"Sind Sie sicher, Mandant und ALLE seine Daten (Buchungen, Konten, etc.) werden unwiderruflich gel\u00f6scht?",
+									"Best\u00e4tigung",
+									JOptionPane.YES_NO_OPTION,
+									JOptionPane.QUESTION_MESSAGE,
+								    null,
+								    options,
+								    options[1]);
+					if (eingabe == 0) {
+						DefaultTableModel model = (DefaultTableModel)mandantTable.getModel();
+						//get mandantid from table model
+						int mandantId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
+						
+						//get the mandant from database and delete it. (in database as well as in the table)
+						driimerdb.deleteMandantById(mandantId);
+						model.removeRow(selRow);
+						MainWindowSingleton.getMainWindowInstance().reload();
+					}
 				}
 			}
 		});

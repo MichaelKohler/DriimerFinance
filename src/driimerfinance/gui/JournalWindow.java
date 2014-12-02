@@ -177,11 +177,16 @@ public class JournalWindow extends OneColumnViewer {
 				selRow = transactionTable.getSelectedRow();
 				// if there is a row selected
 				if (selRow != -1) {
-					int eingabe = JOptionPane.showConfirmDialog(
+					Object[] options = {"Ja", "Nein"};
+					int eingabe = JOptionPane.showOptionDialog(
 									null,
 									"Sind Sie sicher, Buchung wird unwiderruflich gel\u00f6scht?",
 									"Best\u00e4tigung",
-									JOptionPane.YES_NO_OPTION);
+									JOptionPane.YES_NO_OPTION,
+									JOptionPane.QUESTION_MESSAGE,
+								    null,
+								    options,
+								    options[1]);
 					if (eingabe == 0) {
 						DefaultTableModel model = (DefaultTableModel) transactionTable
 								.getModel();
