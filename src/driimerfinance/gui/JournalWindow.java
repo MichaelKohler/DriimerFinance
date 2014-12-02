@@ -100,7 +100,7 @@ public class JournalWindow extends OneColumnViewer {
 					String description = model.getValueAt(selRow, 4).toString();
 					double amount = Double.parseDouble(model.getValueAt(selRow, 5).toString());
 					int receiptNumber = Integer.parseInt(model.getValueAt(selRow, 6).toString());
-					new EditTransactionWindow(parent);
+					new EditTransactionWindow(parent, transactionId, date, fk_fromAccount, fk_toAccount, description, amount, receiptNumber);
 				}
 			}
 		});
@@ -130,8 +130,8 @@ public class JournalWindow extends OneColumnViewer {
 			}
 		});
 		
-		JButton cancelButton = new JButton("Abbrechen");
-		cancelButton.addActionListener(new ActionListener() {
+		JButton closeButton = new JButton("Fenster Schliessen");
+		closeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// we don't need to save this since an account plan is only a
@@ -142,9 +142,9 @@ public class JournalWindow extends OneColumnViewer {
 		
 		buttonPanel.add(editButton, BorderLayout.WEST);
 		buttonPanel.add(deleteButton, BorderLayout.CENTER);
-		buttonPanel.add(cancelButton, BorderLayout.EAST);
+		buttonPanel.add(closeButton, BorderLayout.EAST);
 		frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-		this.frame.getRootPane().setDefaultButton(cancelButton);
+		this.frame.getRootPane().setDefaultButton(closeButton);
 	}
 
 	public void refreshTable() {

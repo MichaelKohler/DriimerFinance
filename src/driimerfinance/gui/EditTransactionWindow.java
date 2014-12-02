@@ -39,6 +39,14 @@ public class EditTransactionWindow {
 	ArrayList<String> fromAccounts = new ArrayList<String>();
 	ArrayList<String> toAccounts = new ArrayList<String>();
 	
+	int transactionId;
+	String date;
+	int fk_fromAccount;
+	int fk_toAccount;
+	String description;
+	double amount; 
+	int receiptNumber;
+		
 	JTextField dateField = null;
 	JComboBox sollField = null;
 	JComboBox habenField = null;
@@ -50,10 +58,17 @@ public class EditTransactionWindow {
 	/**
 	 * Constructor
 	 */
-	public EditTransactionWindow(JournalWindow jouWin) {
+	public EditTransactionWindow(JournalWindow jouWin, int transactionId, String date, int fk_fromAccount, int fk_toAccount, String description, double amount, int receiptNumber) {
 		this.parent = jouWin;
+		this.transactionId = transactionId;
+		this.date = date;
+		this.fk_fromAccount = fk_fromAccount;
+		this.fk_toAccount = fk_toAccount;
+		this.description = description;
+		this.amount = amount;
+		this.receiptNumber = receiptNumber;
 		setData();
-		createGUI();
+		createGUI();	
 	}
 	
 	/**
