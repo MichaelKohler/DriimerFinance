@@ -202,7 +202,7 @@ public class JournalWindow extends OneColumnViewer {
 			}
 		});
 	
-		JButton closeButton = new JButton("Fenster Schliessen");
+		JButton closeButton = new JButton("Fenster schliessen");
 		closeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

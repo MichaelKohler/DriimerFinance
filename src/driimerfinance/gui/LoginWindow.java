@@ -81,7 +81,7 @@ public class LoginWindow {
 			public void actionPerformed(ActionEvent e) {
 				String password = new String(passwordText.getPassword());
 				if (password.equals(db.getUserPasswordById(1))) {
-					JOptionPane.showMessageDialog(frame, "Login Erfolgreich", "Erfolg", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Login erfolgreich", "Erfolg", JOptionPane.INFORMATION_MESSAGE);
 					MainWindowSingleton.getMainWindowInstance();
 					frame.dispose();
 				}
