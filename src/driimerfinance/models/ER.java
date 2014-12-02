@@ -30,7 +30,7 @@ public class ER {
         List<Account> filteredAccounts = new ArrayList<Account>();
         for (Account account : allAccounts) {
         	    int typ = account.getFk_AccountType();
-        	    if (typ == 3) {
+        	    if (typ == 4) { // Typ: Aufwand
         	    	    filteredAccounts.add(account);
         	    }
         }
@@ -48,7 +48,7 @@ public class ER {
         List<Account> filteredAccounts = new ArrayList<Account>();
         for (Account account : allAccounts) {
         	    int typ = account.getFk_AccountType();
-        	    if (typ == 4) {
+        	    if (typ == 3) { // Typ: Ertrag
         	    	    filteredAccounts.add(account);
         	    }
         }
