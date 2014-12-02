@@ -139,7 +139,7 @@ public class ERViewer {
     	    	    Object[] row = { "Gewinn", FinanceHelper.formatAmount(winOrLoss), "", "" };
     	    	    return row;
     	    } else { // loss
-    	    	    Object[] row = { "", "", "Verlust", FinanceHelper.formatAmount(winOrLoss) };
+    	    	    Object[] row = { "", "", "Verlust", FinanceHelper.formatAmount(Math.abs(winOrLoss)) };
     	    	    return row;
     	    }
     }
