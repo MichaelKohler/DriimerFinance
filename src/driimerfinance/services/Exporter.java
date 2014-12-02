@@ -15,15 +15,6 @@ public abstract class Exporter {
     }
     
     /**
-     * Crawls the database to get all data for the export.
-     * 
-     * @return void
-     */
-    public void getDataToExport() {
-        
-    }
-    
-    /**
      * Exports the crawled data to a file on the file system.
      * 
      * @param path to the desired file
@@ -32,4 +23,9 @@ public abstract class Exporter {
     public void exportToFile(String filename) {
         
     }
+
+	public void setDataToExport(Object input) {
+		// TODO Auto-generated method stub
+		
+	}
 }

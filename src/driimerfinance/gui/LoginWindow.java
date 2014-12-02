@@ -1,13 +1,13 @@
 package driimerfinance.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,8 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
+import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.helpers.GUIHelper;
 
 /**
@@ -27,6 +27,8 @@ import driimerfinance.helpers.GUIHelper;
 public class LoginWindow {
 	
 	JFrame frame = new JFrame("Login Window");
+	ImageIcon icon = new ImageIcon("images/DF.png");
+	DriimerDBHelper db = new DriimerDBHelper();
 	
 	/**
 	 * Constructor
@@ -40,9 +42,15 @@ public class LoginWindow {
      */
     private void createGUI() {
 		GUIHelper.centerAndSizeFrame(this.frame);
+		this.frame.setIconImage(icon.getImage());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel() {
+			public void paintComponent(Graphics g) {  
+			Image img = Toolkit.getDefaultToolkit().getImage(new File("images/driimer.jpg").getAbsolutePath());
+			g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);  
+			}
+		};
 		frame.add(panel);
 		placeComponents(panel);
 		frame.setVisible(true);
@@ -67,16 +75,21 @@ public class LoginWindow {
 		JButton loginButton = new JButton("Login");
 		loginButton.setBounds(10, 80, 80, 25);
 		panel.add(loginButton);
-		
-		ActionListener loginButtonListener = new LoginButtonListener();
-		loginButton.addActionListener(loginButtonListener);
-		
+		loginButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String password = new String(passwordText.getPassword());
+				if (password.equals(db.getUserPasswordById(1))) {
+					JOptionPane.showMessageDialog(frame, "Login Erfolgreich", "Erfolg", JOptionPane.INFORMATION_MESSAGE);
+					MainWindowSingleton.getMainWindowInstance();
+					frame.dispose();
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Das Kennwort ist falsch", "Fehler", JOptionPane.ERROR_MESSAGE);
+				}
+			}	
+		});	
 	}
 	
-	public class LoginButtonListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null, "login button has been pressed");
-		}
-	}
 }
+

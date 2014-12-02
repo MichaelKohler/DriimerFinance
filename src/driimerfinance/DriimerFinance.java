@@ -29,7 +29,8 @@ public class DriimerFinance {
     public static void main(String[] args) throws Exception {
    	
  //    		new MainWindow();
-    		MainWindowSingleton.getMainWindowInstance();
+ //   		MainWindowSingleton.getMainWindowInstance();
+    		new LoginWindow();
 
     		// TEST CODE BELOW
         DriimerDBHelper driimerdb = new DriimerDBHelper();

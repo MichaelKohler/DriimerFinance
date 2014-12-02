@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.print.attribute.standard.DateTimeAtProcessing;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -40,6 +41,7 @@ import driimerfinance.models.Transaction;
 public class AddTransactionWindow {
 
 	JFrame frame = new JFrame("DriimerFinance - Buchung hinzuf\u00fcgen");
+	ImageIcon icon = new ImageIcon("images/DF.png");
 	ArrayList<String> fromAccounts = new ArrayList<String>();
 	ArrayList<String> toAccounts = new ArrayList<String>();
 	
@@ -79,6 +81,7 @@ public class AddTransactionWindow {
 		addButtons();
 		this.frame.setSize(400, 300);
 		GUIHelper.centerFrame(this.frame);
+		this.frame.setIconImage(icon.getImage());
 		this.frame.setVisible(true);
 	}
 
@@ -166,8 +169,10 @@ public class AddTransactionWindow {
 				Account habenAccount = helper.getAccountByName(toAccounts.get(habenField.getSelectedIndex()));
 				newTrans.setFk_HabenKonto(habenAccount.getId());
 				newTrans.setBezeichnung(transactionField.getText());
+				double amount = 0.00;
 				try {
-					newTrans.setAmount(Integer.parseInt(amountField.getText()));
+					amount = Integer.parseInt(amountField.getText());
+					newTrans.setAmount(amount);
 					newTrans.setBelegNr(Integer.parseInt(receiptField.getText()));
 				} catch (NumberFormatException ex) {
 					errorMessage += "\nBetrag und Beleg-Nr. m\u00fcssen eine Zahl sein!";
@@ -176,6 +181,7 @@ public class AddTransactionWindow {
 				
 				if (!hasError) {
 					newTrans.createInDB();
+					calculateAccountAmounts(sollAccount, habenAccount, amount);
 					frame.dispose();
 				} else {
 					JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
@@ -193,6 +199,36 @@ public class AddTransactionWindow {
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		this.frame.getRootPane().setDefaultButton(okButton);
+	}
+	
+	private void calculateAccountAmounts(Account soll, Account haben, double amount) {
+		double newSollBalance = 0.00;
+		double newHabenBalance = 0.00;
+
+		// Active Account or Expenses Account -> Soll +
+		if (soll.getFk_AccountType() == 1 || soll.getFk_AccountType() == 3) {
+			newSollBalance = soll.getBalance() + amount;
+		}
+		
+		// Active Account or Expenses Account -> Haben -
+		if (haben.getFk_AccountType() == 1 || haben.getFk_AccountType() == 3) {
+			newHabenBalance = haben.getBalance() - amount;
+		}
+		
+		// Passive Account or Earnings Account -> Soll -
+		if (soll.getFk_AccountType() == 2 || soll.getFk_AccountType() == 4) {
+			newSollBalance = soll.getBalance() - amount;
+		}
+		
+		// Passive Account or Earnings Account -> Haben +
+		if (haben.getFk_AccountType() == 2 || haben.getFk_AccountType() == 4) {
+			newHabenBalance = haben.getBalance() + amount;
+		}
+		
+		soll.setBalance(newSollBalance);
+		soll.updateInDB();
+		haben.setBalance(newHabenBalance);
+		haben.updateInDB();
 	}
 
 }

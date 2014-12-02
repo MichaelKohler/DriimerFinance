@@ -104,7 +104,7 @@ public class Account implements IModel {
      * @param balance to set
      * @return void
      */
-	public void setBalance(int balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 

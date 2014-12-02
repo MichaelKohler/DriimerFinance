@@ -1,5 +1,7 @@
 package driimerfinance.gui;
 
+import javax.swing.ImageIcon;
+
 /**
  * Window to write about Driimer Finance.
  * 
@@ -7,6 +9,8 @@ package driimerfinance.gui;
 */
 public class AboutWindow {
     
+	ImageIcon icon = new ImageIcon("images/DF.png");
+	
 	/**
 	 * Constructor
 	 */

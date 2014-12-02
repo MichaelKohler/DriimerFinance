@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,6 +26,7 @@ import driimerfinance.models.Mandant;
 public class AddMandantWindow {
 
 	JFrame frame = new JFrame("DriimerFinance - Mandant hinzuf\u00fcgen");
+	ImageIcon icon = new ImageIcon("images/DF.png");
 	JTextField nameField = null;
 
 
@@ -43,6 +45,7 @@ public class AddMandantWindow {
 		addButtons();
 		this.frame.setSize(500, 125);
 		GUIHelper.centerFrame(this.frame);
+		this.frame.setIconImage(icon.getImage());
 		this.frame.setVisible(true);
 	}
 

@@ -98,6 +98,33 @@ public class DriimerDBHelper {
 		}
 		return user;
 	}
+	
+	
+	/**
+	 * Finds a users Password by id specified.
+	 * 
+	 * @param id to search
+	 * @return String of Password found or an empty String
+	 */
+	public String getUserPasswordById(int userId) {
+		String password = null;
+		try {
+			preparedStatement = dbconnection
+					.prepareStatement("select Password from user where idUser=?");
+			preparedStatement.setInt(1, userId);
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				 password = resultSet.getString("Password");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return password;
+	}
 
 	/**
 	 * Adds a user to the database.
@@ -206,6 +233,35 @@ public class DriimerDBHelper {
 			preparedStatement = dbconnection
 					.prepareStatement("select * from mandanten where idMandanten=?");
 			preparedStatement.setInt(1, mandantId);
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				mandant.setID(resultSet.getInt("idMandanten"));
+				mandant.setName(resultSet.getString("Name"));
+				mandant.setDBSchema(resultSet.getString("DBSchema"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return mandant;
+	}
+	
+	
+	/**
+	 * Searches a mandant on the database with a given name.
+	 * 
+	 * @param mandantName to search
+	 * @return found mandant if existing or new mandant
+	 */
+	public Mandant getMandantByName(String mandantName) {
+		Mandant mandant = new Mandant();
+		try {
+			preparedStatement = dbconnection
+					.prepareStatement("select * from mandanten where idMandanten=?");
+			preparedStatement.setString(1, mandantName);
 
 			resultSet = preparedStatement.executeQuery();
 

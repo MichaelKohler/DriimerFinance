@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -28,6 +29,7 @@ import driimerfinance.models.Mandant;
 */
 public class ERViewer {
 	JFrame frame = new JFrame("DriimerFinance");
+	ImageIcon icon = new ImageIcon("images/DF.png");
 	
 	/**
 	 * Constructor
@@ -42,6 +44,7 @@ public class ERViewer {
     private void createGUI() {
     	    this.frame.setSize(500, 400);
     	    GUIHelper.centerFrame(this.frame);
+    	    this.frame.setIconImage(icon.getImage());
 		this.frame.setVisible(true);
 		
 		JPanel tablePanel = new JPanel();
