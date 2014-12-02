@@ -95,7 +95,8 @@ public class ERViewer {
         
         int maxLength = spending.size() >= earning.size() ? spending.size() : earning.size();
         int columns = 4;
-        Object[][] rows = new Object[maxLength+2][columns];
+        int additionalLines = 4;
+        Object[][] rows = new Object[maxLength+additionalLines][columns];
         double totalSpending = 0;
         double totalEarning = 0;
         for (int i = 0; i < maxLength; i++) {
@@ -117,9 +118,29 @@ public class ERViewer {
         	    rows[i] = names;
         }
         Object[] emptyRow = { "", "", "", "" };
-        Object[] totalsRow = { "Total", FinanceHelper.formatAmount(totalSpending), "Total", FinanceHelper.formatAmount(totalEarning) };
         rows[maxLength] = emptyRow;
-        rows[maxLength+1] = totalsRow;
+        rows[maxLength+1] = prepareWinRow(totalSpending, totalEarning);
+        rows[maxLength+2] = emptyRow;
+        Object[] totalsRow = { "Total", FinanceHelper.formatAmount(totalSpending), "Total", FinanceHelper.formatAmount(totalEarning) };
+        rows[maxLength+3] = totalsRow;
         return rows;
+    }
+    
+    /**
+     * Calculates the win or loss.
+     * 
+     * @param total spending
+     * @param total earning
+     * @return table row with the appropriate cells filled with earning or loss
+     */
+    private Object[] prepareWinRow(double totalSpending, double totalEarning) {
+    	    double winOrLoss = totalEarning - totalSpending;
+    	    if (winOrLoss >= 0) { // win or neutral
+    	    	    Object[] row = { "Gewinn", FinanceHelper.formatAmount(winOrLoss), "", "" };
+    	    	    return row;
+    	    } else { // loss
+    	    	    Object[] row = { "", "", "Verlust", FinanceHelper.formatAmount(winOrLoss) };
+    	    	    return row;
+    	    }
     }
 }
