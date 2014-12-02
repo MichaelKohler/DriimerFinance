@@ -153,28 +153,18 @@ public class JournalWindow extends OneColumnViewer {
 				// if there is a row selected
 				if (selRow != -1) {
 					MandantDBHelper helper = new MandantDBHelper();
-					DefaultTableModel model = (DefaultTableModel) transactionTable
-							.getModel();
+					DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
 					// get transaction data from table model
-					int transactionId = Integer.parseInt(model.getValueAt(
-							selRow, 0).toString());
+					int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
 					String date = model.getValueAt(selRow, 1).toString();
-					int fk_fromAccount = helper.getAccountByName(
-							model.getValueAt(selRow, 2).toString()).getId();
-					int fk_toAccount = helper.getAccountByName(
-							model.getValueAt(selRow, 3).toString()).getId();
+					int fk_fromAccount = helper.getAccountByName(model.getValueAt(selRow, 2).toString()).getId();
+					int fk_toAccount = helper.getAccountByName(model.getValueAt(selRow, 3).toString()).getId();
 					String description = model.getValueAt(selRow, 4).toString();
-<<<<<<< HEAD
-					double amount = Double.parseDouble(model.getValueAt(selRow, 5).toString());
+					//double amount = Double.parseDouble(model.getValueAt(selRow, 5).toString());
+					double amount = FinanceHelper.unformatAmount(model.getValueAt(selRow, 5).toString());
 					int receiptNumber = Integer.parseInt(model.getValueAt(selRow, 6).toString());
 					new EditTransactionWindow(parent, transactionId, date, fk_fromAccount, fk_toAccount, description, amount, receiptNumber);
-=======
-					double amount = FinanceHelper.unformatAmount(model
-							.getValueAt(selRow, 5).toString());
-					int receiptNumber = Integer.parseInt(model.getValueAt(
-							selRow, 6).toString());
-					new EditTransactionWindow(parent);
->>>>>>> origin/master
+					//new EditTransactionWindow(parent);
 				}
 			}
 		});
@@ -187,8 +177,7 @@ public class JournalWindow extends OneColumnViewer {
 				selRow = transactionTable.getSelectedRow();
 				// if there is a row selected
 				if (selRow != -1) {
-					int eingabe = JOptionPane
-							.showConfirmDialog(
+					int eingabe = JOptionPane.showConfirmDialog(
 									null,
 									"Sind Sie sicher, Buchung wird unwiderruflich gel\u00f6scht?",
 									"Best\u00e4tigung",
@@ -197,8 +186,7 @@ public class JournalWindow extends OneColumnViewer {
 						DefaultTableModel model = (DefaultTableModel) transactionTable
 								.getModel();
 						// get transactiontid from table model
-						int transactionId = Integer.parseInt(model.getValueAt(
-								selRow, 0).toString());
+						int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
 						// get the transaction from database and delete it. (in
 						// database as well as in the table)
 						db.deleteTransactionById(transactionId);
@@ -208,15 +196,9 @@ public class JournalWindow extends OneColumnViewer {
 
 			}
 		});
-<<<<<<< HEAD
-		
+	
 		JButton closeButton = new JButton("Fenster Schliessen");
 		closeButton.addActionListener(new ActionListener() {
-=======
-
-		JButton cancelButton = new JButton("Abbrechen");
-		cancelButton.addActionListener(new ActionListener() {
->>>>>>> origin/master
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// we don't need to save this since an account plan is only a

@@ -75,6 +75,7 @@ public class LoginWindow {
 		JButton loginButton = new JButton("Login");
 		loginButton.setBounds(10, 80, 80, 25);
 		panel.add(loginButton);
+		this.frame.getRootPane().setDefaultButton(loginButton);
 		loginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
