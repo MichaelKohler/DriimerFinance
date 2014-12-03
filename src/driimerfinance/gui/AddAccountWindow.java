@@ -33,7 +33,6 @@ public class AddAccountWindow {
 
 	JFrame frame = new JFrame("DriimerFinance - Konto hinzuf\u00fcgen");
 	ImageIcon icon = new ImageIcon("images/DF.png");
-	AccountPlanWindow parent = null;
 	
 	ArrayList<String> types = new ArrayList<String>();
 	
@@ -47,8 +46,7 @@ public class AddAccountWindow {
 	 * 
 	 * @param account plan window to attach to
 	 */
-    public AddAccountWindow(AccountPlanWindow accPlanWin) {
-    	    this.parent = accPlanWin;
+    public AddAccountWindow() {
         getData();
         createGUI();
     }
@@ -120,7 +118,7 @@ public class AddAccountWindow {
 			public void actionPerformed(ActionEvent e) {
 				Account newAcc = new Account();
 				try {
-					newAcc.setId(Integer.parseInt(numberField.getText()));
+					newAcc.setNumber(Integer.parseInt(numberField.getText()));
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(frame, "Die Konto-Nr. muss eine Nummer sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -130,11 +128,11 @@ public class AddAccountWindow {
 					return;
 				}
 				newAcc.setName(nameField.getText());
-				int typeCode = typeField.getSelectedIndex();
+				int typeCode = typeField.getSelectedIndex()+1;
+				System.out.println(typeCode);
 				newAcc.setFk_AccountType(typeCode);
 				newAcc.setCapitalAccount(isCapAccount.isSelected());
 				newAcc.createInDB();
-				parent.addAccountToTable(newAcc);
 				frame.dispose();
 			}
 		});

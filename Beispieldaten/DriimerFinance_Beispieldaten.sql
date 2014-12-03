@@ -21,7 +21,7 @@ USE `DriimerFinance` ;
 -- Table `DriimerFinance`.`Mandanten`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DriimerFinance`.`Mandanten` (
-  `idMandanten` INT NOT NULL,
+  `idMandanten` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(250) NOT NULL,
   `DBSchema` VARCHAR(250) NOT NULL,
   PRIMARY KEY (`idMandanten`))
@@ -32,7 +32,7 @@ ENGINE = InnoDB;
 -- Table `DriimerFinance`.`User`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DriimerFinance`.`User` (
-  `idUser` INT NOT NULL,
+  `idUser` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(250) NOT NULL,
   `Vorname` VARCHAR(250) NOT NULL,
   `Password` VARCHAR(250) NOT NULL,

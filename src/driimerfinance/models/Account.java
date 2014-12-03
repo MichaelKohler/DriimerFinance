@@ -11,6 +11,7 @@ import driimerfinance.database.MandantDBHelper;
 public class Account implements IModel {
 	
 	private Integer id = null;
+	private Integer number = null;
 	private String name = null;
 	private int fk_AccountType = 0;
 	private double balance = 0;
@@ -49,6 +50,25 @@ public class Account implements IModel {
      */
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	/**
+     * Getter: Returns the object's number
+     * 
+     * @return number
+     */
+	public Integer getNumber() {
+		return this.number;
+	}
+
+	/**
+     * Setter: Sets the object's number to the one specified
+     * 
+     * @param number to set
+     * @return void
+     */
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 
 	/**

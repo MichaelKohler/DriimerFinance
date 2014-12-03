@@ -216,6 +216,7 @@ public class MandantDBHelper {
 			while (resultSet.next()) {
 				Account account = new Account();
 				account.setId(resultSet.getInt("idKonto"));
+				account.setNumber(resultSet.getInt("Nummer"));
 				account.setName(resultSet.getString("Name"));
 				account.setFk_AccountType(resultSet.getInt("fk_KontoTyp"));
 				account.setBalance(resultSet.getInt("Guthaben"));
@@ -246,6 +247,7 @@ public class MandantDBHelper {
 
 			if (resultSet.next()) {
 				account.setId(resultSet.getInt("idKonto"));
+				account.setNumber(resultSet.getInt("Nummer"));
 				account.setName(resultSet.getString("Name"));
 				account.setFk_AccountType(resultSet.getInt("fk_KontoTyp"));
 				account.setBalance(resultSet.getInt("Guthaben"));
@@ -274,6 +276,7 @@ public class MandantDBHelper {
 
 			if (resultSet.next()) {
 				account.setId(resultSet.getInt("idKonto"));
+				account.setNumber(resultSet.getInt("Nummer"));
 				account.setName(resultSet.getString("Name"));
 				account.setFk_AccountType(resultSet.getInt("fk_KontoTyp"));
 				account.setBalance(resultSet.getInt("Guthaben"));
@@ -295,11 +298,13 @@ public class MandantDBHelper {
 	public void addAccount(Account account) {
 		try {
 			preparedStatement = dbconnection
-					.prepareStatement("insert into konto(Name, fk_KontoTyp, Guthaben, Kapitalkonto) values (?,?,?,?)");
-			preparedStatement.setString(1, account.getName());
-			preparedStatement.setInt(2, account.getFk_AccountType());
-			preparedStatement.setDouble(3, account.getBalance());
-			preparedStatement.setBoolean(4,  account.getCapitalAccount());
+					.prepareStatement("insert into konto(Nummer, Name, fk_KontoTyp, Guthaben, Kapitalkonto) values (?,?,?,?,?)");
+			preparedStatement.setInt(1, account.getNumber());
+			preparedStatement.setString(2, account.getName());
+			preparedStatement.setInt(3, account.getFk_AccountType());
+			preparedStatement.setDouble(4, account.getBalance());
+			preparedStatement.setBoolean(5,  account.getCapitalAccount());
+			System.out.println(preparedStatement);
 			preparedStatement.execute();
 
 		} catch (SQLException e) {
@@ -317,12 +322,13 @@ public class MandantDBHelper {
 	public void updateAccount(Account account) {
 		try {
 			preparedStatement = dbconnection
-					.prepareStatement("update konto set Name=?, fk_KontoTyp=?, Guthaben=?, Kapitalkonto=? where idKonto=?");
-			preparedStatement.setString(1, account.getName());
-			preparedStatement.setInt(2, account.getFk_AccountType());
-			preparedStatement.setDouble(3, account.getBalance());
-			preparedStatement.setBoolean(4,  account.getCapitalAccount());
-			preparedStatement.setInt(5, account.getId());
+					.prepareStatement("update konto set Nummer=?, Name=?, fk_KontoTyp=?, Guthaben=?, Kapitalkonto=? where idKonto=?");
+			preparedStatement.setInt(1, account.getNumber());
+			preparedStatement.setString(2, account.getName());
+			preparedStatement.setInt(3, account.getFk_AccountType());
+			preparedStatement.setDouble(4, account.getBalance());
+			preparedStatement.setBoolean(5,  account.getCapitalAccount());
+			preparedStatement.setInt(6, account.getId());
 			preparedStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

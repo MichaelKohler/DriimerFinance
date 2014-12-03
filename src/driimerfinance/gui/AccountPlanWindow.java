@@ -55,22 +55,10 @@ public class AccountPlanWindow {
 	 * Adds the content of the window.
 	 */
 	private void addForm() {
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		JButton addButton = new JButton("Konto hinzuf\u00fcgen");
-		addButton.setPreferredSize(new Dimension(400, 20));
-		addButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new AddAccountWindow(parent);
-			}
-		});
-		buttonPanel.add(addButton);
-
 		JPanel tablePanel = new JPanel();
 		tablePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-		String[] headers = { "Nummer", "Name", "Typ", "Kapitalkonto" };
+		String[] headers = { "ID", "Nummer", "Name", "Typ", "Kapitalkonto" };
 		Object[][] data = getData();
 
 		accountTable = new JTable(new DefaultTableModel(data, headers));
@@ -79,7 +67,6 @@ public class AccountPlanWindow {
 		JScrollPane scrollPane = new JScrollPane(accountTable);
 		tablePanel.add(scrollPane);
 
-		frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
 		frame.getContentPane().add(tablePanel, BorderLayout.CENTER);
 	}
 
@@ -94,7 +81,7 @@ public class AccountPlanWindow {
 			Account acc = allAccounts.get(i);
 			AccountType type = new AccountType();
 			type.setId(acc.getFk_AccountType());
-			Object[] row = { acc.getId(), acc.getName(), type.getTypeAsString(), acc.getCapitalAccount() };
+			Object[] row = { acc.getId(), acc.getNumber(), acc.getName(), type.getTypeAsString(), acc.getCapitalAccount() };
 			rows[i] = row;
 		}
 		return rows;
@@ -127,7 +114,7 @@ public class AccountPlanWindow {
 	 */
 	public void addAccountToTable(Account acc) {
 		DefaultTableModel model = (DefaultTableModel) (accountTable.getModel());
-		Object[] newRow = { acc.getId().toString(), acc.getName(),
+		Object[] newRow = { acc.getId().toString(), acc.getNumber().toString(), acc.getName(),
 				acc.getFk_AccountType() };
 		model.addRow(newRow);
 		frame.repaint();

@@ -1,5 +1,6 @@
 package driimerfinance.gui;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -7,6 +8,7 @@ import java.io.File;
 import java.util.List;
 
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -123,7 +125,7 @@ public class MenuBarSingleton {
 		transactions.add(transactionItem);
 
 		JMenuItem journalItem = new JMenuItem("Buchungsjournal");
-		journalItem.setMnemonic(KeyEvent.VK_H);
+		journalItem.setMnemonic(KeyEvent.VK_J);
 		journalItem.setToolTipText("Buchungsjournal");
 		journalItem.addActionListener(new ActionListener() {
 			@Override
@@ -135,9 +137,20 @@ public class MenuBarSingleton {
 
 		JMenu accountPlan = new JMenu("Kontenplan");
 		accountPlan.setMnemonic(KeyEvent.VK_K);
+		
+		JMenuItem addAccount = new JMenuItem("Konto hinzufügen...");
+		addAccount.setMnemonic(KeyEvent.VK_H);
+		addAccount.setToolTipText("Konto hinzufügen");
+		addAccount.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AddAccountWindow();
+			}
+		});
+		accountPlan.add(addAccount);
 
 		JMenuItem editAccountPlan = new JMenuItem("Kontenplan editieren...");
-		editAccountPlan.setMnemonic(KeyEvent.VK_H);
+		editAccountPlan.setMnemonic(KeyEvent.VK_E);
 		editAccountPlan.setToolTipText("Kontenplan editieren");
 		editAccountPlan.addActionListener(new ActionListener() {
 			@Override
