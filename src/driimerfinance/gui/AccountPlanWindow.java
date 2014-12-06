@@ -61,7 +61,14 @@ public class AccountPlanWindow {
 		String[] headers = { "ID", "Nummer", "Name", "Typ", "Kapitalkonto" };
 		Object[][] data = getData();
 
-		accountTable = new JTable(new DefaultTableModel(data, headers));
+		accountTable = new JTable(new DefaultTableModel(data, headers) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		});
 		accountTable.setPreferredScrollableViewportSize(new Dimension(400, 300));
 		accountTable.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(accountTable);

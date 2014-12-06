@@ -74,7 +74,14 @@ public class JournalWindow extends OneColumnViewer {
 		String[] headers = { "ID", "Datum", "Soll-Konto", "Haben-Konto",
 				"Buchungssatz", "Betrag", "Beleg-Nr" };
 		Object[][] data = {};
-		transactionTable = new JTable(new DefaultTableModel(data, headers));
+		transactionTable = new JTable(new DefaultTableModel(data, headers){
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		});
 		transactionTable.setPreferredScrollableViewportSize(new Dimension(640,
 				490));
 		transactionTable.setFillsViewportHeight(true);

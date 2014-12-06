@@ -42,14 +42,14 @@ public class EditTransactionWindow {
 	ArrayList<String> toAccounts = new ArrayList<String>();
 	
 	int transactionId;
-	String date;
+	String stDate;
 	int fk_fromAccount;
 	int fk_toAccount;
 	String description;
-	double amount; 
-	int receiptNumber;
+	String amount; 
+	String receiptNumber;
 		
-	JTextField dateField = null;
+	//JTextField dateField = null;
 	JComboBox sollField = null;
 	JComboBox habenField = null;
 	JTextField transactionField =null;
@@ -63,12 +63,12 @@ public class EditTransactionWindow {
 	public EditTransactionWindow(JournalWindow jouWin, int transactionId, String date, int fk_fromAccount, int fk_toAccount, String description, double amount, int receiptNumber) {
 		this.parent = jouWin;
 		this.transactionId = transactionId;
-		this.date = date;
+		this.stDate = date;
 		this.fk_fromAccount = fk_fromAccount;
 		this.fk_toAccount = fk_toAccount;
 		this.description = description;
-		this.amount = amount;
-		this.receiptNumber = receiptNumber;
+		this.amount = Double.toString(amount);
+		this.receiptNumber = Double.toString(receiptNumber);
 		setData();
 		createGUI();	
 	}
@@ -115,8 +115,8 @@ public class EditTransactionWindow {
 		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 
 		JLabel dateLabel = new JLabel("Datum");
-		this.dateField = new JTextField();
-		this.dateField.setPreferredSize(new Dimension(150, 20));
+		//this.dateField = new JTextField();
+		//this.dateField.setPreferredSize(new Dimension(150, 20));
 		JLabel sollLabel = new JLabel("Soll Konto");
 		this.sollField = new JComboBox(this.fromAccounts.toArray());
 		this.sollField.setPreferredSize(new Dimension(150, 20));
@@ -124,13 +124,13 @@ public class EditTransactionWindow {
 		this.habenField = new JComboBox(this.toAccounts.toArray());
 		this.habenField.setPreferredSize(new Dimension(150, 20));
 		JLabel buchungLabel = new JLabel("Buchungssatz");
-		this.transactionField = new JTextField();
+		this.transactionField = new JTextField(description);
 		this.transactionField.setPreferredSize(new Dimension(150, 20));
 		JLabel betragLabel = new JLabel("Betrag");
-		this.amountField = new JTextField();
+		this.amountField = new JTextField(amount);
 		this.amountField.setPreferredSize(new Dimension(150, 20));
 		JLabel belegLabel = new JLabel("Beleg Nr.");
-		this.receiptField = new JTextField();
+		this.receiptField = new JTextField(receiptNumber);
 		this.receiptField.setPreferredSize(new Dimension(150, 20));
 
 		formPanel.add(dateLabel);
@@ -159,44 +159,53 @@ public class EditTransactionWindow {
 		okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean hasError = false;
-				String errorMessage = "";
-				Transaction newTrans = new Transaction();
-				Date date = new Date();
-				String regex = "[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{4}";
-				//System.out.println((java.sql.Date) datePicker.getModel().getValue());
-//				System.out.println(new java.sql.Date((java.util.Date) datePicker.getModel().getValue()));
-				java.util.Date selectedDate = (Date) datePicker.getModel().getValue();
-				
-				if (selectedDate != null) {
-					newTrans.setDate(new java.sql.Date(selectedDate.getTime()));
-				} else {
-					errorMessage = "Datum muss ausgef\u00fcllt sein!";
-					hasError = true;
+				Object[] options = {"Ja", "Nein"};
+				int eingabe = JOptionPane.showOptionDialog(
+								null,
+								"Sind Sie sicher, Buchung wird ge\u00e4ndert?",
+								"Best\u00e4tigung",
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE,
+							    null,
+							    options,
+							    options[1]);
+				if (eingabe == 0) {
+					boolean hasError = false;
+					String errorMessage = "";
+					MandantDBHelper helper = new MandantDBHelper();
+					Transaction transToEdit = helper.getTransactionById(transactionId);
+					Date date = new Date();
+					String regex = "[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{4}";
+					//System.out.println((java.sql.Date) datePicker.getModel().getValue());
+//					System.out.println(new java.sql.Date((java.util.Date) datePicker.getModel().getValue()));
+					java.util.Date selectedDate = (Date) datePicker.getModel().getValue();
+					if (selectedDate != null) {
+						transToEdit.setDate(new java.sql.Date(selectedDate.getTime()));
+					} else {
+						errorMessage = "Datum muss ausgef\u00fcllt sein!";
+						hasError = true;
+					}
+					Account sollAccount = helper.getAccountByName(fromAccounts.get(sollField.getSelectedIndex()));
+					transToEdit.setFk_SollKonto(sollAccount.getId());
+					Account habenAccount = helper.getAccountByName(toAccounts.get(habenField.getSelectedIndex()));
+					transToEdit.setFk_HabenKonto(habenAccount.getId());
+					transToEdit.setBezeichnung(transactionField.getText());
+					try {
+						transToEdit.setAmount(Integer.parseInt(amountField.getText()));
+						transToEdit.setBelegNr(Integer.parseInt(receiptField.getText()));
+					} catch (NumberFormatException ex) {
+						errorMessage += "\nBetrag und Beleg-Nr. m\u00fcssen eine Zahl sein!";
+						hasError = true;
+					}
+					if (!hasError) {
+						helper.updateTransaction(transToEdit);
+						parent.refreshTable();
+						frame.dispose();
+					} else {
+						JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
+					}
 				}
-				MandantDBHelper helper = new MandantDBHelper();
-				Account sollAccount = helper.getAccountByName(fromAccounts.get(sollField.getSelectedIndex()));
-				newTrans.setFk_SollKonto(sollAccount.getId());
-				Account habenAccount = helper.getAccountByName(toAccounts.get(habenField.getSelectedIndex()));
-				newTrans.setFk_HabenKonto(habenAccount.getId());
-				newTrans.setBezeichnung(transactionField.getText());
-				try {
-					newTrans.setAmount(Integer.parseInt(amountField.getText()));
-					newTrans.setBelegNr(Integer.parseInt(receiptField.getText()));
-				} catch (NumberFormatException ex) {
-					errorMessage += "\nBetrag und Beleg-Nr. m\u00fcssen eine Zahl sein!";
-					hasError = true;
-				}
-				
-				if (!hasError) {
-					newTrans.createInDB();
-					parent.refreshTable();
-					frame.dispose();
-				} else {
-					JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
+			}});
 		JButton cancelButton = new JButton("Abbrechen");
 		cancelButton.addActionListener(new ActionListener() {
 			@Override

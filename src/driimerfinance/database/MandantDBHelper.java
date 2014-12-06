@@ -116,7 +116,7 @@ public class MandantDBHelper {
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-				transaction.setId(resultSet.getInt("idMandanten"));
+				transaction.setId(resultSet.getInt("idBuchung"));
 				transaction.setDate(resultSet.getDate("Datum"));
 				transaction.setFk_SollKonto(resultSet.getInt("fk_SollKonto"));
 				transaction.setFk_HabenKonto(resultSet.getInt("fk_HabenKonto"));
