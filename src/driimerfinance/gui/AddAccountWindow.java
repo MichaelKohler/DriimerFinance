@@ -136,6 +136,14 @@ public class AddAccountWindow {
 				return;
 			}
 			
+			if (isCapAccount.isSelected()) {
+				Account capAccount = helper.getCapitalAccount();
+				if (capAccount != null) {
+					JOptionPane.showMessageDialog(frame, "Es darf nur ein Kapitalkonto existieren!", "Fehler", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			}
+			
 			Account newAcc = new Account();
 			try {
 				newAcc.setNumber(Integer.parseInt(numberField.getText()));
