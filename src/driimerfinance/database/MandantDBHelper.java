@@ -138,9 +138,10 @@ public class MandantDBHelper {
 	 * 
 	 * @param transaction to add
 	 */
-	public void addTransaction(Transaction transaction) {
+	public int addTransaction(Transaction transaction) {
+		int returnedKey = 0;
 		try {
-			preparedStatement = dbconnection.prepareStatement("insert into buchung(Datum, fk_SollKonto, fk_HabenKonto, Bezeichnung, Betrag, `Beleg-Nr`) values (?,?,?,?,?,?)");
+			preparedStatement = dbconnection.prepareStatement("insert into buchung(Datum, fk_SollKonto, fk_HabenKonto, Bezeichnung, Betrag, `Beleg-Nr`) values (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setDate(1, transaction.getDate());
 			preparedStatement.setInt(2, transaction.getFk_SollKonto());
 			preparedStatement.setInt(3, transaction.getFk_HabenKonto());
@@ -148,12 +149,20 @@ public class MandantDBHelper {
 			preparedStatement.setDouble(5, transaction.getBetrag());
 			preparedStatement.setInt(6, transaction.getBelegNr());
 			preparedStatement.execute();
-
+			ResultSet rs =  preparedStatement.getGeneratedKeys();
+			if (rs.next()){
+				
+				returnedKey = rs.getInt(1);
+				System.out.println("returnes id: " + returnedKey);
+			}
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
+		return returnedKey;
 	}
 
 	/**

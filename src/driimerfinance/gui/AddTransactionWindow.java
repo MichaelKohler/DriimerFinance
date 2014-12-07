@@ -27,14 +27,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import driimerfinance.database.MandantDBHelper;
+import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 import driimerfinance.models.Transaction;
@@ -59,14 +62,31 @@ public class AddTransactionWindow {
 	JTextField amountField = null;
 	JTextField receiptField = null;
 	JDatePickerImpl datePicker = null;
+	JTable table = null;
 
 	/**
 	 * Constructor
 	 */
+	public AddTransactionWindow(JTable table) {
+		setTable(table);
+		createGUI();
+	}
+	/**
+	 * Constructor
+	 */
 	public AddTransactionWindow() {
+		setTable(table);
 		createGUI();
 	}
 	
+	public JTable getTable() {
+		return table;
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+
 	/**
      * Creates the GUI
      */
@@ -125,7 +145,7 @@ public class AddTransactionWindow {
 //		this.habenField = new JComboBox(this.toAccounts.keySet().toArray());
 		this.habenField.setPreferredSize(new Dimension(150, 20));
 		
-		JLabel buchungLabel = new JLabel("Buchungssatz");
+		JLabel buchungLabel = new JLabel("Text");
 		this.transactionField = new JTextField();
 		this.transactionField.setPreferredSize(new Dimension(150, 20));
 		JLabel betragLabel = new JLabel("Betrag");
@@ -195,8 +215,18 @@ public class AddTransactionWindow {
 				
 				if (!hasError) {
 					newTrans.createInDB();
-					Account sollAccount = helper.getAccountById(sollAccountId);
-					Account habenAccount = helper.getAccountById(habenAccountId);
+					
+					//Update Swing table
+					DefaultTableModel model = (DefaultTableModel) (table.getModel());
+					Account sollAccount = helper.getAccountById(newTrans.getFk_SollKonto());
+					Account habenAccount = helper.getAccountById(newTrans.getFk_HabenKonto());
+					Object[] newRow = { newTrans.getId().toString(),
+							newTrans.getStringDate(), sollAccount.getName(),
+							habenAccount.getName(), newTrans.getBezeichnung(),
+							FinanceHelper.formatAmount(newTrans.getBetrag()),
+							newTrans.getBelegNr() };
+					model.addRow(newRow);
+					
 					calculateAccountAmounts(sollAccount, habenAccount, amount);
 					frame.dispose();
 				} else {

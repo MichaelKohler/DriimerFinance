@@ -195,7 +195,7 @@ public class Transaction implements IModel {
      */
     public void createInDB() {
     	MandantDBHelper db = new MandantDBHelper();
-    	db.addTransaction(this);
+    	this.setId(db.addTransaction(this));
     	db.closeConnection();
     }
     
