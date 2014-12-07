@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -104,6 +107,13 @@ public class AddTransactionWindow {
 		p.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		Date date = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		datePicker.getModel().setDay(calendar.get(Calendar.DAY_OF_MONTH));
+		datePicker.getModel().setMonth(calendar.get(Calendar.MONTH));
+		datePicker.getModel().setYear(calendar.get(Calendar.YEAR));
+		datePicker.getModel().setSelected(true);
 		
 		JLabel dateLabel = new JLabel("Datum");
 		this.dateField = new JTextField();
