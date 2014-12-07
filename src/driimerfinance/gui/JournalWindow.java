@@ -111,6 +111,71 @@ public class JournalWindow extends OneColumnViewer {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 
+		JButton createButton = new JButton("Neue Buchung");
+		createButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AddTransactionWindow();
+			}
+		});
+		
+		JButton editButton = new JButton("Buchung Bearbeiten");
+		editButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selRow = 0;
+				selRow = transactionTable.getSelectedRow();
+				// if there is a row selected
+				if (selRow != -1) {
+					MandantDBHelper helper = new MandantDBHelper();
+					DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
+					// get transaction data from table model
+					int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
+					String date = model.getValueAt(selRow, 1).toString();
+					int fk_fromAccount = helper.getAccountByName(model.getValueAt(selRow, 2).toString()).getId();
+					int fk_toAccount = helper.getAccountByName(model.getValueAt(selRow, 3).toString()).getId();
+					String description = model.getValueAt(selRow, 4).toString();
+					//double amount = Double.parseDouble(model.getValueAt(selRow, 5).toString());
+					double amount = FinanceHelper.unformatAmount(model.getValueAt(selRow, 5).toString());
+					int receiptNumber = Integer.parseInt(model.getValueAt(selRow, 6).toString());
+					new EditTransactionWindow(parent, transactionId, date, fk_fromAccount, fk_toAccount, description, amount, receiptNumber);
+				}
+			}
+		});
+
+		JButton deleteButton = new JButton("Buchung L\u00f6schen");
+		deleteButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selRow = 0;
+				selRow = transactionTable.getSelectedRow();
+				// if there is a row selected
+				if (selRow != -1) {
+					Object[] options = {"Ja", "Nein"};
+					int eingabe = JOptionPane.showOptionDialog(
+									null,
+									"Sind Sie sicher, Buchung wird unwiderruflich gel\u00f6scht?",
+									"Best\u00e4tigung",
+									JOptionPane.YES_NO_OPTION,
+									JOptionPane.QUESTION_MESSAGE,
+								    null,
+								    options,
+								    options[1]);
+					if (eingabe == 0) {
+						DefaultTableModel model = (DefaultTableModel) transactionTable
+								.getModel();
+						// get transactiontid from table model
+						int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
+						// get the transaction from database and delete it. (in
+						// database as well as in the table)
+						db.deleteTransactionById(transactionId);
+						model.removeRow(selRow);
+					}
+				}
+
+			}
+		});
+		
 		JButton PDFExportButton = new JButton("PDF Export");
 		PDFExportButton.addActionListener(new ActionListener() {
 			@Override
@@ -151,64 +216,8 @@ public class JournalWindow extends OneColumnViewer {
 
 			}
 		});
-		JButton editButton = new JButton("Buchung bearbeiten");
-		editButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int selRow = 0;
-				selRow = transactionTable.getSelectedRow();
-				// if there is a row selected
-				if (selRow != -1) {
-					MandantDBHelper helper = new MandantDBHelper();
-					DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
-					// get transaction data from table model
-					int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
-					String date = model.getValueAt(selRow, 1).toString();
-					int fk_fromAccount = helper.getAccountByName(model.getValueAt(selRow, 2).toString()).getId();
-					int fk_toAccount = helper.getAccountByName(model.getValueAt(selRow, 3).toString()).getId();
-					String description = model.getValueAt(selRow, 4).toString();
-					//double amount = Double.parseDouble(model.getValueAt(selRow, 5).toString());
-					double amount = FinanceHelper.unformatAmount(model.getValueAt(selRow, 5).toString());
-					int receiptNumber = Integer.parseInt(model.getValueAt(selRow, 6).toString());
-					new EditTransactionWindow(parent, transactionId, date, fk_fromAccount, fk_toAccount, description, amount, receiptNumber);
-				}
-			}
-		});
-
-		JButton deleteButton = new JButton("Buchung l\u00f6schen");
-		deleteButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int selRow = 0;
-				selRow = transactionTable.getSelectedRow();
-				// if there is a row selected
-				if (selRow != -1) {
-					Object[] options = {"Ja", "Nein"};
-					int eingabe = JOptionPane.showOptionDialog(
-									null,
-									"Sind Sie sicher, Buchung wird unwiderruflich gel\u00f6scht?",
-									"Best\u00e4tigung",
-									JOptionPane.YES_NO_OPTION,
-									JOptionPane.QUESTION_MESSAGE,
-								    null,
-								    options,
-								    options[1]);
-					if (eingabe == 0) {
-						DefaultTableModel model = (DefaultTableModel) transactionTable
-								.getModel();
-						// get transactiontid from table model
-						int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
-						// get the transaction from database and delete it. (in
-						// database as well as in the table)
-						db.deleteTransactionById(transactionId);
-						model.removeRow(selRow);
-					}
-				}
-
-			}
-		});
 	
-		JButton closeButton = new JButton("Fenster schliessen");
+		JButton closeButton = new JButton("Exit");
 		closeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -218,9 +227,10 @@ public class JournalWindow extends OneColumnViewer {
 			}
 		});
 
-		buttonPanel.add(PDFExportButton, BorderLayout.WEST);
+		buttonPanel.add(createButton, BorderLayout.WEST);
 		buttonPanel.add(editButton, BorderLayout.WEST);
 		buttonPanel.add(deleteButton, BorderLayout.CENTER);
+		buttonPanel.add(PDFExportButton, BorderLayout.CENTER);
 		buttonPanel.add(closeButton, BorderLayout.EAST);
 		frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		this.frame.getRootPane().setDefaultButton(closeButton);
