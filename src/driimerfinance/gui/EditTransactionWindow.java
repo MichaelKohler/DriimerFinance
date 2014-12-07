@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -38,8 +41,6 @@ public class EditTransactionWindow {
 	JournalWindow parent = null;
 	JFrame frame = new JFrame("DriimerFinance - Buchung bearbeiten");
 	ImageIcon icon = new ImageIcon("images/DF.png");
-//	ArrayList<String> fromAccounts = new ArrayList<String>();
-//	ArrayList<String> toAccounts = new ArrayList<String>();
 	
 	int transactionId;
 	String stDate;
@@ -48,8 +49,6 @@ public class EditTransactionWindow {
 	String description;
 	String amount; 
 	String receiptNumber;
-		
-	//JTextField dateField = null;
 	JComboBox sollField = new JComboBox();
 	JComboBox habenField = new JComboBox();
 	JTextField transactionField =null;
@@ -68,22 +67,9 @@ public class EditTransactionWindow {
 		this.fk_toAccount = fk_toAccount;
 		this.description = description;
 		this.amount = Double.toString(amount);
-		this.receiptNumber = Double.toString(receiptNumber);
-//		setData();
+		this.receiptNumber = Integer.toString(receiptNumber);
 		createGUI();	
 	}
-	
-	/**
-     * Gets the necessary data from the DB
-     */
-//	private void setData() {
-//		MandantDBHelper helper = new MandantDBHelper();
-//		List<Account> accs = helper.getAllAccounts();
-//		for (Account acc : accs) {
-//			this.fromAccounts.add(acc.getName());
-//			this.toAccounts.add(acc.getName());
-//		}
-//	}
 
 	/**
      * Creates the GUI
@@ -113,10 +99,20 @@ public class EditTransactionWindow {
 		p.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-
+		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+		Date date;
+		try {
+			date = formatter.parse(this.stDate);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			datePicker.getModel().setDay(calendar.get(Calendar.DAY_OF_MONTH));
+			datePicker.getModel().setMonth(calendar.get(Calendar.MONTH));
+			datePicker.getModel().setYear(calendar.get(Calendar.YEAR));
+			datePicker.getModel().setSelected(true);
+		} catch (ParseException e) {
+		}
+		
 		JLabel dateLabel = new JLabel("Datum");
-		//this.dateField = new JTextField();
-		//this.dateField.setPreferredSize(new Dimension(150, 20));
 		JLabel sollLabel = new JLabel("Soll Konto");
 		
 		MandantDBHelper helper = new MandantDBHelper();
@@ -132,13 +128,9 @@ public class EditTransactionWindow {
 				this.habenField.setSelectedItem(itemData);
 			}
 		}
-//		this.sollField.setSelectedItem(anObject);;
-//		this.habenField.setSelectedItem();
 		this.sollField.setRenderer(new ComboboxHelper());
-//		this.sollField = new JComboBox(this.fromAccounts.toArray());
 		this.sollField.setPreferredSize(new Dimension(150, 20));
 		JLabel habenLabel = new JLabel("Haben Konto");
-//		this.habenField = new JComboBox(this.toAccounts.toArray());
 		this.habenField.setRenderer(new ComboboxHelper());
 		this.habenField.setPreferredSize(new Dimension(150, 20));
 		JLabel buchungLabel = new JLabel("Buchungssatz");
@@ -152,7 +144,6 @@ public class EditTransactionWindow {
 		this.receiptField.setPreferredSize(new Dimension(150, 20));
 
 		formPanel.add(dateLabel);
-		//formPanel.add(this.dateField);
 		formPanel.add(this.datePicker);
 		formPanel.add(sollLabel);
 		formPanel.add(this.sollField);
@@ -194,8 +185,6 @@ public class EditTransactionWindow {
 					Transaction transToEdit = helper.getTransactionById(transactionId);
 					Date date = new Date();
 					String regex = "[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{4}";
-					//System.out.println((java.sql.Date) datePicker.getModel().getValue());
-//					System.out.println(new java.sql.Date((java.util.Date) datePicker.getModel().getValue()));
 					java.util.Date selectedDate = (Date) datePicker.getModel().getValue();
 					if (selectedDate != null) {
 						transToEdit.setDate(new java.sql.Date(selectedDate.getTime()));
@@ -211,7 +200,7 @@ public class EditTransactionWindow {
 					transToEdit.setFk_HabenKonto(habenAccountId);
 					transToEdit.setBezeichnung(transactionField.getText());
 					try {
-						transToEdit.setAmount(Integer.parseInt(amountField.getText()));
+						transToEdit.setAmount(Double.parseDouble(amountField.getText()));
 						transToEdit.setBelegNr(Integer.parseInt(receiptField.getText()));
 					} catch (NumberFormatException ex) {
 						errorMessage += "\nBetrag und Beleg-Nr. m\u00fcssen eine Zahl sein!";

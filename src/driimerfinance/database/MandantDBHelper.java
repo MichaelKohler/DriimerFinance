@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.TreeMap;
 
+import javax.swing.JOptionPane;
+
 import driimerfinance.models.Account;
 import driimerfinance.models.AccountType;
 import driimerfinance.models.Mandant;
@@ -90,7 +92,7 @@ public class MandantDBHelper {
 				transaction.setFk_SollKonto(resultSet.getInt("fk_SollKonto"));
 				transaction.setFk_HabenKonto(resultSet.getInt("fk_HabenKonto"));
 				transaction.setBezeichnung(resultSet.getString("Bezeichnung"));
-				transaction.setBetrag(resultSet.getInt("Betrag"));
+				transaction.setBetrag(resultSet.getDouble("Betrag"));
 				transaction.setBelegNr(resultSet.getInt("Beleg-Nr"));
 				transactions.add(transaction);
 			}
@@ -122,7 +124,7 @@ public class MandantDBHelper {
 				transaction.setFk_SollKonto(resultSet.getInt("fk_SollKonto"));
 				transaction.setFk_HabenKonto(resultSet.getInt("fk_HabenKonto"));
 				transaction.setBezeichnung(resultSet.getString("bezeichnung"));
-				transaction.setBetrag(resultSet.getInt("Betrag"));
+				transaction.setBetrag(resultSet.getDouble("Betrag"));
 				transaction.setBelegNr(resultSet.getInt("Beleg-Nr"));
 			}
 		} catch (SQLException e) {
@@ -379,6 +381,25 @@ public class MandantDBHelper {
 		} finally {
 			close();
 		}
+	}
+	
+	public boolean deleteAccountById(int accountId) {
+		try {			
+			preparedStatement = dbconnection
+					.prepareStatement("delete from konto where idkonto=?");
+			preparedStatement.setInt(1, accountId);
+			preparedStatement.execute();
+		} catch (SQLException e) {
+			if (e.getSQLState().startsWith("23"))
+			{
+				JOptionPane.showMessageDialog(null, "Konto kann nicht gel\u00f6scht werden, da es von Buchungen noch verwendet wird", "Fehler", JOptionPane.ERROR_MESSAGE);
+			}
+			e.printStackTrace();
+			return false;
+		} finally {
+			close();
+		}
+		return true;
 	}
 	
 	/**

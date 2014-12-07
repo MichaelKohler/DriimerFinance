@@ -99,6 +99,36 @@ public class DriimerDBHelper {
 		return user;
 	}
 	
+	/**
+	 * Finds a user by name specified.
+	 * 
+	 * @param name to search
+	 * @return user which was found or an empty user
+	 */
+	public User getUserByName(String name) {
+		User user = new User();
+		try {
+			preparedStatement = dbconnection
+					.prepareStatement("select * from user where username=?");
+			preparedStatement.setString(1, name);
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				user.setId(resultSet.getInt("idUser"));
+				user.setName(resultSet.getString("Name"));
+				user.setVorname(resultSet.getString("Vorname"));
+				user.setPassword(resultSet.getString("Password"));
+				user.setUsername(resultSet.getString("username"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return user;
+	}
+	
 	
 	/**
 	 * Finds a users Password by id specified.

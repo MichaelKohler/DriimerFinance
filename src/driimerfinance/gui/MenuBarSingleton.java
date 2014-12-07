@@ -41,7 +41,7 @@ public class MenuBarSingleton {
 
 		JMenuItem exportMenuItem = new JMenuItem("Export Raw Data..");
 		exportMenuItem.setMnemonic(KeyEvent.VK_E);
-		exportMenuItem.setToolTipText("Applikation schliessen");
+		exportMenuItem.setToolTipText("Daten exportieren..");
 		exportMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
@@ -59,6 +59,17 @@ public class MenuBarSingleton {
 			}
 		});
 		file.add(exportMenuItem);
+		
+		JMenuItem pwMenuItem = new JMenuItem("Passwort wechseln..");
+		pwMenuItem.setMnemonic(KeyEvent.VK_E);
+		pwMenuItem.setToolTipText("Passwort des Benutzers wechseln..");
+		pwMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				new EditUserWindow();
+			}
+		});
+		file.add(pwMenuItem);
 		
 		JMenuItem eMenuItem = new JMenuItem("Exit");
 		eMenuItem.setMnemonic(KeyEvent.VK_E);

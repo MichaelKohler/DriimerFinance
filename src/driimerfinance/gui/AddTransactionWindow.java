@@ -205,7 +205,7 @@ public class AddTransactionWindow {
 				newTrans.setBezeichnung(transactionField.getText());
 				double amount = 0.00;
 				try {
-					amount = Integer.parseInt(amountField.getText());
+					amount = Double.parseDouble(amountField.getText());
 					newTrans.setAmount(amount);
 					newTrans.setBelegNr(Integer.parseInt(receiptField.getText()));
 				} catch (NumberFormatException ex) {
