@@ -6,6 +6,7 @@ import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.gui.MainWindow;
 import driimerfinance.gui.LoginWindow;
 import driimerfinance.gui.MainWindowSingleton;
+import driimerfinance.gui.SetupWindow;
 import driimerfinance.models.Mandant;
 import driimerfinance.models.User;
 
@@ -28,6 +29,7 @@ public class DriimerFinance {
      */
     public static void main(String[] args) throws Exception {
     		MainWindowSingleton.getMainWindowInstance();
+    		new SetupWindow();
  //   		new LoginWindow();
 
     		// TEST CODE BELOW
