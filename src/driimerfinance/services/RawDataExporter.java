@@ -60,11 +60,13 @@ public class RawDataExporter extends Exporter implements Runnable {
 			pathToDump = new File("lib/mysqldump.exe").getAbsolutePath();
 		}
 		String command = pathToDump + " -u " + username + " -p" + password + " " + dbname;
+		System.out.println(command);
 		try {
 			Process proc = Runtime.getRuntime().exec(command);
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(
 					proc.getInputStream()));
 			String filename = path + File.separator + dbname + ".sql";
+			System.out.println(filename);
 			PrintWriter writer = new PrintWriter(filename, "UTF-8");
 			String tmp = "";
 			while ((tmp = stdInput.readLine()) != null) {
