@@ -1,26 +1,33 @@
 package driimerfinance.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+
+import com.itextpdf.text.DocumentException;
 
 import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 import driimerfinance.models.ER;
 import driimerfinance.models.Mandant;
+import driimerfinance.services.PDFExporter;
 
 /**
  * Erfolgsrechnung overview window
@@ -68,6 +75,41 @@ public class ERViewer {
 		PDFExportButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				JFileChooser chooser = new JFileChooser();
+				chooser.setCurrentDirectory(new java.io.File("."));
+				chooser.setDialogTitle("Select Destination");
+				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				chooser.setFileFilter(new FileNameExtensionFilter("PDF Files",
+						"PDF", "pdf"));
+				//
+				// disable the "All files" option.
+				//
+				chooser.setAcceptAllFileFilterUsed(false);
+				//
+				if (chooser.showOpenDialog((Component) e.getSource()) == JFileChooser.APPROVE_OPTION) {
+					PDFExporter pdf = new PDFExporter();
+					String filePath = chooser.getSelectedFile()
+							.getAbsolutePath();
+					if (!filePath.endsWith(".pdf")) {
+						filePath = filePath + ".pdf";
+					}
+					System.out.println("Filepath: " + filePath);
+					pdf.setOutputPath(filePath);
+					try {
+						System.out.println("creating pdf");
+						pdf.createErPdf();
+					} catch (DocumentException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else {
+					System.out.println("No Selection ");
+				}
+
 			}
 		});
 		JButton cancelButton = new JButton("Abbrechen");

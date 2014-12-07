@@ -78,6 +78,37 @@ public class PDFExporter {
 		document.add(chapter);
 		document.close();
 	}
+	public void createErPdf() throws DocumentException, IOException {
+		Document document = new Document(PageSize.A4.rotate());
+		try {
+			PdfWriter writer = PdfWriter.getInstance(document,
+					new FileOutputStream(outputPath));
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
+		String documentTitle = new String("Buchungsjournal");
+		document.open();
+		document.addTitle(documentTitle);
+		document.addSubject(documentTitle);
+		document.addKeywords("keyword1, keyword2, keyword3");
+		document.addAuthor(System.getProperty("user.name"));
+		document.addCreator(System.getProperty("user.name"));
+
+		// addTitlePage(document, "Buchungsjournal");
+		Anchor anchor = new Anchor(documentTitle, catFont);
+		anchor.setName(documentTitle);
+
+		Chapter chapter = new Chapter(new Paragraph(anchor), 1);
+		Paragraph titleParagraph = new Paragraph();
+		addTitlePage(titleParagraph);
+		chapter.add(titleParagraph);
+		addEmptyLine(titleParagraph, 1);
+		createJournalTable(chapter);
+
+		document.add(chapter);
+		document.close();
+	}
 
 	private static void addTitlePage(Paragraph para) throws DocumentException {
 		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy:HH:mm");
