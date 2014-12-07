@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.TreeMap;
+import java.util.Vector;
 
 import javax.print.attribute.standard.DateTimeAtProcessing;
 import javax.swing.ImageIcon;
@@ -36,6 +38,7 @@ import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 import driimerfinance.models.Transaction;
+import driimerfinance.helpers.ComboboxHelper;
 
 /**
  * Add a new transaction with this window.
@@ -52,8 +55,8 @@ public class AddTransactionWindow {
 //	TreeMap<Integer, String> toAccounts = new TreeMap<Integer, String>();
 	
 	JTextField dateField = null;
-	JComboBox sollField = null;
-	JComboBox habenField = null;
+	JComboBox sollField = new JComboBox();
+	JComboBox habenField = new JComboBox();
 	JTextField transactionField =null;
 	JTextField amountField = null;
 	JTextField receiptField = null;
@@ -63,7 +66,7 @@ public class AddTransactionWindow {
 	 * Constructor
 	 */
 	public AddTransactionWindow() {
-	    setData();
+	    //setData();
 		createGUI();
 	}
 	
@@ -115,18 +118,26 @@ public class AddTransactionWindow {
 		this.dateField.setPreferredSize(new Dimension(150, 20));
 		JLabel sollLabel = new JLabel("Soll Konto");
 		
-		this.sollField = new JComboBox(this.fromAccounts.toArray());
-		this.sollField = new JComboBox();
+		MandantDBHelper helper = new MandantDBHelper();
+		List<Account> accs = helper.getAllAccounts();
+		for (Account acc : accs) {
+			Object[] itemData = new Object[] {acc.getId(), acc.getName()};
+			this.sollField.addItem(itemData);
+			this.habenField.addItem(itemData);
+		}
+		
+//		this.sollField = new JComboBox(this.fromAccounts.keySet().toArray());
 //		for(Entry<Integer, String> e : fromAccounts.entrySet()){                  
-//			this.sollField.addItem(e.getKey());
+//			this.sollField.addItem(e.getValue());
 //			this.sollField.setItemCaption(e.getKey(), e.getValue()); 
 //		}
-		
+		this.sollField.setRenderer(new ComboboxHelper());
+		this.habenField.setRenderer(new ComboboxHelper());
 		this.sollField.setPreferredSize(new Dimension(150, 20));
 		
 		JLabel habenLabel = new JLabel("Haben Konto");
 		
-		this.habenField = new JComboBox(this.toAccounts.toArray());
+//		this.habenField = new JComboBox(this.toAccounts.keySet().toArray());
 		this.habenField.setPreferredSize(new Dimension(150, 20));
 		
 		JLabel buchungLabel = new JLabel("Buchungssatz");
@@ -180,10 +191,12 @@ public class AddTransactionWindow {
 					hasError = true;
 				}
 				MandantDBHelper helper = new MandantDBHelper();
-				Account sollAccount = helper.getAccountByName(fromAccounts.get(sollField.getSelectedIndex()));
-				newTrans.setFk_SollKonto(sollAccount.getId());
-				Account habenAccount = helper.getAccountByName(toAccounts.get(habenField.getSelectedIndex()));
-				newTrans.setFk_HabenKonto(habenAccount.getId());
+				Object[] itemData = (Object[])sollField.getSelectedItem();
+				int sollAccountId = Integer.parseInt(itemData[0].toString());
+				itemData = (Object[])habenField.getSelectedItem();
+				int habenAccountId = Integer.parseInt(itemData[0].toString());
+				newTrans.setFk_SollKonto(sollAccountId);
+				newTrans.setFk_HabenKonto(habenAccountId);
 				newTrans.setBezeichnung(transactionField.getText());
 				double amount = 0.00;
 				try {
@@ -197,6 +210,8 @@ public class AddTransactionWindow {
 				
 				if (!hasError) {
 					newTrans.createInDB();
+					Account sollAccount = helper.getAccountById(sollAccountId);
+					Account habenAccount = helper.getAccountById(habenAccountId);
 					calculateAccountAmounts(sollAccount, habenAccount, amount);
 					frame.dispose();
 				} else {
