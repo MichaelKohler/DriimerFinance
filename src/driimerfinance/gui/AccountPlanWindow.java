@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import driimerfinance.database.MandantDBHelper;
+import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 import driimerfinance.models.AccountType;
@@ -30,6 +32,7 @@ public class AccountPlanWindow {
 	JFrame frame = new JFrame("DriimerFinance - Kontenplan");
 	ImageIcon icon = new ImageIcon("images/DF.png");
 	JTable accountTable = new JTable();
+	MandantDBHelper db = new MandantDBHelper();
 	AccountPlanWindow parent = this;
 
 	/**
@@ -45,7 +48,7 @@ public class AccountPlanWindow {
 	private void createGUI() {
 		addForm();
 		addButtons();
-		frame.setSize(400, 500);
+		frame.setSize(650, 500);
 		GUIHelper.centerFrame(frame);
 		this.frame.setIconImage(icon.getImage());
 		frame.setVisible(true);
@@ -81,8 +84,7 @@ public class AccountPlanWindow {
 	 * Gets the data for the view once the window is started
 	 */
 	private Object[][] getData() {
-		MandantDBHelper helper = new MandantDBHelper();
-		List<Account> allAccounts = helper.getAllAccounts();
+		List<Account> allAccounts = db.getAllAccounts();
 		Object[][] rows = new Object[allAccounts.size()][4];
 		for (int i = 0; i < allAccounts.size(); i++) {
 			Account acc = allAccounts.get(i);
@@ -99,8 +101,67 @@ public class AccountPlanWindow {
 	 */
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
-		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
+		
+		JButton editButton = new JButton("Konto bearbeiten");
+		editButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selRow = 0;
+				selRow = accountTable.getSelectedRow();
+				// if there is a row selected
+				if (selRow != -1) {
+					MandantDBHelper helper = new MandantDBHelper();
+					DefaultTableModel model = (DefaultTableModel) accountTable.getModel();
+					// get transaction data from table model
+					int accountid = Integer.parseInt(model.getValueAt(selRow, 0).toString());
+					int number = Integer.parseInt(model.getValueAt(selRow, 1).toString());
+					String name = model.getValueAt(selRow, 2).toString();
+					int fk_AccountType = Integer.parseInt(model.getValueAt(selRow, 3).toString());
+					double balance = FinanceHelper.unformatAmount(model.getValueAt(selRow, 4).toString());
+					Boolean capitalAccount = Boolean.parseBoolean(model.getValueAt(selRow, 5).toString());
+//					new EditAccountWindow(parent, accountid, number, name, fk_AccountType, balance, capitalAccount);
+				}
+			}
+		});
+		
+		JButton deleteButton = new JButton("Konto l\u00f6schen");
+		deleteButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selRow = 0;
+				selRow = accountTable.getSelectedRow();
+				// if there is a row selected
+				if (selRow != -1) {
+					Object[] options = {"Ja", "Nein"};
+					int eingabe = JOptionPane.showOptionDialog(
+									null,
+									"Sind Sie sicher, Konto wird unwiderruflich gel\u00f6scht?",
+									"Best\u00e4tigung",
+									JOptionPane.YES_NO_OPTION,
+									JOptionPane.QUESTION_MESSAGE,
+								    null,
+								    options,
+								    options[1]);
+					if (eingabe == 0) {
+						DefaultTableModel model = (DefaultTableModel) accountTable
+								.getModel();
+						// get accountid from table model
+						int accountId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
+						// get the transaction from database and delete it. (in
+						// database as well as in the table)
+						boolean done = db.deleteAccountById(accountId);
+						if (done)
+						{
+							model.removeRow(selRow);
+						}
+					}
+				}
+
+			}
+		});
+		
+		JButton closeButton = new JButton("Fenster schliessen");
+		closeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// we don't need to save this since an account plan is only a
@@ -108,9 +169,12 @@ public class AccountPlanWindow {
 				frame.dispose();
 			}
 		});
-		buttonPanel.add(okButton, BorderLayout.CENTER);
+		
+		buttonPanel.add(editButton, BorderLayout.WEST);
+		buttonPanel.add(deleteButton, BorderLayout.CENTER);
+		buttonPanel.add(closeButton, BorderLayout.EAST);
 		frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-		this.frame.getRootPane().setDefaultButton(okButton);
+		this.frame.getRootPane().setDefaultButton(closeButton);
 	}
 
 	/**

@@ -88,14 +88,13 @@ public class JournalWindow extends OneColumnViewer {
 		JScrollPane scrollPane = new JScrollPane(transactionTable);
 		tablePanel.add(scrollPane);
 
-		MandantDBHelper helper = new MandantDBHelper();
 		List<Transaction> transactions = db.getAllTransactions();
 		for (Transaction transaction : transactions) {
 			DefaultTableModel model = (DefaultTableModel) (transactionTable
 					.getModel());
-			Account sollAccount = helper.getAccountById(transaction
+			Account sollAccount = db.getAccountById(transaction
 					.getFk_SollKonto());
-			Account habenAccount = helper.getAccountById(transaction
+			Account habenAccount = db.getAccountById(transaction
 					.getFk_HabenKonto());
 			Object[] newRow = { transaction.getId().toString(),
 					transaction.getStringDate(), sollAccount.getName(),
