@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.TreeMap;
 
 import driimerfinance.models.Account;
 import driimerfinance.models.AccountType;
@@ -230,6 +231,23 @@ public class MandantDBHelper {
 		}
 		return accounts;
 	}
+	
+	public TreeMap getAllAccountsInMap() {
+	TreeMap accountMap = new TreeMap<Integer, String>();
+	try {
+		statement = dbconnection.createStatement();
+		// resultSet gets the result of the SQL query
+		resultSet = statement.executeQuery("select * from konto");
+		while (resultSet.next()) {
+			accountMap.put(resultSet.getInt("idKonto"), resultSet.getString("Name"));
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		close();
+	}
+	return accountMap;
+}
 	
 	/**
      * Getter: Returns the account with this id of this mandant in the database

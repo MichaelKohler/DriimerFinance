@@ -10,8 +10,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.TreeMap;
 
 import javax.print.attribute.standard.DateTimeAtProcessing;
 import javax.swing.ImageIcon;
@@ -44,6 +48,8 @@ public class AddTransactionWindow {
 	ImageIcon icon = new ImageIcon("images/DF.png");
 	ArrayList<String> fromAccounts = new ArrayList<String>();
 	ArrayList<String> toAccounts = new ArrayList<String>();
+//	TreeMap<Integer, String> fromAccounts = new TreeMap<Integer, String>();
+//	TreeMap<Integer, String> toAccounts = new TreeMap<Integer, String>();
 	
 	JTextField dateField = null;
 	JComboBox sollField = null;
@@ -108,11 +114,21 @@ public class AddTransactionWindow {
 		this.dateField = new JTextField();
 		this.dateField.setPreferredSize(new Dimension(150, 20));
 		JLabel sollLabel = new JLabel("Soll Konto");
+		
 		this.sollField = new JComboBox(this.fromAccounts.toArray());
+		this.sollField = new JComboBox();
+//		for(Entry<Integer, String> e : fromAccounts.entrySet()){                  
+//			this.sollField.addItem(e.getKey());
+//			this.sollField.setItemCaption(e.getKey(), e.getValue()); 
+//		}
+		
 		this.sollField.setPreferredSize(new Dimension(150, 20));
+		
 		JLabel habenLabel = new JLabel("Haben Konto");
+		
 		this.habenField = new JComboBox(this.toAccounts.toArray());
 		this.habenField.setPreferredSize(new Dimension(150, 20));
+		
 		JLabel buchungLabel = new JLabel("Buchungssatz");
 		this.transactionField = new JTextField();
 		this.transactionField.setPreferredSize(new Dimension(150, 20));
