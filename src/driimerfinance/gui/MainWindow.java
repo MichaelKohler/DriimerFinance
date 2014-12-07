@@ -1,6 +1,7 @@
 package driimerfinance.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import driimerfinance.helpers.GUIHelper;
@@ -61,17 +64,20 @@ public class MainWindow {
 	 */
 	private void addForm() {
 		JPanel formPanel = new JPanel();
-		GridLayout layout = new GridLayout(3,4);
-		formPanel.setLayout(layout);
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		JScrollPane pane = new JScrollPane(formPanel);
+		pane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		DriimerDBHelper driimerdb = new DriimerDBHelper();
 		List<Mandant> mandanten = driimerdb.getAllMantanten();
+		int numberOfColumns = mandanten.size();
+		GridLayout layout = new GridLayout(numberOfColumns, 4);
+		formPanel.setLayout(layout);
 		for ( Mandant mandant : mandanten ) {
 			JButton manantButton = makeButton(mandant);
 			formPanel.add(manantButton);
-			this.frame.getContentPane().add(formPanel, BorderLayout.CENTER);
 		}
+		this.frame.getContentPane().add(pane, BorderLayout.CENTER);
 	}
 	
 	private JButton makeButton(final Mandant mandant) {
