@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -39,8 +38,8 @@ public class EditTransactionWindow {
 	JournalWindow parent = null;
 	JFrame frame = new JFrame("DriimerFinance - Buchung bearbeiten");
 	ImageIcon icon = new ImageIcon("images/DF.png");
-	ArrayList<String> fromAccounts = new ArrayList<String>();
-	ArrayList<String> toAccounts = new ArrayList<String>();
+//	ArrayList<String> fromAccounts = new ArrayList<String>();
+//	ArrayList<String> toAccounts = new ArrayList<String>();
 	
 	int transactionId;
 	String stDate;
@@ -126,7 +125,15 @@ public class EditTransactionWindow {
 			Object[] itemData = new Object[] {acc.getId(), acc.getName()};
 			this.sollField.addItem(itemData);
 			this.habenField.addItem(itemData);
+			if (acc.getId()==this.fk_fromAccount){
+				this.sollField.setSelectedItem(itemData);
+			}
+			if (acc.getId()==this.fk_toAccount){
+				this.habenField.setSelectedItem(itemData);
+			}
 		}
+//		this.sollField.setSelectedItem(anObject);;
+//		this.habenField.setSelectedItem();
 		this.sollField.setRenderer(new ComboboxHelper());
 //		this.sollField = new JComboBox(this.fromAccounts.toArray());
 		this.sollField.setPreferredSize(new Dimension(150, 20));
