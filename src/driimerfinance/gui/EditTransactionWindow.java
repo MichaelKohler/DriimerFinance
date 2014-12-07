@@ -199,7 +199,6 @@ public class EditTransactionWindow {
 					}
 					if (!hasError) {
 						helper.updateTransaction(transToEdit);
-						parent.refreshTable();
 						frame.dispose();
 					} else {
 						JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
