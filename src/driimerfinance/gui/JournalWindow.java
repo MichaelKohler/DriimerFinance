@@ -134,7 +134,7 @@ public class JournalWindow extends OneColumnViewer {
 						filePath = filePath + ".pdf";
 					}
 					System.out.println("Filepath: " + filePath);
-					pdf.setOutputPaht(filePath);
+					pdf.setOutputPath(filePath);
 					try {
 						System.out.println("creating pdf");
 						pdf.createPdf(transactionTable);

@@ -1,15 +1,10 @@
 package driimerfinance.services;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
 import javax.swing.JTable;
-
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
@@ -22,11 +17,8 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Section;
-import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-
 import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.models.Account;
@@ -66,18 +58,14 @@ public class PDFExporter {
 	
 	public void createPdf(Object object) throws DocumentException, IOException {
 		if (object instanceof JTable) {
-			JTable table = (JTable) object;
 			Document document = new Document(PageSize.A4.rotate());
 			try {
-				PdfWriter writer = PdfWriter.getInstance(document,
-						new FileOutputStream(outputPaht));
-	
 				document.open();
 				document.addTitle("Buchungsjournal");
 				document.addSubject("Subject");
 				document.addKeywords("keyword1, keyword2, keyword3");
-				document.addAuthor("Martin Müller");
-				document.addCreator("Martin Müller");
+				document.addAuthor(System.getProperty("user.name"));
+				document.addCreator(System.getProperty("user.name"));
 				
 				//addTitlePage(document, "Buchungsjournal");
 				addContent(document);
@@ -113,7 +101,7 @@ public class PDFExporter {
 	  }
 
 
-	public void setOutputPaht(String outputPaht) {
+	public void setOutputPath(String outputPaht) {
 		this.outputPaht = outputPaht;
 	}
 
