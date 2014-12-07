@@ -6,6 +6,8 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.swing.JTable;
+
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Chapter;
@@ -75,7 +77,9 @@ public class PDFExporter {
 		document.add(chapter);
 		document.close();
 	}
-	public void createErPdf() throws DocumentException, IOException {
+
+	public void createErPdf(JTable jtable) throws DocumentException,
+			IOException {
 		Document document = new Document(PageSize.A4.rotate());
 		try {
 			PdfWriter writer = PdfWriter.getInstance(document,
@@ -101,7 +105,8 @@ public class PDFExporter {
 		addTitlePage(titleParagraph);
 		chapter.add(titleParagraph);
 		addEmptyLine(titleParagraph, 1);
-		createErTable(chapter);
+		System.out.println("createertable");
+		createErTable(chapter, jtable);
 
 		document.add(chapter);
 		document.close();
@@ -183,47 +188,34 @@ public class PDFExporter {
 		subCatPart.add(table);
 
 	}
-	
-	private void createErTable(Section subCatPart)
+
+	private void createErTable(Section subCatPart, JTable jtable)
 			throws BadElementException {
+		int count = jtable.getRowCount();
+		System.out.println("count: " + count);
 		PdfPTable table = new PdfPTable(4);
-
-		PdfPCell c1 = new PdfPCell(new Phrase("ID"));
-		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-		table.addCell(c1);
-
-		c1 = new PdfPCell(new Phrase("Datum"));
-		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-		table.addCell(c1);
-
-		c1 = new PdfPCell(new Phrase("Soll-Konto"));
-		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-		table.addCell(c1);
-
-		c1 = new PdfPCell(new Phrase("Haben-Konto"));
-		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-		table.addCell(c1);
-
+		table.addCell("Aufwand");
+		table.addCell("Betrag");
+		table.addCell("Ertrag");
+		table.addCell("Betrag");
+		for (int i = 0; i < count; i++) {
+			System.out.println("I: " + i);
+			for (int a = 0; a <= 3; a++) {
+				System.out.println("a: " + a);
+				Object obj1 = GetTableData(jtable, i, a);
+				String value1 = obj1.toString();
+				System.out.println("TableCellValue: " + value1);
+				table.addCell(value1);
+			}
+		}
+		
 		table.setHeaderRows(1);
 
-		MandantDBHelper helper = new MandantDBHelper();
-		List<Transaction> transactions = helper.getAllTransactions();
-		for (Transaction transaction : transactions) {
-
-			Account sollAccount = helper.getAccountById(transaction
-					.getFk_SollKonto());
-			Account habenAccount = helper.getAccountById(transaction
-					.getFk_HabenKonto());
-
-			table.addCell(transaction.getId().toString());
-			table.addCell(transaction.getStringDate());
-			table.addCell(sollAccount.getName());
-			table.addCell(habenAccount.getName());
-			table.addCell(transaction.getBezeichnung());
-			table.addCell(FinanceHelper.formatAmount(transaction.getBetrag()));
-			table.addCell(transaction.getBelegNr().toString());
-		}
+		
 		subCatPart.add(table);
 
 	}
+	public Object GetTableData(JTable table, int row_index, int col_index){
+		  return table.getModel().getValueAt(row_index, col_index);
+		 }
 }

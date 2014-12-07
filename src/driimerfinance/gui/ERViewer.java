@@ -27,6 +27,7 @@ import driimerfinance.models.Account;
 import driimerfinance.models.ER;
 import driimerfinance.services.PDFExporter;
 
+
 /**
  * Erfolgsrechnung overview window
  * 
@@ -35,6 +36,7 @@ import driimerfinance.services.PDFExporter;
 public class ERViewer {
 	JFrame frame = new JFrame("DriimerFinance");
 	ImageIcon icon = new ImageIcon("images/DF.png");
+	JTable accountTable = null;
 	
 	/**
 	 * Constructor
@@ -58,7 +60,7 @@ public class ERViewer {
 		String[] headers = { "Aufwand", "Betrag", "Ertrag", "Betrag" };
 		Object[][] data = prepareData();
 		
-		JTable accountTable = new JTable(new DefaultTableModel(data, headers));
+		accountTable = new JTable(new DefaultTableModel(data, headers));
 		accountTable.setPreferredScrollableViewportSize(new Dimension(490, 390));
 		accountTable.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(accountTable);
@@ -96,7 +98,7 @@ public class ERViewer {
 					pdf.setOutputPath(filePath);
 					try {
 						System.out.println("creating pdf");
-						pdf.createErPdf();
+						pdf.createErPdf(accountTable);
 					} catch (DocumentException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
