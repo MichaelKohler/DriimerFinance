@@ -87,7 +87,7 @@ public class PDFExporter {
 			System.err.println(e.getMessage());
 		}
 
-		String documentTitle = new String("Buchungsjournal");
+		String documentTitle = new String("Erfolgsrechnung");
 		document.open();
 		document.addTitle(documentTitle);
 		document.addSubject(documentTitle);
@@ -104,7 +104,7 @@ public class PDFExporter {
 		addTitlePage(titleParagraph);
 		chapter.add(titleParagraph);
 		addEmptyLine(titleParagraph, 1);
-		createJournalTable(chapter);
+		createErTable(chapter);
 
 		document.add(chapter);
 		document.close();
@@ -132,7 +132,7 @@ public class PDFExporter {
 		}
 	}
 
-	private static void createJournalTable(Section subCatPart)
+	private void createJournalTable(Section subCatPart)
 			throws BadElementException {
 		PdfPTable table = new PdfPTable(7);
 
@@ -161,6 +161,49 @@ public class PDFExporter {
 		table.addCell(c1);
 
 		c1 = new PdfPCell(new Phrase("Beleg-Nr"));
+		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.addCell(c1);
+
+		table.setHeaderRows(1);
+
+		MandantDBHelper helper = new MandantDBHelper();
+		List<Transaction> transactions = helper.getAllTransactions();
+		for (Transaction transaction : transactions) {
+
+			Account sollAccount = helper.getAccountById(transaction
+					.getFk_SollKonto());
+			Account habenAccount = helper.getAccountById(transaction
+					.getFk_HabenKonto());
+
+			table.addCell(transaction.getId().toString());
+			table.addCell(transaction.getStringDate());
+			table.addCell(sollAccount.getName());
+			table.addCell(habenAccount.getName());
+			table.addCell(transaction.getBezeichnung());
+			table.addCell(FinanceHelper.formatAmount(transaction.getBetrag()));
+			table.addCell(transaction.getBelegNr().toString());
+		}
+		subCatPart.add(table);
+
+	}
+	
+	private void createErTable(Section subCatPart)
+			throws BadElementException {
+		PdfPTable table = new PdfPTable(4);
+
+		PdfPCell c1 = new PdfPCell(new Phrase("ID"));
+		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.addCell(c1);
+
+		c1 = new PdfPCell(new Phrase("Datum"));
+		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.addCell(c1);
+
+		c1 = new PdfPCell(new Phrase("Soll-Konto"));
+		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.addCell(c1);
+
+		c1 = new PdfPCell(new Phrase("Haben-Konto"));
 		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		table.addCell(c1);
 
