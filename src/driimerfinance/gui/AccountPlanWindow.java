@@ -116,7 +116,7 @@ public class AccountPlanWindow {
 					int accountid = Integer.parseInt(model.getValueAt(selRow, 0).toString());
 					int number = Integer.parseInt(model.getValueAt(selRow, 1).toString());
 					String name = model.getValueAt(selRow, 2).toString();
-					int fk_AccountType = helper.getAccountByName(model.getValueAt(selRow, 3).toString()).getId();
+					int fk_AccountType = helper.getAccountTypeIdByName(model.getValueAt(selRow, 3).toString());
 					Boolean capitalAccount = Boolean.parseBoolean(model.getValueAt(selRow, 4).toString());
 					new EditAccountWindow(parent, accountid, number, name, fk_AccountType, capitalAccount);
 				}

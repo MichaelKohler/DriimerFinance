@@ -110,7 +110,7 @@ public class EditAccountWindow {
 		this.nameField.setPreferredSize(new Dimension(150, 20));
 		JLabel typeLabel = new JLabel("Typ");
 		this.typeField = new JComboBox(types.toArray());
-//		this.typeField.setSelectedItem(fk_AccountType);
+		this.typeField.setSelectedItem(types.toArray()[fk_AccountType-1]);
 		this.typeField.setPreferredSize(new Dimension(150, 20));
 		JLabel capLabel = new JLabel("Kapitalkonto?");
 		this.isCapAccount = new JCheckBox();

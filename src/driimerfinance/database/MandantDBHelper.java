@@ -453,6 +453,30 @@ public class MandantDBHelper {
 	}
 	
 	/**
+	 * Getter: Returns account type id by name
+	 */
+	public int getAccountTypeIdByName(String accountTypeName) {
+		int accountTypeId = 0;
+		try {
+			preparedStatement = dbconnection
+					.prepareStatement("select idKontotyp from kontotyp where Name=?");
+			preparedStatement.setString(1, accountTypeName);
+			
+			resultSet = preparedStatement.executeQuery();
+			
+			if (resultSet.next()) {
+				accountTypeId = resultSet.getInt("idKontotyp");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return accountTypeId;
+	}
+	
+	
+	/**
 	 * Adds an accounttype to this mandant's database.
 	 * 
 	 * @param accounttype to add
