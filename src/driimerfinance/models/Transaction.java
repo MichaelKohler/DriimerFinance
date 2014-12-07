@@ -194,9 +194,9 @@ public class Transaction implements IModel {
      * @return void
      */
     public void createInDB() {
-    	MandantDBHelper db = new MandantDBHelper();
-    	db.addTransaction(this);
-    	db.closeConnection();
+    		MandantDBHelper db = new MandantDBHelper();
+    		db.addTransaction(this);
+    		db.closeConnection();
     }
     
     /**
@@ -205,9 +205,9 @@ public class Transaction implements IModel {
      * @return void
      */
     public void updateInDB() {
-    	MandantDBHelper db = new MandantDBHelper();
-    	db.updateTransaction(this);
-    	db.closeConnection();
+    		MandantDBHelper db = new MandantDBHelper();
+    		db.updateTransaction(this);
+    		db.closeConnection();
     }
     
     /**
@@ -216,9 +216,8 @@ public class Transaction implements IModel {
      * @return void
      */
     public void deleteInDB() {
-    	MandantDBHelper db = new MandantDBHelper();
-    	db.deleteTransaction(this);
-    	db.closeConnection();
-        
+    		MandantDBHelper db = new MandantDBHelper();
+    		db.deleteTransaction(this);
+    		db.closeConnection();
     }
 }

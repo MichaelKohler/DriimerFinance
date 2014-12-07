@@ -90,7 +90,7 @@ public class MandantDBHelper {
 				transaction.setFk_SollKonto(resultSet.getInt("fk_SollKonto"));
 				transaction.setFk_HabenKonto(resultSet.getInt("fk_HabenKonto"));
 				transaction.setBezeichnung(resultSet.getString("Bezeichnung"));
-				transaction.setBetrag(resultSet.getInt("Betrag"));
+				transaction.setBetrag(resultSet.getDouble("Betrag"));
 				transaction.setBelegNr(resultSet.getInt("Beleg-Nr"));
 				transactions.add(transaction);
 			}
@@ -122,7 +122,7 @@ public class MandantDBHelper {
 				transaction.setFk_SollKonto(resultSet.getInt("fk_SollKonto"));
 				transaction.setFk_HabenKonto(resultSet.getInt("fk_HabenKonto"));
 				transaction.setBezeichnung(resultSet.getString("bezeichnung"));
-				transaction.setBetrag(resultSet.getInt("Betrag"));
+				transaction.setBetrag(resultSet.getDouble("Betrag"));
 				transaction.setBelegNr(resultSet.getInt("Beleg-Nr"));
 			}
 		} catch (SQLException e) {

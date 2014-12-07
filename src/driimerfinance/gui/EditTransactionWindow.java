@@ -68,7 +68,7 @@ public class EditTransactionWindow {
 		this.fk_toAccount = fk_toAccount;
 		this.description = description;
 		this.amount = Double.toString(amount);
-		this.receiptNumber = Double.toString(receiptNumber);
+		this.receiptNumber = Integer.toString(receiptNumber);
 //		setData();
 		createGUI();	
 	}
@@ -211,7 +211,7 @@ public class EditTransactionWindow {
 					transToEdit.setFk_HabenKonto(habenAccountId);
 					transToEdit.setBezeichnung(transactionField.getText());
 					try {
-						transToEdit.setAmount(Integer.parseInt(amountField.getText()));
+						transToEdit.setAmount(Double.parseDouble(amountField.getText()));
 						transToEdit.setBelegNr(Integer.parseInt(receiptField.getText()));
 					} catch (NumberFormatException ex) {
 						errorMessage += "\nBetrag und Beleg-Nr. m\u00fcssen eine Zahl sein!";
