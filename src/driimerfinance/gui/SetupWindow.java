@@ -43,7 +43,6 @@ public class SetupWindow {
 	
 	ImageIcon icon = new ImageIcon("images/DF.png");
 	JFrame frame = new JFrame("DriimerFinance - Konfiguration");
-	JTextField userField = new JTextField();
 	JPasswordField pwField1 = new JPasswordField();
 	JPasswordField pwField2 = new JPasswordField();
 	JTextField licenseField = new JTextField();
@@ -90,12 +89,9 @@ public class SetupWindow {
 	 */
     private void addForm() {
 		JPanel formPanel = new JPanel();
-		GridLayout layout = new GridLayout(4, 2);
+		GridLayout layout = new GridLayout(3, 2);
 		formPanel.setLayout(layout);
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		JLabel userLabel = new JLabel("Benutzername");
-		formPanel.add(userLabel);
-		formPanel.add(userField);
 		JLabel pw1Label = new JLabel("Passwort");
 		formPanel.add(pw1Label);
 		formPanel.add(pwField1);
@@ -118,10 +114,6 @@ public class SetupWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				boolean pwOK = checkPasswords();
-				if (userField.getText() == "") {
-					JOptionPane.showMessageDialog(frame, "Username darf nicht leer sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
-				}
-				
 				if (!pwOK) {
 					JOptionPane.showMessageDialog(frame, "Passwörter stimmen nicht überein!", "Fehler", JOptionPane.ERROR_MESSAGE);
 				}
