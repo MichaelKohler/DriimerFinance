@@ -6,6 +6,11 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,6 +22,15 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 
 import driimerfinance.helpers.GUIHelper;
 
@@ -147,6 +161,37 @@ public class SetupWindow {
 	 * Checks if the license is valid using the License Key Server
 	 */
 	private boolean checkLicense() {
+		HttpClient httpclient = HttpClients.createDefault();
+		HttpPost httppost = new HttpPost("http://driimerfinance.michaelkohler.info/checkLicense");
+		List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+		params.add(new BasicNameValuePair("key", licenseField.getText()));
+		try {
+			httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			return false;
+		}
+
+		HttpResponse response = null;
+		try {
+			response = httpclient.execute(httppost);
+		} catch (IOException e) {
+			return false;
+		}
+		HttpEntity entity = response.getEntity();
+
+		if (entity != null) {
+		    InputStream instream = null;
+			try {
+				instream = entity.getContent();
+				@SuppressWarnings("resource")
+				java.util.Scanner s = new java.util.Scanner(instream).useDelimiter("\\A");
+			    String responseString =  s.hasNext() ? s.next() : "";
+			    instream.close();
+			    return responseString.contains("\"valid\":true");
+			} catch (IllegalStateException | IOException e) {
+				return false;
+			}
+		}
 		return false;
 	}
 }
