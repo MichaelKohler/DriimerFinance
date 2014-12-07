@@ -72,53 +72,9 @@ public class ERViewer {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton PDFExportButton = new JButton("PDF Export");
-		PDFExportButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				JFileChooser chooser = new JFileChooser();
-				chooser.setCurrentDirectory(new java.io.File("."));
-				chooser.setDialogTitle("Select Destination");
-				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				chooser.setFileFilter(new FileNameExtensionFilter("PDF Files",
-						"PDF", "pdf"));
-				//
-				// disable the "All files" option.
-				//
-				chooser.setAcceptAllFileFilterUsed(false);
-				//
-				if (chooser.showOpenDialog((Component) e.getSource()) == JFileChooser.APPROVE_OPTION) {
-					PDFExporter pdf = new PDFExporter();
-					String filePath = chooser.getSelectedFile()
-							.getAbsolutePath();
-					if (!filePath.endsWith(".pdf")) {
-						filePath = filePath + ".pdf";
-					}
-					System.out.println("Filepath: " + filePath);
-					pdf.setOutputPath(filePath);
-					try {
-						System.out.println("creating pdf");
-						pdf.createErPdf(accountTable);
-					} catch (DocumentException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else {
-					System.out.println("No Selection ");
-				}
-
-			}
-		});
+		PDFExportButton.addActionListener(new PDFExportAction());
 		JButton cancelButton = new JButton("Abbrechen");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
+		cancelButton.addActionListener(new FrameCloseAction(frame));
 		buttonPanel.add(PDFExportButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
@@ -184,5 +140,40 @@ public class ERViewer {
     	    	    Object[] row = { "", "", "Verlust", FinanceHelper.formatAmount(Math.abs(winOrLoss)) };
     	    	    return row;
     	    }
+    }
+    
+    public class PDFExportAction implements ActionListener {
+    	@Override
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(new java.io.File("."));
+			chooser.setDialogTitle("Select Destination");
+			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			chooser.setFileFilter(new FileNameExtensionFilter("PDF Files",
+					"PDF", "pdf"));
+			// disable the "All files" option.
+			chooser.setAcceptAllFileFilterUsed(false);
+
+			if (chooser.showOpenDialog((Component) e.getSource()) == JFileChooser.APPROVE_OPTION) {
+				PDFExporter pdf = new PDFExporter();
+				String filePath = chooser.getSelectedFile()
+						.getAbsolutePath();
+				if (!filePath.endsWith(".pdf")) {
+					filePath = filePath + ".pdf";
+				}
+				System.out.println("Filepath: " + filePath);
+				pdf.setOutputPath(filePath);
+				try {
+					System.out.println("creating pdf");
+					pdf.createErPdf(accountTable);
+				} catch (DocumentException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			} else {
+				System.out.println("No Selection ");
+			}
+		}
     }
 }

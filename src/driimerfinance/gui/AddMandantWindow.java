@@ -77,39 +77,36 @@ public class AddMandantWindow {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (nameField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(frame, "Der Name muss ausgef\u00fcllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				DriimerDBHelper helper = new DriimerDBHelper();
-				String mandantName = nameField.getText();
-				Mandant existingMandant = helper.getMandantByName(mandantName);
-				if (existingMandant == null) {
-					Mandant newMandant = new Mandant();
-					newMandant.setName(mandantName);
-					newMandant.setDBSchema(nameField.getText());
-					newMandant.createInDB();
-					MainWindowSingleton.getMainWindowInstance().reload();
-					frame.dispose();
-				}
-				else {
-					JOptionPane.showMessageDialog(frame, "Der Name darf nicht bereits existieren!", "Fehler", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
+		okButton.addActionListener(new SaveMandantAction());
 		JButton cancelButton = new JButton("Abbrechen");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
+		cancelButton.addActionListener(new FrameCloseAction(frame));
 		buttonPanel.add(okButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		this.frame.getRootPane().setDefaultButton(okButton);
+	}
+	
+	public class SaveMandantAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (nameField.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(frame, "Der Name muss ausgef\u00fcllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			DriimerDBHelper helper = new DriimerDBHelper();
+			String mandantName = nameField.getText();
+			Mandant existingMandant = helper.getMandantByName(mandantName);
+			if (existingMandant == null) {
+				Mandant newMandant = new Mandant();
+				newMandant.setName(mandantName);
+				newMandant.setDBSchema(nameField.getText());
+				newMandant.createInDB();
+				MainWindowSingleton.getMainWindowInstance().reload();
+				frame.dispose();
+			}
+			else {
+				JOptionPane.showMessageDialog(frame, "Der Name darf nicht bereits existieren!", "Fehler", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 }

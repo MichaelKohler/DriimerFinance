@@ -81,15 +81,7 @@ public class MainWindow {
 	
 	private JButton makeButton(final Mandant mandant) {
 		JButton button = new JButton(mandant.getName());
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mandant.setCurrentWorkingMandant();
- 				JMenuBar menubar = MenuBarSingleton.getMenuBarInstance();
-				JMenu mandantmenu = menubar.getMenu(menubar.getMenuCount()-1);
-				mandantmenu.setText("Mandant: " + mandant.getName());
-			}
-		});
+		button.addActionListener(new ChangeMandantAction(mandant));
 		return button;
 	}
 	
@@ -100,5 +92,21 @@ public class MainWindow {
 		MainWindowSingleton.main = null;
 		System.out.println("frame nulled");
 		MainWindowSingleton.getMainWindowInstance();
+	}
+	
+	public class ChangeMandantAction implements ActionListener {
+		Mandant mandant = null;
+		
+		public ChangeMandantAction(Mandant mandant) {
+			this.mandant = mandant;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			mandant.setCurrentWorkingMandant();
+				JMenuBar menubar = MenuBarSingleton.getMenuBarInstance();
+			JMenu mandantmenu = menubar.getMenu(menubar.getMenuCount()-1);
+			mandantmenu.setText("Mandant: " + mandant.getName());
+		}
 	}
 }

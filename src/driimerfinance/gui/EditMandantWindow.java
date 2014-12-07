@@ -73,8 +73,6 @@ public class EditMandantWindow {
 		JScrollPane scrollPane = new JScrollPane(mandantTable);
 		tablePanel.add(scrollPane);
 		
-		
-		
 		List<Mandant> mandanten = driimerdb.getAllMantanten();
 		for ( Mandant mandant : mandanten) {
 			DefaultTableModel model = (DefaultTableModel) (mandantTable.getModel());
@@ -91,57 +89,53 @@ public class EditMandantWindow {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton deleteButton = new JButton("Mandant l\u00f6schen");
-		
-		
-		deleteButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int selRow = 0;
-				selRow = mandantTable.getSelectedRow();
-				//if there is a row selected
-				if ( selRow != -1 ) {
-					Object[] options = {"Ja", "Nein"};
-					int eingabe = JOptionPane.showOptionDialog(
-									null,
-									"Sind Sie sicher, Mandant und ALLE seine Daten (Buchungen, Konten, etc.) werden unwiderruflich gel\u00f6scht?",
-									"Best\u00e4tigung",
-									JOptionPane.YES_NO_OPTION,
-									JOptionPane.QUESTION_MESSAGE,
-								    null,
-								    options,
-								    options[1]);
-					if (eingabe == 0) {
-						DefaultTableModel model = (DefaultTableModel)mandantTable.getModel();
-						//get mandantid from table model
-						int mandantId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
-						
-						//get the mandant from database and delete it. (in database as well as in the table)
-						driimerdb.deleteMandantById(mandantId);
-						model.removeRow(selRow);
-						MainWindowSingleton.getMainWindowInstance().reload();
-					}
-				}
-			}
-		});
+		deleteButton.addActionListener(new DeleteMandantAction());
 		JButton editButton = new JButton("Mandant editieren");
-		editButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
+		editButton.addActionListener(new SaveEditedMandantAction());
 		JButton cancelButton = new JButton("Abbrechen");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
+		cancelButton.addActionListener(new FrameCloseAction(frame));
 		buttonPanel.add(deleteButton, BorderLayout.WEST);
 		buttonPanel.add(editButton, BorderLayout.CENTER);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		this.frame.getRootPane().setDefaultButton(cancelButton);
+	}
+	
+	public class DeleteMandantAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int selRow = 0;
+			selRow = mandantTable.getSelectedRow();
+			//if there is a row selected
+			if ( selRow != -1 ) {
+				Object[] options = {"Ja", "Nein"};
+				int eingabe = JOptionPane.showOptionDialog(
+								null,
+								"Sind Sie sicher, Mandant und ALLE seine Daten (Buchungen, Konten, etc.) werden unwiderruflich gel\u00f6scht?",
+								"Best\u00e4tigung",
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE,
+							    null,
+							    options,
+							    options[1]);
+				if (eingabe == 0) {
+					DefaultTableModel model = (DefaultTableModel)mandantTable.getModel();
+					//get mandantid from table model
+					int mandantId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
+					
+					//get the mandant from database and delete it. (in database as well as in the table)
+					driimerdb.deleteMandantById(mandantId);
+					model.removeRow(selRow);
+					MainWindowSingleton.getMainWindowInstance().reload();
+				}
+			}
+		}
+	}
+	
+	public class SaveEditedMandantAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {	
+		}
 	}
 
 }

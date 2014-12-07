@@ -72,33 +72,30 @@ public class EditUserWindow {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String pw1 = new String(pwField1.getPassword());
-				String pw2 = new String(pwField2.getPassword());
-				if (pw1.equals(pw2) == false) {
-					JOptionPane.showMessageDialog(frame, "Passwörter stimmen nicht überein!", "Fehler", JOptionPane.ERROR_MESSAGE);
-				}
-				else {
-					DriimerDBHelper helper = new DriimerDBHelper();
-					User user = helper.getUserByName("admin");
-					user.setPassword(pw1);
-					user.updateInDB();
-					frame.dispose();
-				}
-			}
-		});
+		okButton.addActionListener(new SaveEditedUserAction());
 		JButton cancelButton = new JButton("Abbrechen");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
+		cancelButton.addActionListener(new FrameCloseAction(frame));
 		buttonPanel.add(okButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		this.frame.getRootPane().setDefaultButton(okButton);
+	}
+	
+	public class SaveEditedUserAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String pw1 = new String(pwField1.getPassword());
+			String pw2 = new String(pwField2.getPassword());
+			if (pw1.equals(pw2) == false) {
+				JOptionPane.showMessageDialog(frame, "Passwörter stimmen nicht überein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+			}
+			else {
+				DriimerDBHelper helper = new DriimerDBHelper();
+				User user = helper.getUserByName("admin");
+				user.setPassword(pw1);
+				user.updateInDB();
+				frame.dispose();
+			}
+		}
 	}
 }

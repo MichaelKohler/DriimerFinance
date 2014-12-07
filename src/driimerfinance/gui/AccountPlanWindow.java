@@ -103,71 +103,13 @@ public class AccountPlanWindow {
 		JPanel buttonPanel = new JPanel();
 		
 		JButton editButton = new JButton("Konto bearbeiten");
-		editButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int selRow = 0;
-				selRow = accountTable.getSelectedRow();
-				// if there is a row selected
-				if (selRow != -1) {
-					MandantDBHelper helper = new MandantDBHelper();
-					DefaultTableModel model = (DefaultTableModel) accountTable.getModel();
-					// get transaction data from table model
-					int accountid = Integer.parseInt(model.getValueAt(selRow, 0).toString());
-					int number = Integer.parseInt(model.getValueAt(selRow, 1).toString());
-					String name = model.getValueAt(selRow, 2).toString();
-					int fk_AccountType = helper.getAccountTypeIdByName(model.getValueAt(selRow, 3).toString());
-					Boolean capitalAccount = Boolean.parseBoolean(model.getValueAt(selRow, 4).toString());
-					new EditAccountWindow(parent, accountid, number, name, fk_AccountType, capitalAccount);
-				}
-			}
-		});
+		editButton.addActionListener(new AccountEditAction());
 		
 		JButton deleteButton = new JButton("Konto l\u00f6schen");
-		deleteButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int selRow = 0;
-				selRow = accountTable.getSelectedRow();
-				// if there is a row selected
-				if (selRow != -1) {
-					Object[] options = {"Ja", "Nein"};
-					int eingabe = JOptionPane.showOptionDialog(
-									null,
-									"Sind Sie sicher, Konto wird unwiderruflich gel\u00f6scht?",
-									"Best\u00e4tigung",
-									JOptionPane.YES_NO_OPTION,
-									JOptionPane.QUESTION_MESSAGE,
-								    null,
-								    options,
-								    options[1]);
-					if (eingabe == 0) {
-						DefaultTableModel model = (DefaultTableModel) accountTable
-								.getModel();
-						// get accountid from table model
-						int accountId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
-						// get the transaction from database and delete it. (in
-						// database as well as in the table)
-						boolean done = db.deleteAccountById(accountId);
-						if (done)
-						{
-							model.removeRow(selRow);
-						}
-					}
-				}
-
-			}
-		});
+		deleteButton.addActionListener(new AccountDeleteAction());
 		
 		JButton closeButton = new JButton("Fenster schliessen");
-		closeButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// we don't need to save this since an account plan is only a
-				// virtual entity
-				frame.dispose();
-			}
-		});
+		closeButton.addActionListener(new FrameCloseAction(frame));
 		
 		buttonPanel.add(editButton, BorderLayout.WEST);
 		buttonPanel.add(deleteButton, BorderLayout.CENTER);
@@ -188,5 +130,59 @@ public class AccountPlanWindow {
 				acc.getFk_AccountType() };
 		model.addRow(newRow);
 		frame.repaint();
+	}
+	
+	public class AccountEditAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int selRow = 0;
+			selRow = accountTable.getSelectedRow();
+			// if there is a row selected
+			if (selRow != -1) {
+				MandantDBHelper helper = new MandantDBHelper();
+				DefaultTableModel model = (DefaultTableModel) accountTable.getModel();
+				// get transaction data from table model
+				int accountid = Integer.parseInt(model.getValueAt(selRow, 0).toString());
+				int number = Integer.parseInt(model.getValueAt(selRow, 1).toString());
+				String name = model.getValueAt(selRow, 2).toString();
+				int fk_AccountType = helper.getAccountTypeIdByName(model.getValueAt(selRow, 3).toString());
+				Boolean capitalAccount = Boolean.parseBoolean(model.getValueAt(selRow, 4).toString());
+				new EditAccountWindow(parent, accountid, number, name, fk_AccountType, capitalAccount);
+			}
+		}
+	}
+	
+	public class AccountDeleteAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int selRow = 0;
+			selRow = accountTable.getSelectedRow();
+			// if there is a row selected
+			if (selRow != -1) {
+				Object[] options = {"Ja", "Nein"};
+				int eingabe = JOptionPane.showOptionDialog(
+								null,
+								"Sind Sie sicher, Konto wird unwiderruflich gel\u00f6scht?",
+								"Best\u00e4tigung",
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE,
+							    null,
+							    options,
+							    options[1]);
+				if (eingabe == 0) {
+					DefaultTableModel model = (DefaultTableModel) accountTable
+							.getModel();
+					// get accountid from table model
+					int accountId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
+					// get the transaction from database and delete it. (in
+					// database as well as in the table)
+					boolean done = db.deleteAccountById(accountId);
+					if (done)
+					{
+						model.removeRow(selRow);
+					}
+				}
+			}
+		}
 	}
 }

@@ -108,120 +108,19 @@ public class JournalWindow {
 		JPanel buttonPanel = new JPanel();
 
 		JButton createButton = new JButton("Neue Buchung");
-		createButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new AddTransactionWindow(transactionTable);
-			}
-		});
+		createButton.addActionListener(new AddNewTransactionAction());
 		
-		JButton editButton = new JButton("Buchung Bearbeiten");
-		editButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int selRow = 0;
-				selRow = transactionTable.getSelectedRow();
-				// if there is a row selected
-				if (selRow != -1) {
-					MandantDBHelper helper = new MandantDBHelper();
-					DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
-					// get transaction data from table model
-					int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
-					String date = model.getValueAt(selRow, 1).toString();
-					int fk_fromAccount = helper.getAccountByName(model.getValueAt(selRow, 2).toString()).getId();
-					int fk_toAccount = helper.getAccountByName(model.getValueAt(selRow, 3).toString()).getId();
-					String description = model.getValueAt(selRow, 4).toString();
-					//double amount = Double.parseDouble(model.getValueAt(selRow, 5).toString());
-					double amount = FinanceHelper.unformatAmount(model.getValueAt(selRow, 5).toString());
-					int receiptNumber = Integer.parseInt(model.getValueAt(selRow, 6).toString());
-					new EditTransactionWindow(parent, transactionId, date, fk_fromAccount, fk_toAccount, description, amount, receiptNumber, model, selRow);
-				}
-			}
-		});
+		JButton editButton = new JButton("Buchung bearbeiten");
+		editButton.addActionListener(new EditTransactionAction());
 
-		JButton deleteButton = new JButton("Buchung L\u00f6schen");
-		deleteButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int selRow = 0;
-				selRow = transactionTable.getSelectedRow();
-				// if there is a row selected
-				if (selRow != -1) {
-					Object[] options = {"Ja", "Nein"};
-					int eingabe = JOptionPane.showOptionDialog(
-									null,
-									"Sind Sie sicher, Buchung wird unwiderruflich gel\u00f6scht?",
-									"Best\u00e4tigung",
-									JOptionPane.YES_NO_OPTION,
-									JOptionPane.QUESTION_MESSAGE,
-								    null,
-								    options,
-								    options[1]);
-					if (eingabe == 0) {
-						DefaultTableModel model = (DefaultTableModel) transactionTable
-								.getModel();
-						// get transactiontid from table model
-						int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
-						// get the transaction from database and delete it. (in
-						// database as well as in the table)
-						db.deleteTransactionById(transactionId);
-						model.removeRow(selRow);
-					}
-				}
-
-			}
-		});
+		JButton deleteButton = new JButton("Buchung l\u00f6schen");
+		deleteButton.addActionListener(new DeleteTransactionAction());
 		
 		JButton PDFExportButton = new JButton("PDF Export");
-		PDFExportButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				JFileChooser chooser = new JFileChooser();
-				chooser.setCurrentDirectory(new java.io.File("."));
-				chooser.setDialogTitle("Select Destination");
-				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				chooser.setFileFilter(new FileNameExtensionFilter("PDF Files",
-						"PDF", "pdf"));
-				//
-				// disable the "All files" option.
-				//
-				chooser.setAcceptAllFileFilterUsed(false);
-				//
-				if (chooser.showOpenDialog((Component) e.getSource()) == JFileChooser.APPROVE_OPTION) {
-					PDFExporter pdf = new PDFExporter();
-					String filePath = chooser.getSelectedFile().getAbsolutePath();
-					if (!filePath.endsWith(".pdf")) {
-						filePath = filePath + ".pdf";
-					}
-					System.out.println("Filepath: " + filePath);
-					pdf.setOutputPath(filePath);
-					try {
-						System.out.println("creating pdf");
-						pdf.createJournalPdf();
-					} catch (DocumentException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else {
-					System.out.println("No Selection ");
-				}
-
-			}
-		});
+		PDFExportButton.addActionListener(new PDFExportAction());
 	
-		JButton closeButton = new JButton("Exit");
-		closeButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// we don't need to save this since an account plan is only a
-				// virtual entity
-				frame.dispose();
-			}
-		});
+		JButton closeButton = new JButton("Fenster schliessen");
+		closeButton.addActionListener(new FrameCloseAction(frame));
 
 		buttonPanel.add(createButton, BorderLayout.WEST);
 		buttonPanel.add(editButton, BorderLayout.WEST);
@@ -236,12 +135,98 @@ public class JournalWindow {
 		frame.repaint();
 	}
 
-	// public void addAccountToTable(Account acc) {
-	// DefaultTableModel model = (DefaultTableModel) (accountTable.getModel());
-	// Object[] newRow = { acc.getId().toString(), acc.getName(),
-	// acc.getFk_AccountType() };
-	// model.addRow(newRow);
-	// frame.repaint();
-	// }
+	public class AddNewTransactionAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new AddTransactionWindow(transactionTable);
+		}
+	}
+	
+	public class EditTransactionAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int selRow = 0;
+			selRow = transactionTable.getSelectedRow();
+			// if there is a row selected
+			if (selRow != -1) {
+				MandantDBHelper helper = new MandantDBHelper();
+				DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
+				// get transaction data from table model
+				int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
+				String date = model.getValueAt(selRow, 1).toString();
+				int fk_fromAccount = helper.getAccountByName(model.getValueAt(selRow, 2).toString()).getId();
+				int fk_toAccount = helper.getAccountByName(model.getValueAt(selRow, 3).toString()).getId();
+				String description = model.getValueAt(selRow, 4).toString();
+				double amount = FinanceHelper.unformatAmount(model.getValueAt(selRow, 5).toString());
+				int receiptNumber = Integer.parseInt(model.getValueAt(selRow, 6).toString());
+				new EditTransactionWindow(parent, transactionId, date, fk_fromAccount, fk_toAccount, description, amount, receiptNumber, model, selRow);
+			}
+		}
+	}
 
+	public class DeleteTransactionAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int selRow = 0;
+			selRow = transactionTable.getSelectedRow();
+			// if there is a row selected
+			if (selRow != -1) {
+				Object[] options = {"Ja", "Nein"};
+				int eingabe = JOptionPane.showOptionDialog(
+								null,
+								"Sind Sie sicher, Buchung wird unwiderruflich gel\u00f6scht?",
+								"Best\u00e4tigung",
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE,
+							    null,
+							    options,
+							    options[1]);
+				if (eingabe == 0) {
+					DefaultTableModel model = (DefaultTableModel) transactionTable
+							.getModel();
+					// get transactiontid from table model
+					int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
+					// get the transaction from database and delete it. (in
+					// database as well as in the table)
+					db.deleteTransactionById(transactionId);
+					model.removeRow(selRow);
+				}
+			}
+		}
+	}
+	
+	public class PDFExportAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(new java.io.File("."));
+			chooser.setDialogTitle("Select Destination");
+			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			chooser.setFileFilter(new FileNameExtensionFilter("PDF Files",
+					"PDF", "pdf"));
+			// disable the "All files" option.
+			chooser.setAcceptAllFileFilterUsed(false);
+
+			if (chooser.showOpenDialog((Component) e.getSource()) == JFileChooser.APPROVE_OPTION) {
+				PDFExporter pdf = new PDFExporter();
+				String filePath = chooser.getSelectedFile().getAbsolutePath();
+				if (!filePath.endsWith(".pdf")) {
+					filePath = filePath + ".pdf";
+				}
+				System.out.println("Filepath: " + filePath);
+				pdf.setOutputPath(filePath);
+				try {
+					System.out.println("creating pdf");
+					pdf.createJournalPdf();
+				} catch (DocumentException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			} else {
+				System.out.println("No Selection ");
+			}
+		}
+	}
 }

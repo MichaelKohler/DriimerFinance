@@ -63,18 +63,9 @@ public class BalanceViewer {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton PDFExportButton = new JButton("PDF Export");
-		PDFExportButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		PDFExportButton.addActionListener(new ExportPDFAction());
 		JButton cancelButton = new JButton("Abbrechen");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
+		cancelButton.addActionListener(new FrameCloseAction(frame));
 		buttonPanel.add(PDFExportButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
@@ -119,5 +110,11 @@ public class BalanceViewer {
         rows[maxLength] = emptyRow;
         rows[maxLength+1] = totalsRow;
         return rows;
+    }
+    
+    public class ExportPDFAction implements ActionListener {
+    		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
     }
 }

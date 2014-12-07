@@ -171,82 +171,76 @@ public class EditTransactionWindow {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Object[] options = {"Ja", "Nein"};
-				int eingabe = JOptionPane.showOptionDialog(
-								null,
-								"Sind Sie sicher, Buchung wird ge\u00e4ndert?",
-								"Best\u00e4tigung",
-								JOptionPane.YES_NO_OPTION,
-								JOptionPane.QUESTION_MESSAGE,
-							    null,
-							    options,
-							    options[1]);
-				if (eingabe == 0) {
-					boolean hasError = false;
-					String errorMessage = "";
-					MandantDBHelper helper = new MandantDBHelper();
-					Transaction transToEdit = helper.getTransactionById(transactionId);
-					Date date = new Date();
-					String regex = "[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{4}";
-					java.util.Date selectedDate = (Date) datePicker.getModel().getValue();
-					if (selectedDate != null) {
-						transToEdit.setDate(new java.sql.Date(selectedDate.getTime()));
-					} else {
-						errorMessage = "Datum muss ausgef\u00fcllt sein!";
-						hasError = true;
-					}
-					Object[] itemData = (Object[])sollField.getSelectedItem();
-					int sollAccountId = Integer.parseInt(itemData[0].toString());
-					itemData = (Object[])habenField.getSelectedItem();
-					int habenAccountId = Integer.parseInt(itemData[0].toString());
-					transToEdit.setFk_SollKonto(sollAccountId);
-					transToEdit.setFk_HabenKonto(habenAccountId);
-					transToEdit.setBezeichnung(transactionField.getText());
-					try {
-						transToEdit.setAmount(Double.parseDouble(amountField.getText()));
-						transToEdit.setBelegNr(Integer.parseInt(receiptField.getText()));
-					} catch (NumberFormatException ex) {
-						errorMessage += "\nBetrag und Beleg-Nr. m\u00fcssen eine Zahl sein!";
-						hasError = true;
-					}
-					if (!hasError) {
-						transToEdit.updateInDB();
-						
-						
-						//Update Jtable in GUI
-						
-						Account sollAccount = helper.getAccountById(transToEdit.getFk_SollKonto());
-						Account habenAccount = helper.getAccountById(transToEdit.getFk_HabenKonto());
-						Object[] newRow = { transToEdit.getId().toString(),
-								transToEdit.getStringDate(), sollAccount.getName(),
-								habenAccount.getName(), transToEdit.getBezeichnung(),
-								FinanceHelper.formatAmount(transToEdit.getBetrag()),
-								transToEdit.getBelegNr() };
-						for(int i=0; i< newRow.length; i++) {
-							model.setValueAt(newRow[i].toString(), row, i);
-						}
-						
-						
-						frame.dispose();
-					} else {
-						JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			}});
+		okButton.addActionListener(new SaveEditedTransactionAction());
 		JButton cancelButton = new JButton("Abbrechen");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
+		cancelButton.addActionListener(new FrameCloseAction(frame));
 		buttonPanel.add(okButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		this.frame.getRootPane().setDefaultButton(okButton);
 	}
+	
+	public class SaveEditedTransactionAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Object[] options = {"Ja", "Nein"};
+			int eingabe = JOptionPane.showOptionDialog(
+							null,
+							"Sind Sie sicher, Buchung wird ge\u00e4ndert?",
+							"Best\u00e4tigung",
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE,
+						    null,
+						    options,
+						    options[1]);
+			if (eingabe == 0) {
+				boolean hasError = false;
+				String errorMessage = "";
+				MandantDBHelper helper = new MandantDBHelper();
+				Transaction transToEdit = helper.getTransactionById(transactionId);
+				Date date = new Date();
+				String regex = "[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{4}";
+				java.util.Date selectedDate = (Date) datePicker.getModel().getValue();
+				if (selectedDate != null) {
+					transToEdit.setDate(new java.sql.Date(selectedDate.getTime()));
+				} else {
+					errorMessage = "Datum muss ausgef\u00fcllt sein!";
+					hasError = true;
+				}
+				Object[] itemData = (Object[])sollField.getSelectedItem();
+				int sollAccountId = Integer.parseInt(itemData[0].toString());
+				itemData = (Object[])habenField.getSelectedItem();
+				int habenAccountId = Integer.parseInt(itemData[0].toString());
+				transToEdit.setFk_SollKonto(sollAccountId);
+				transToEdit.setFk_HabenKonto(habenAccountId);
+				transToEdit.setBezeichnung(transactionField.getText());
+				try {
+					transToEdit.setAmount(Double.parseDouble(amountField.getText()));
+					transToEdit.setBelegNr(Integer.parseInt(receiptField.getText()));
+				} catch (NumberFormatException ex) {
+					errorMessage += "\nBetrag und Beleg-Nr. m\u00fcssen eine Zahl sein!";
+					hasError = true;
+				}
+				if (!hasError) {
+					transToEdit.updateInDB();
+					
+					//Update Jtable in GUI
+					Account sollAccount = helper.getAccountById(transToEdit.getFk_SollKonto());
+					Account habenAccount = helper.getAccountById(transToEdit.getFk_HabenKonto());
+					Object[] newRow = { transToEdit.getId().toString(),
+							transToEdit.getStringDate(), sollAccount.getName(),
+							habenAccount.getName(), transToEdit.getBezeichnung(),
+							FinanceHelper.formatAmount(transToEdit.getBetrag()),
+							transToEdit.getBelegNr() };
+					for(int i=0; i< newRow.length; i++) {
+						model.setValueAt(newRow[i].toString(), row, i);
+					}
 
+					frame.dispose();
+				} else {
+					JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+	}
 }

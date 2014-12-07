@@ -117,46 +117,9 @@ public class SetupWindow {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				boolean pwOK = checkPasswords();
-				if (!pwOK) {
-					JOptionPane.showMessageDialog(frame, "Passwörter stimmen nicht überein!", "Fehler", JOptionPane.ERROR_MESSAGE);
-				}
-				
-				boolean licenseOK = FinanceHelper.checkLicense(licenseField.getText());
-				if (!licenseOK) {
-					JOptionPane.showMessageDialog(frame, "Der Lizenzschlüssel ist nicht gültig!", "Fehler", JOptionPane.ERROR_MESSAGE);
-				}
-				
-				if (pwOK && licenseOK) {
-					// User erstellen und Frame schliessen
-					User user = new User("admin", new String(pwField1.getPassword()));
-					user.createInDB();
-					Properties prop = new Properties();
-					try {
-						URL url = getClass().getResource("../../driimerfinance/database/database.properties");
-						prop.load(new FileInputStream(url.toURI().getPath()));
-						prop.setProperty("licensekey", licenseField.getText());
-						prop.store(new FileOutputStream(url.toURI().getPath()), null);
-					} catch (IOException ex) {
-						ex.printStackTrace();
-					} catch (URISyntaxException ex) {
-						ex.printStackTrace();
-					}
-					frame.dispose();
-					MainWindowSingleton.getMainWindowInstance();
-				}
-			}
-		});
+		okButton.addActionListener(new SaveConfigAction());
 		JButton cancelButton = new JButton("Abbrechen");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
+		cancelButton.addActionListener(new FrameCloseAction(frame));
 		buttonPanel.add(okButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
@@ -168,5 +131,39 @@ public class SetupWindow {
 	 */
 	private boolean checkPasswords() {
 		return new String(pwField1.getPassword()).equals(new String(pwField2.getPassword()));
+	}
+	
+	public class SaveConfigAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			boolean pwOK = checkPasswords();
+			if (!pwOK) {
+				JOptionPane.showMessageDialog(frame, "Passwörter stimmen nicht überein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			boolean licenseOK = FinanceHelper.checkLicense(licenseField.getText());
+			if (!licenseOK) {
+				JOptionPane.showMessageDialog(frame, "Der Lizenzschlüssel ist nicht gültig!", "Fehler", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			if (pwOK && licenseOK) {
+				// User erstellen und Frame schliessen
+				User user = new User("admin", new String(pwField1.getPassword()));
+				user.createInDB();
+				Properties prop = new Properties();
+				try {
+					URL url = getClass().getResource("../../driimerfinance/database/database.properties");
+					prop.load(new FileInputStream(url.toURI().getPath()));
+					prop.setProperty("licensekey", licenseField.getText());
+					prop.store(new FileOutputStream(url.toURI().getPath()), null);
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				} catch (URISyntaxException ex) {
+					ex.printStackTrace();
+				}
+				frame.dispose();
+				MainWindowSingleton.getMainWindowInstance();
+			}
+		}
 	}
 }

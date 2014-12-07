@@ -41,8 +41,6 @@ public class EditAccountWindow {
 	AccountPlanWindow parent = null;
 	JFrame frame = new JFrame("DriimerFinance - Konto bearbeiten");
 	ImageIcon icon = new ImageIcon("images/DF.png");
-//	ArrayList<String> fromAccounts = new ArrayList<String>();
-//	ArrayList<String> toAccounts = new ArrayList<String>();
 	
 	private int accountId;
 	private int number;
@@ -50,8 +48,7 @@ public class EditAccountWindow {
 	private int fk_AccountType = 0;
 	private boolean capitalAccount = false;
 	ArrayList<String> types = new ArrayList<String>();
-		
-	//JTextField dateField = null;
+
 	JComboBox typeField = new JComboBox();
 	JTextField numberField = null;
 	JTextField nameField = null;
@@ -134,58 +131,56 @@ public class EditAccountWindow {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Object[] options = {"Ja", "Nein"};
-				int eingabe = JOptionPane.showOptionDialog(
-								null,
-								"Sind Sie sicher, Konto wird ge\u00e4ndert?",
-								"Best\u00e4tigung",
-								JOptionPane.YES_NO_OPTION,
-								JOptionPane.QUESTION_MESSAGE,
-							    null,
-							    options,
-							    options[1]);
-				if (eingabe == 0) {
-					boolean hasError = false;
-					String errorMessage = "";
-					MandantDBHelper helper = new MandantDBHelper();
-					Account accToEdit = helper.getAccountById(accountId);
-					try {
-						accToEdit.setNumber(Integer.parseInt(numberField.getText()));
-					} catch (NumberFormatException ex) {
-						JOptionPane.showMessageDialog(frame, "Die Konto-Nr. muss eine Nummer sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
-						return;
-					}
-					if (nameField.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(frame, "Der Name muss ausgef\u00fcllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
-						return;
-					}
-					accToEdit.setName(nameField.getText());
-					int typeCode = typeField.getSelectedIndex()+1;
-					System.out.println(typeCode);
-					accToEdit.setFk_AccountType(typeCode);
-					accToEdit.setBalance(helper.getAccountById(accountId).getBalance());
-					accToEdit.setCapitalAccount(isCapAccount.isSelected());
-					if (!hasError) {
-						helper.updateAccount(accToEdit);
-						frame.dispose();
-					} else {
-						JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			}});
+		okButton.addActionListener(new SaveEditedTransactionAction());
 		JButton cancelButton = new JButton("Abbrechen");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
+		cancelButton.addActionListener(new FrameCloseAction(frame));
 		buttonPanel.add(okButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		this.frame.getRootPane().setDefaultButton(okButton);
+	}
+	
+	public class SaveEditedTransactionAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Object[] options = {"Ja", "Nein"};
+			int eingabe = JOptionPane.showOptionDialog(
+							null,
+							"Sind Sie sicher, Konto wird ge\u00e4ndert?",
+							"Best\u00e4tigung",
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE,
+						    null,
+						    options,
+						    options[1]);
+			if (eingabe == 0) {
+				boolean hasError = false;
+				String errorMessage = "";
+				MandantDBHelper helper = new MandantDBHelper();
+				Account accToEdit = helper.getAccountById(accountId);
+				try {
+					accToEdit.setNumber(Integer.parseInt(numberField.getText()));
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(frame, "Die Konto-Nr. muss eine Nummer sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if (nameField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(frame, "Der Name muss ausgef\u00fcllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				accToEdit.setName(nameField.getText());
+				int typeCode = typeField.getSelectedIndex()+1;
+				System.out.println(typeCode);
+				accToEdit.setFk_AccountType(typeCode);
+				accToEdit.setBalance(helper.getAccountById(accountId).getBalance());
+				accToEdit.setCapitalAccount(isCapAccount.isSelected());
+				if (!hasError) {
+					helper.updateAccount(accToEdit);
+					frame.dispose();
+				} else {
+					JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
 	}
 }

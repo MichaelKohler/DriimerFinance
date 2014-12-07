@@ -113,46 +113,43 @@ public class AddAccountWindow {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (nameField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(frame, "Der Name muss ausgef\u00fcllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				MandantDBHelper helper = new MandantDBHelper();
-				Account existingAccount = helper.getAccountByName(nameField.getText());
-				if (existingAccount != null) {
-					JOptionPane.showMessageDialog(frame, "Der Name darf nicht bereits als Konto existieren!", "Fehler", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				
-				Account newAcc = new Account();
-				try {
-					newAcc.setNumber(Integer.parseInt(numberField.getText()));
-				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(frame, "Die Konto-Nr. muss eine Nummer sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				newAcc.setName(nameField.getText());
-				int typeCode = typeField.getSelectedIndex()+1;
-				System.out.println(typeCode);
-				newAcc.setFk_AccountType(typeCode);
-				newAcc.setCapitalAccount(isCapAccount.isSelected());
-				newAcc.createInDB();
-				frame.dispose();
-			}
-		});
+		okButton.addActionListener(new SaveAccountAction());
 		JButton cancelButton = new JButton("Abbrechen");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
+		cancelButton.addActionListener(new FrameCloseAction(frame));
 		buttonPanel.add(okButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		this.frame.getRootPane().setDefaultButton(okButton);
+	}
+	
+	public class SaveAccountAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (nameField.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(frame, "Der Name muss ausgef\u00fcllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			MandantDBHelper helper = new MandantDBHelper();
+			Account existingAccount = helper.getAccountByName(nameField.getText());
+			if (existingAccount != null) {
+				JOptionPane.showMessageDialog(frame, "Der Name darf nicht bereits als Konto existieren!", "Fehler", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			Account newAcc = new Account();
+			try {
+				newAcc.setNumber(Integer.parseInt(numberField.getText()));
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(frame, "Die Konto-Nr. muss eine Nummer sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			newAcc.setName(nameField.getText());
+			int typeCode = typeField.getSelectedIndex()+1;
+			System.out.println(typeCode);
+			newAcc.setFk_AccountType(typeCode);
+			newAcc.setCapitalAccount(isCapAccount.isSelected());
+			newAcc.createInDB();
+			frame.dispose();
+		}
 	}
 }

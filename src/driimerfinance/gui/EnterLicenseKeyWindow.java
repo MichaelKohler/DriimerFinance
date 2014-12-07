@@ -73,40 +73,37 @@ public class EnterLicenseKeyWindow {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				boolean licenseOK = FinanceHelper.checkLicense(licenseField.getText());
-				if (!licenseOK) {
-					JOptionPane.showMessageDialog(frame, "Der Lizenzschlüssel ist nicht gültig!", "Fehler", JOptionPane.ERROR_MESSAGE);
-				}
-				else {
-					Properties prop = new Properties();
-					try {
-						URL url = getClass().getResource("../../driimerfinance/database/database.properties");
-						prop.load(new FileInputStream(url.toURI().getPath()));
-						prop.setProperty("licensekey", licenseField.getText());
-						prop.store(new FileOutputStream(url.toURI().getPath()), null);
-					} catch (IOException ex) {
-						ex.printStackTrace();
-					} catch (URISyntaxException ex) {
-						ex.printStackTrace();
-					}
-					frame.dispose();
-					MainWindowSingleton.getMainWindowInstance();
-				}
-			}
-		});
+		okButton.addActionListener(new SaveLicenseAction());
 		JButton cancelButton = new JButton("Abbrechen");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
+		cancelButton.addActionListener(new FrameCloseAction(frame));
 		buttonPanel.add(okButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		this.frame.getRootPane().setDefaultButton(okButton);
+	}
+	
+	public class SaveLicenseAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			boolean licenseOK = FinanceHelper.checkLicense(licenseField.getText());
+			if (!licenseOK) {
+				JOptionPane.showMessageDialog(frame, "Der Lizenzschlüssel ist nicht gültig!", "Fehler", JOptionPane.ERROR_MESSAGE);
+			}
+			else {
+				Properties prop = new Properties();
+				try {
+					URL url = getClass().getResource("../../driimerfinance/database/database.properties");
+					prop.load(new FileInputStream(url.toURI().getPath()));
+					prop.setProperty("licensekey", licenseField.getText());
+					prop.store(new FileOutputStream(url.toURI().getPath()), null);
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				} catch (URISyntaxException ex) {
+					ex.printStackTrace();
+				}
+				frame.dispose();
+				MainWindowSingleton.getMainWindowInstance();
+			}
+		}
 	}
 }

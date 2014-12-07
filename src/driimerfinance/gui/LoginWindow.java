@@ -30,9 +30,10 @@ import java.awt.BorderLayout;
 */
 public class LoginWindow {
 	
-	JFrame frame = new JFrame("Login Window");
+	JFrame frame = new JFrame("Driimer Finance - Login");
 	ImageIcon icon = new ImageIcon("images/DF.png");
 	DriimerDBHelper db = new DriimerDBHelper();
+	JPasswordField passwordText;
 	
 	/**
 	 * Constructor
@@ -72,7 +73,7 @@ public class LoginWindow {
 		textLabel.setFont(new Font("Verdana", 0, 30));
 		panel.add(textLabel);
 		
-		final JPasswordField passwordText = new JPasswordField(20);
+		passwordText = new JPasswordField(20);
 		passwordText.setFont(new Font("Verdana", 0, 30));
 		panel.add(passwordText);
 
@@ -80,21 +81,22 @@ public class LoginWindow {
 		loginButton.setFont(new Font("Verdana", 0, 30));
 		panel.add(loginButton);
 		this.frame.getRootPane().setDefaultButton(loginButton);
-		loginButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String password = new String(passwordText.getPassword());
-				if (password.equals(db.getUserPasswordById(1))) {
-					MainWindowSingleton.getMainWindowInstance();
-					frame.dispose();
-				}
-				else {
-					JOptionPane.showMessageDialog(frame, "Das Kennwort ist falsch", "Fehler", JOptionPane.ERROR_MESSAGE);
-					passwordText.setText("");
-				}
-			}	
-		});	
+		loginButton.addActionListener(new LoginAction());	
 	}
 	
+	public class LoginAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String password = new String(passwordText.getPassword());
+			if (password.equals(db.getUserPasswordById(1))) {
+				MainWindowSingleton.getMainWindowInstance();
+				frame.dispose();
+			}
+			else {
+				JOptionPane.showMessageDialog(frame, "Das Kennwort ist falsch", "Fehler", JOptionPane.ERROR_MESSAGE);
+				passwordText.setText("");
+			}
+		}
+	}
 }
 

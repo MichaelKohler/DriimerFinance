@@ -41,8 +41,6 @@ public class AddTransactionWindow {
 
 	JFrame frame = new JFrame("DriimerFinance - Buchung hinzuf\u00fcgen");
 	ImageIcon icon = new ImageIcon("images/DF.png");
-//	ArrayList<String> fromAccounts = new ArrayList<String>();
-//	ArrayList<String> toAccounts = new ArrayList<String>();
 	
 	JTextField dateField = null;
 	JComboBox sollField = new JComboBox();
@@ -119,19 +117,13 @@ public class AddTransactionWindow {
 			this.sollField.addItem(itemData);
 			this.habenField.addItem(itemData);
 		}
-		
-//		this.sollField = new JComboBox(this.fromAccounts.keySet().toArray());
-//		for(Entry<Integer, String> e : fromAccounts.entrySet()){                  
-//			this.sollField.addItem(e.getValue());
-//			this.sollField.setItemCaption(e.getKey(), e.getValue()); 
-//		}
+
 		this.sollField.setRenderer(new ComboboxHelper());
 		this.habenField.setRenderer(new ComboboxHelper());
 		this.sollField.setPreferredSize(new Dimension(150, 20));
 		
 		JLabel habenLabel = new JLabel("Haben Konto");
 		
-//		this.habenField = new JComboBox(this.toAccounts.keySet().toArray());
 		this.habenField.setPreferredSize(new Dimension(150, 20));
 		
 		JLabel buchungLabel = new JLabel("Text");
@@ -145,7 +137,6 @@ public class AddTransactionWindow {
 		this.receiptField.setPreferredSize(new Dimension(150, 20));
 
 		formPanel.add(dateLabel);
-		//formPanel.add(this.dateField);
 		formPanel.add(datePicker);
 		formPanel.add(sollLabel);
 		formPanel.add(this.sollField);
@@ -167,69 +158,9 @@ public class AddTransactionWindow {
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				boolean hasError = false;
-				String errorMessage = "";
-				Transaction newTrans = new Transaction();
-				String regex = "[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{4}";
-				//System.out.println((java.sql.Date) datePicker.getModel().getValue());
-//				System.out.println(new java.sql.Date((java.util.Date) datePicker.getModel().getValue()));
-				java.util.Date selectedDate = (Date) datePicker.getModel().getValue();
-				
-				if (selectedDate != null) {
-					newTrans.setDate(new java.sql.Date(selectedDate.getTime()));
-				} else {
-					errorMessage = "Datum muss ausgef\u00fcllt sein!";
-					hasError = true;
-				}
-				MandantDBHelper helper = new MandantDBHelper();
-				Object[] itemData = (Object[])sollField.getSelectedItem();
-				int sollAccountId = Integer.parseInt(itemData[0].toString());
-				itemData = (Object[])habenField.getSelectedItem();
-				int habenAccountId = Integer.parseInt(itemData[0].toString());
-				newTrans.setFk_SollKonto(sollAccountId);
-				newTrans.setFk_HabenKonto(habenAccountId);
-				newTrans.setBezeichnung(transactionField.getText());
-				double amount = 0.00;
-				try {
-					amount = Double.parseDouble(amountField.getText());
-					newTrans.setAmount(amount);
-					newTrans.setBelegNr(Integer.parseInt(receiptField.getText()));
-				} catch (NumberFormatException ex) {
-					errorMessage += "\nBetrag und Beleg-Nr. m\u00fcssen eine Zahl sein!";
-					hasError = true;
-				}
-				
-				if (!hasError) {
-					newTrans.createInDB();
-					
-					//Update Swing table
-					DefaultTableModel model = (DefaultTableModel) (table.getModel());
-					Account sollAccount = helper.getAccountById(newTrans.getFk_SollKonto());
-					Account habenAccount = helper.getAccountById(newTrans.getFk_HabenKonto());
-					Object[] newRow = { newTrans.getId().toString(),
-							newTrans.getStringDate(), sollAccount.getName(),
-							habenAccount.getName(), newTrans.getBezeichnung(),
-							FinanceHelper.formatAmount(newTrans.getBetrag()),
-							newTrans.getBelegNr() };
-					model.addRow(newRow);
-					
-					calculateAccountAmounts(sollAccount, habenAccount, amount);
-					frame.dispose();
-				} else {
-					JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
+		okButton.addActionListener(new SaveTransactionAction());
 		JButton cancelButton = new JButton("Abbrechen");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
+		cancelButton.addActionListener(new FrameCloseAction(frame));
 		buttonPanel.add(okButton, BorderLayout.WEST);
 		buttonPanel.add(cancelButton, BorderLayout.EAST);
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
@@ -266,4 +197,58 @@ public class AddTransactionWindow {
 		haben.updateInDB();
 	}
 
+	public class SaveTransactionAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			boolean hasError = false;
+			String errorMessage = "";
+			Transaction newTrans = new Transaction();
+			String regex = "[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{4}";
+			java.util.Date selectedDate = (Date) datePicker.getModel().getValue();
+			
+			if (selectedDate != null) {
+				newTrans.setDate(new java.sql.Date(selectedDate.getTime()));
+			} else {
+				errorMessage = "Datum muss ausgef\u00fcllt sein!";
+				hasError = true;
+			}
+			MandantDBHelper helper = new MandantDBHelper();
+			Object[] itemData = (Object[])sollField.getSelectedItem();
+			int sollAccountId = Integer.parseInt(itemData[0].toString());
+			itemData = (Object[])habenField.getSelectedItem();
+			int habenAccountId = Integer.parseInt(itemData[0].toString());
+			newTrans.setFk_SollKonto(sollAccountId);
+			newTrans.setFk_HabenKonto(habenAccountId);
+			newTrans.setBezeichnung(transactionField.getText());
+			double amount = 0.00;
+			try {
+				amount = Double.parseDouble(amountField.getText());
+				newTrans.setAmount(amount);
+				newTrans.setBelegNr(Integer.parseInt(receiptField.getText()));
+			} catch (NumberFormatException ex) {
+				errorMessage += "\nBetrag und Beleg-Nr. m\u00fcssen eine Zahl sein!";
+				hasError = true;
+			}
+			
+			if (!hasError) {
+				newTrans.createInDB();
+				
+				//Update Swing table
+				DefaultTableModel model = (DefaultTableModel) (table.getModel());
+				Account sollAccount = helper.getAccountById(newTrans.getFk_SollKonto());
+				Account habenAccount = helper.getAccountById(newTrans.getFk_HabenKonto());
+				Object[] newRow = { newTrans.getId().toString(),
+						newTrans.getStringDate(), sollAccount.getName(),
+						habenAccount.getName(), newTrans.getBezeichnung(),
+						FinanceHelper.formatAmount(newTrans.getBetrag()),
+						newTrans.getBelegNr() };
+				model.addRow(newRow);
+				
+				calculateAccountAmounts(sollAccount, habenAccount, amount);
+				frame.dispose();
+			} else {
+				JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
 }
