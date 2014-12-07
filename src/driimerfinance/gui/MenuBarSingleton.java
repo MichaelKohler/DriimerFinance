@@ -55,7 +55,7 @@ public class MenuBarSingleton {
 			    } else {
 			            return;
 			    }
-				new RawDataExporter().exportToFile(path);
+			    (new Thread(new RawDataExporter(path))).start();
 			}
 		});
 		file.add(exportMenuItem);
