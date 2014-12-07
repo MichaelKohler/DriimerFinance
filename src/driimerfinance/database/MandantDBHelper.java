@@ -294,7 +294,7 @@ public class MandantDBHelper {
      * @return account found or a new account
      */
 	public Account getAccountByName(String accountName) {
-		Account account= new Account();
+		Account account = null;
 		try {
 			preparedStatement = dbconnection
 					.prepareStatement("select * from konto where Name=?");
@@ -303,6 +303,7 @@ public class MandantDBHelper {
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
+				account = new Account();
 				account.setId(resultSet.getInt("idKonto"));
 				account.setNumber(resultSet.getInt("Nummer"));
 				account.setName(resultSet.getString("Name"));

@@ -116,15 +116,22 @@ public class AddAccountWindow {
 		okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (nameField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(frame, "Der Name muss ausgef\u00fcllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				MandantDBHelper helper = new MandantDBHelper();
+				Account existingAccount = helper.getAccountByName(nameField.getText());
+				if (existingAccount != null) {
+					JOptionPane.showMessageDialog(frame, "Der Name darf nicht bereits als Konto existieren!", "Fehler", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
 				Account newAcc = new Account();
 				try {
 					newAcc.setNumber(Integer.parseInt(numberField.getText()));
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(frame, "Die Konto-Nr. muss eine Nummer sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				if (nameField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(frame, "Der Name muss ausgef\u00fcllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				newAcc.setName(nameField.getText());
