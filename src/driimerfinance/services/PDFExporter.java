@@ -1,10 +1,13 @@
 package driimerfinance.services;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
 import javax.swing.JTable;
+
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
@@ -19,6 +22,8 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Section;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.models.Account;
@@ -30,12 +35,8 @@ import driimerfinance.models.Transaction;
  * (c) 2014 Driimer Finance
  */
 public class PDFExporter {
-	private String outputPaht = null;
+	private String outputPath = null;
 	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
-			Font.BOLD);
-	private static Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,
-			Font.NORMAL, BaseColor.RED);
-	private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
 			Font.BOLD);
 	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
 			Font.BOLD);
@@ -56,10 +57,11 @@ public class PDFExporter {
 	}
 	
 	
-	public void createPdf(Object object) throws DocumentException, IOException {
+	public void createJournalPdf(Object object) throws DocumentException, IOException {
 		if (object instanceof JTable) {
 			Document document = new Document(PageSize.A4.rotate());
 			try {
+				PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(outputPath));
 				document.open();
 				document.addTitle("Buchungsjournal");
 				document.addSubject("Subject");
@@ -82,7 +84,7 @@ public class PDFExporter {
 	    anchor.setName("Buchungsjournal");
 	    
 	    // Second parameter is the number of the chapter
-	    SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yy:HH:mm:SS");
+	    SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy:HH:mm");
         Object date = DATE_FORMAT.format(new Date(System.currentTimeMillis()));
 	    Chapter catPart = new Chapter(new Paragraph(anchor), 1);
 	    catPart.add(new Paragraph(
@@ -102,7 +104,7 @@ public class PDFExporter {
 
 
 	public void setOutputPath(String outputPaht) {
-		this.outputPaht = outputPaht;
+		this.outputPath = outputPaht;
 	}
 
 	private static void addTitlePage(Document document, String title) throws DocumentException {

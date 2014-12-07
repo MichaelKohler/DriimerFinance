@@ -137,7 +137,7 @@ public class JournalWindow extends OneColumnViewer {
 					pdf.setOutputPath(filePath);
 					try {
 						System.out.println("creating pdf");
-						pdf.createPdf(transactionTable);
+						pdf.createJournalPdf(transactionTable);
 					} catch (DocumentException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
