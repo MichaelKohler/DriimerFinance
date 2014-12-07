@@ -6,11 +6,16 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,6 +37,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
+import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.User;
 
@@ -119,7 +125,7 @@ public class SetupWindow {
 					JOptionPane.showMessageDialog(frame, "Passwörter stimmen nicht überein!", "Fehler", JOptionPane.ERROR_MESSAGE);
 				}
 				
-				boolean licenseOK = checkLicense();
+				boolean licenseOK = FinanceHelper.checkLicense(licenseField.getText());
 				if (!licenseOK) {
 					JOptionPane.showMessageDialog(frame, "Der Lizenzschlüssel ist nicht gültig!", "Fehler", JOptionPane.ERROR_MESSAGE);
 				}
@@ -128,7 +134,19 @@ public class SetupWindow {
 					// User erstellen und Frame schliessen
 					User user = new User("admin", new String(pwField1.getPassword()));
 					user.createInDB();
+					Properties prop = new Properties();
+					try {
+						URL url = getClass().getResource("../../driimerfinance/database/database.properties");
+						prop.load(new FileInputStream(url.toURI().getPath()));
+						prop.setProperty("licensekey", licenseField.getText());
+						prop.store(new FileOutputStream(url.toURI().getPath()), null);
+					} catch (IOException ex) {
+						ex.printStackTrace();
+					} catch (URISyntaxException ex) {
+						ex.printStackTrace();
+					}
 					frame.dispose();
+					MainWindowSingleton.getMainWindowInstance();
 				}
 			}
 		});
@@ -150,43 +168,5 @@ public class SetupWindow {
 	 */
 	private boolean checkPasswords() {
 		return new String(pwField1.getPassword()).equals(new String(pwField2.getPassword()));
-	}
-	
-	/**
-	 * Checks if the license is valid using the License Key Server
-	 */
-	private boolean checkLicense() {
-		HttpClient httpclient = HttpClients.createDefault();
-		HttpPost httppost = new HttpPost("http://driimerfinance.michaelkohler.info/checkLicense");
-		List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-		params.add(new BasicNameValuePair("key", licenseField.getText()));
-		try {
-			httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-		} catch (UnsupportedEncodingException e) {
-			return false;
-		}
-
-		HttpResponse response = null;
-		try {
-			response = httpclient.execute(httppost);
-		} catch (IOException e) {
-			return false;
-		}
-		HttpEntity entity = response.getEntity();
-
-		if (entity != null) {
-		    InputStream instream = null;
-			try {
-				instream = entity.getContent();
-				@SuppressWarnings("resource")
-				java.util.Scanner s = new java.util.Scanner(instream).useDelimiter("\\A");
-			    String responseString =  s.hasNext() ? s.next() : "";
-			    instream.close();
-			    return responseString.contains("\"valid\":true");
-			} catch (IllegalStateException | IOException e) {
-				return false;
-			}
-		}
-		return false;
 	}
 }
