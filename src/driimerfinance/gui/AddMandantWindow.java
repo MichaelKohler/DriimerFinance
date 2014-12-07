@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import driimerfinance.database.DriimerDBHelper;
+import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Mandant;
 
@@ -81,12 +84,20 @@ public class AddMandantWindow {
 					JOptionPane.showMessageDialog(frame, "Der Name muss ausgef\u00fcllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				Mandant newMandant = new Mandant();
-				newMandant.setName(nameField.getText());
-				newMandant.setDBSchema(nameField.getText());
-				newMandant.createInDB();
-				MainWindowSingleton.getMainWindowInstance().reload();
-				frame.dispose();
+				DriimerDBHelper helper = new DriimerDBHelper();
+				String mandantName = nameField.getText();
+				Mandant existingMandant = helper.getMandantByName(mandantName);
+				if (existingMandant == null) {
+					Mandant newMandant = new Mandant();
+					newMandant.setName(mandantName);
+					newMandant.setDBSchema(nameField.getText());
+					newMandant.createInDB();
+					MainWindowSingleton.getMainWindowInstance().reload();
+					frame.dispose();
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Der Name darf nicht bereits existieren!", "Fehler", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		JButton cancelButton = new JButton("Abbrechen");

@@ -283,18 +283,19 @@ public class DriimerDBHelper {
 	 * Searches a mandant on the database with a given name.
 	 * 
 	 * @param mandantName to search
-	 * @return found mandant if existing or new mandant
+	 * @return found mandant if existing or null otherwise
 	 */
 	public Mandant getMandantByName(String mandantName) {
-		Mandant mandant = new Mandant();
+		Mandant mandant = null;
 		try {
 			preparedStatement = dbconnection
-					.prepareStatement("select * from mandanten where idMandanten=?");
+					.prepareStatement("select * from mandanten where Name=?");
 			preparedStatement.setString(1, mandantName);
 
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
+				mandant = new Mandant();
 				mandant.setID(resultSet.getInt("idMandanten"));
 				mandant.setName(resultSet.getString("Name"));
 				mandant.setDBSchema(resultSet.getString("DBSchema"));
