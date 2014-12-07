@@ -10,8 +10,8 @@ import driimerfinance.database.MandantDBHelper;
 
 public class Account implements IModel {
 	
-	private Integer id = null;
-	private Integer number = null;
+	private int id;
+	private int number;
 	private String name = null;
 	private int fk_AccountType = 0;
 	private double balance = 0;
