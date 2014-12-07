@@ -112,6 +112,40 @@ public class PDFExporter {
 		document.close();
 	}
 
+	public void createBalancePdf(JTable jtable) throws DocumentException,
+			IOException {
+		Document document = new Document(PageSize.A4.rotate());
+		try {
+			PdfWriter writer = PdfWriter.getInstance(document,
+					new FileOutputStream(outputPath));
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
+		String documentTitle = new String("Bilanz");
+		document.open();
+		document.addTitle(documentTitle);
+		document.addSubject(documentTitle);
+		document.addKeywords("keyword1, keyword2, keyword3");
+		document.addAuthor(System.getProperty("user.name"));
+		document.addCreator(System.getProperty("user.name"));
+
+		// addTitlePage(document, "Buchungsjournal");
+		Anchor anchor = new Anchor(documentTitle, catFont);
+		anchor.setName(documentTitle);
+
+		Chapter chapter = new Chapter(new Paragraph(anchor), 1);
+		Paragraph titleParagraph = new Paragraph();
+		addTitlePage(titleParagraph);
+		chapter.add(titleParagraph);
+		addEmptyLine(titleParagraph, 1);
+		System.out.println("createertable");
+		createBalanceTable(chapter, jtable);
+
+		document.add(chapter);
+		document.close();
+	}
+
 	private static void addTitlePage(Paragraph para) throws DocumentException {
 		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy:HH:mm");
 		Object date = DATE_FORMAT.format(new Date(System.currentTimeMillis()));
@@ -208,14 +242,40 @@ public class PDFExporter {
 				table.addCell(value1);
 			}
 		}
-		
+
 		table.setHeaderRows(1);
 
-		
 		subCatPart.add(table);
 
 	}
-	public Object GetTableData(JTable table, int row_index, int col_index){
-		  return table.getModel().getValueAt(row_index, col_index);
-		 }
+
+	private void createBalanceTable(Section subCatPart, JTable jtable)
+			throws BadElementException {
+		int count = jtable.getRowCount();
+		System.out.println("count: " + count);
+		PdfPTable table = new PdfPTable(4);
+		table.addCell("Aktiven");
+		table.addCell("Betrag");
+		table.addCell("Passiven");
+		table.addCell("Betrag");
+		for (int i = 0; i < count; i++) {
+			System.out.println("I: " + i);
+			for (int a = 0; a <= 3; a++) {
+				System.out.println("a: " + a);
+				Object obj1 = GetTableData(jtable, i, a);
+				String value1 = obj1.toString();
+				System.out.println("TableCellValue: " + value1);
+				table.addCell(value1);
+			}
+		}
+
+		table.setHeaderRows(1);
+
+		subCatPart.add(table);
+
+	}
+
+	public Object GetTableData(JTable table, int row_index, int col_index) {
+		return table.getModel().getValueAt(row_index, col_index);
+	}
 }
