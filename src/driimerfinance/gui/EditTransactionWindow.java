@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -28,6 +29,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.ComboboxHelper;
+import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 import driimerfinance.models.Transaction;
@@ -55,11 +57,13 @@ public class EditTransactionWindow {
 	JTextField amountField = null;
 	JTextField receiptField = null;
 	JDatePickerImpl datePicker = null;
+	private DefaultTableModel model = null;
+	private int row = 0;
 
 	/**
 	 * Constructor
 	 */
-	public EditTransactionWindow(JournalWindow jouWin, int transactionId, String date, int fk_fromAccount, int fk_toAccount, String description, double amount, int receiptNumber) {
+	public EditTransactionWindow(JournalWindow jouWin, int transactionId, String date, int fk_fromAccount, int fk_toAccount, String description, double amount, int receiptNumber, DefaultTableModel model, int row) {
 		this.parent = jouWin;
 		this.transactionId = transactionId;
 		this.stDate = date;
@@ -68,6 +72,8 @@ public class EditTransactionWindow {
 		this.description = description;
 		this.amount = Double.toString(amount);
 		this.receiptNumber = Integer.toString(receiptNumber);
+		this.model = model;
+		this.row = row;
 		createGUI();	
 	}
 
@@ -207,7 +213,23 @@ public class EditTransactionWindow {
 						hasError = true;
 					}
 					if (!hasError) {
-						helper.updateTransaction(transToEdit);
+						transToEdit.updateInDB();
+						
+						
+						//Update Jtable in GUI
+						
+						Account sollAccount = helper.getAccountById(transToEdit.getFk_SollKonto());
+						Account habenAccount = helper.getAccountById(transToEdit.getFk_HabenKonto());
+						Object[] newRow = { transToEdit.getId().toString(),
+								transToEdit.getStringDate(), sollAccount.getName(),
+								habenAccount.getName(), transToEdit.getBezeichnung(),
+								FinanceHelper.formatAmount(transToEdit.getBetrag()),
+								transToEdit.getBelegNr() };
+						for(int i=0; i< newRow.length; i++) {
+							model.setValueAt(newRow[i].toString(), row, i);
+						}
+						
+						
 						frame.dispose();
 					} else {
 						JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);

@@ -134,7 +134,7 @@ public class JournalWindow {
 					//double amount = Double.parseDouble(model.getValueAt(selRow, 5).toString());
 					double amount = FinanceHelper.unformatAmount(model.getValueAt(selRow, 5).toString());
 					int receiptNumber = Integer.parseInt(model.getValueAt(selRow, 6).toString());
-					new EditTransactionWindow(parent, transactionId, date, fk_fromAccount, fk_toAccount, description, amount, receiptNumber);
+					new EditTransactionWindow(parent, transactionId, date, fk_fromAccount, fk_toAccount, description, amount, receiptNumber, model, selRow);
 				}
 			}
 		});
