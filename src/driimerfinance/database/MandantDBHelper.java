@@ -320,6 +320,36 @@ public class MandantDBHelper {
 	}
 	
 	/**
+     * Getter: Returns the capital account
+     * 
+     * @return account found
+     */
+	public Account getCapitalAccount() {
+		Account account = null;
+		try {
+			preparedStatement = dbconnection.prepareStatement("select * from konto where Kapitalkonto=?");
+			preparedStatement.setInt(1, 1); // 1 == Kapitalaccount
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				account = new Account();
+				account.setId(resultSet.getInt("idKonto"));
+				account.setNumber(resultSet.getInt("Nummer"));
+				account.setName(resultSet.getString("Name"));
+				account.setFk_AccountType(resultSet.getInt("fk_KontoTyp"));
+				account.setBalance(resultSet.getInt("Guthaben"));
+				account.setCapitalAccount(resultSet.getBoolean("Kapitalkonto"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return account;
+	}
+	
+	/**
 	 * Adds an account to this mandant's database.
 	 * 
 	 * @param account to add

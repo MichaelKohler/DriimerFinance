@@ -24,6 +24,7 @@ import com.itextpdf.text.DocumentException;
 import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
+import driimerfinance.models.AnnualAccounts;
 import driimerfinance.models.ER;
 import driimerfinance.services.PDFExporter;
 
@@ -42,17 +43,26 @@ public class ERViewer {
 	 * Constructor
 	 */
     public ERViewer() {
-        createGUI();
+        createGUI(true);
+    }
+    
+    /**
+     * Constructor
+     */
+    public ERViewer(boolean show) {
+    	    createGUI(show);
     }
     
     /**
      * Creates the GUI.
+     * 
+     * @param show the frame or not
      */
-    private void createGUI() {
+    private void createGUI(boolean show) {
     	    this.frame.setSize(500, 400);
     	    GUIHelper.centerFrame(this.frame);
     	    this.frame.setIconImage(icon.getImage());
-		this.frame.setVisible(true);
+		this.frame.setVisible(show);
 		
 		JPanel tablePanel = new JPanel();
 		tablePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -95,28 +105,27 @@ public class ERViewer {
         int columns = 4;
         int additionalLines = 4;
         Object[][] rows = new Object[maxLength+additionalLines][columns];
-        double totalSpending = 0;
-        double totalEarning = 0;
+
         for (int i = 0; i < maxLength; i++) {
         	    String nameSpending = "";
         	    String balanceSpending = "";
         	    if (i < spending.size()) {
         	    	    nameSpending = spending.get(i).getName();
         	    	    balanceSpending = FinanceHelper.formatAmount(spending.get(i).getBalance());
-        	    	    totalSpending += spending.get(i).getBalance();
         	    }
         	    String nameEarning = "";
         	    String balanceEarning = "";
         	    if (i < earning.size()) {
         	    	    nameEarning = earning.get(i).getName();
         	    	    balanceEarning = FinanceHelper.formatAmount(earning.get(i).getBalance());
-        	    	    totalEarning += earning.get(i).getBalance();
     	        }
         	    Object[] names = { nameSpending, balanceSpending, nameEarning, balanceEarning };
         	    rows[i] = names;
         }
         Object[] emptyRow = { "", "", "", "" };
         rows[maxLength] = emptyRow;
+        double totalSpending = new AnnualAccounts().calculateTotalSpending();
+        double totalEarning = new AnnualAccounts().calculateTotalEarning();
         rows[maxLength+1] = prepareWinRow(totalSpending, totalEarning);
         rows[maxLength+2] = emptyRow;
         Object[] totalsRow = { "Total", FinanceHelper.formatAmount(totalSpending), "Total", FinanceHelper.formatAmount(totalEarning) };
@@ -142,38 +151,42 @@ public class ERViewer {
     	    }
     }
     
-    public class PDFExportAction implements ActionListener {
-    	@Override
-		public void actionPerformed(ActionEvent e) {
-			JFileChooser chooser = new JFileChooser();
-			chooser.setCurrentDirectory(new java.io.File("."));
-			chooser.setDialogTitle("Select Destination");
-			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			chooser.setFileFilter(new FileNameExtensionFilter("PDF Files",
-					"PDF", "pdf"));
-			// disable the "All files" option.
-			chooser.setAcceptAllFileFilterUsed(false);
+    public void exportPDF() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+		chooser.setDialogTitle("Select Destination");
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		chooser.setFileFilter(new FileNameExtensionFilter("PDF Files",
+				"PDF", "pdf"));
+		// disable the "All files" option.
+		chooser.setAcceptAllFileFilterUsed(false);
 
-			if (chooser.showOpenDialog((Component) e.getSource()) == JFileChooser.APPROVE_OPTION) {
-				PDFExporter pdf = new PDFExporter();
-				String filePath = chooser.getSelectedFile()
-						.getAbsolutePath();
-				if (!filePath.endsWith(".pdf")) {
-					filePath = filePath + ".pdf";
-				}
-				System.out.println("Filepath: " + filePath);
-				pdf.setOutputPath(filePath);
-				try {
-					System.out.println("creating pdf");
-					pdf.createErPdf(accountTable);
-				} catch (DocumentException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			} else {
-				System.out.println("No Selection ");
+		if (chooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+			PDFExporter pdf = new PDFExporter();
+			String filePath = chooser.getSelectedFile()
+					.getAbsolutePath();
+			if (!filePath.endsWith(".pdf")) {
+				filePath = filePath + ".pdf";
 			}
+			System.out.println("Filepath: " + filePath);
+			pdf.setOutputPath(filePath);
+			try {
+				System.out.println("creating pdf");
+				pdf.createErPdf(accountTable);
+			} catch (DocumentException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} else {
+			System.out.println("No Selection ");
 		}
+    }
+    
+    public class PDFExportAction implements ActionListener {
+    	    @Override
+		public void actionPerformed(ActionEvent e) {
+    	    		exportPDF();
+    	    }
     }
 }

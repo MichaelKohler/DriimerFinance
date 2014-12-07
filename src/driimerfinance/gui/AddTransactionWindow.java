@@ -49,7 +49,7 @@ public class AddTransactionWindow {
 	JTextField amountField = null;
 	JTextField receiptField = null;
 	JDatePickerImpl datePicker = null;
-	JTable table = null;
+	JTable table = new JTable();
 
 	/**
 	 * Constructor

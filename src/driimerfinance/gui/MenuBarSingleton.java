@@ -197,20 +197,13 @@ public class MenuBarSingleton {
 		
 		JMenu finStatementMenu = new JMenu("Jahresabschluss");
 		balanceMenu.setMnemonic(KeyEvent.VK_B);
-
 		JMenuItem createFinStatement = new JMenuItem("Jahresabschluss erstellen...");
-		showBalanceItem.setMnemonic(KeyEvent.VK_B);
-		showBalanceItem.setToolTipText("Jahresabschluss erstellen");
-		showBalanceItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				
-			}
-		});
+		createFinStatement.setMnemonic(KeyEvent.VK_B);
+		createFinStatement.setToolTipText("Jahresabschluss erstellen");
+		createFinStatement.addActionListener(new AnnualAccountsAction());
 		finStatementMenu.add(createFinStatement);
 
 		bar.add(file);
-
 		bar.add(transactions);
 		bar.add(accountPlan);
 		bar.add(erMenu);

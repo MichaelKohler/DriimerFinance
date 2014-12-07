@@ -47,19 +47,26 @@ public class JournalWindow {
 	 * Constructor
 	 */
 	public JournalWindow() {
-		createGUI();
+		createGUI(true);
+	}
+	
+	/**
+	 * Constructor
+	 */
+	public JournalWindow(boolean show) {
+		createGUI(show);
 	}
 
 	/**
 	 * Creates the GUI
 	 */
-	private void createGUI() {
+	private void createGUI(boolean show) {
 		addTable();
 		addButtons();
 		this.frame.setSize(650, 500);
 		GUIHelper.centerFrame(this.frame);
 		this.frame.setIconImage(icon.getImage());
-		this.frame.setVisible(true);
+		this.frame.setVisible(show);
 	}
 
 	/**
@@ -195,38 +202,41 @@ public class JournalWindow {
 		}
 	}
 	
+	public void exportPDF() {
+		JFileChooser chooser = new JFileChooser();
+		chooser.setCurrentDirectory(new java.io.File("."));
+		chooser.setDialogTitle("Select Destination");
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		chooser.setFileFilter(new FileNameExtensionFilter("PDF Files",
+				"PDF", "pdf"));
+		// disable the "All files" option.
+		chooser.setAcceptAllFileFilterUsed(false);
+
+		if (chooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+			PDFExporter pdf = new PDFExporter();
+			String filePath = chooser.getSelectedFile().getAbsolutePath();
+			if (!filePath.endsWith(".pdf")) {
+				filePath = filePath + ".pdf";
+			}
+			System.out.println("Filepath: " + filePath);
+			pdf.setOutputPath(filePath);
+			try {
+				System.out.println("creating pdf");
+				pdf.createJournalPdf();
+			} catch (DocumentException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} else {
+			System.out.println("No Selection ");
+		}
+	}
+	
 	public class PDFExportAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
-			JFileChooser chooser = new JFileChooser();
-			chooser.setCurrentDirectory(new java.io.File("."));
-			chooser.setDialogTitle("Select Destination");
-			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			chooser.setFileFilter(new FileNameExtensionFilter("PDF Files",
-					"PDF", "pdf"));
-			// disable the "All files" option.
-			chooser.setAcceptAllFileFilterUsed(false);
-
-			if (chooser.showOpenDialog((Component) e.getSource()) == JFileChooser.APPROVE_OPTION) {
-				PDFExporter pdf = new PDFExporter();
-				String filePath = chooser.getSelectedFile().getAbsolutePath();
-				if (!filePath.endsWith(".pdf")) {
-					filePath = filePath + ".pdf";
-				}
-				System.out.println("Filepath: " + filePath);
-				pdf.setOutputPath(filePath);
-				try {
-					System.out.println("creating pdf");
-					pdf.createJournalPdf();
-				} catch (DocumentException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			} else {
-				System.out.println("No Selection ");
-			}
+			exportPDF();
 		}
 	}
 }

@@ -33,18 +33,26 @@ public class BalanceViewer {
 	 * Constructor
 	 */
     public BalanceViewer() {
-        createGUI();
+        createGUI(true);
+        addButtons();
+    }
+    
+    /**
+	 * Constructor
+	 */
+    public BalanceViewer(boolean show) {
+        createGUI(show);
         addButtons();
     }
     
     /**
      * Creates the GUI.
      */
-    private void createGUI() {
+    private void createGUI(boolean show) {
     	    this.frame.setSize(500, 400);
     	    GUIHelper.centerFrame(this.frame);
     	    this.frame.setIconImage(icon.getImage());
-		this.frame.setVisible(true);
+		this.frame.setVisible(show);
 		
 		JPanel tablePanel = new JPanel();
 		tablePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -112,9 +120,14 @@ public class BalanceViewer {
         return rows;
     }
     
+    public void exportPDF() {
+    	
+    }
+    
     public class ExportPDFAction implements ActionListener {
     		@Override
 		public void actionPerformed(ActionEvent e) {
+    			exportPDF();
 		}
     }
 }
