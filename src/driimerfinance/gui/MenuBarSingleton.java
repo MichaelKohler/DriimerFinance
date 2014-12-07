@@ -1,6 +1,5 @@
 package driimerfinance.gui;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -8,12 +7,10 @@ import java.io.File;
 import java.util.List;
 
 import javax.swing.Box;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.SwingConstants;
 
 import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.models.Mandant;

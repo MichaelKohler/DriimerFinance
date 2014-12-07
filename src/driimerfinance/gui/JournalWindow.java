@@ -5,13 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -40,7 +34,7 @@ import driimerfinance.services.PDFExporter;
  * 
  * (c) 2014 Driimer Finance
  */
-public class JournalWindow extends OneColumnViewer {
+public class JournalWindow {
 
 	JFrame frame = new JFrame("Buchungsjournal");
 	ImageIcon icon = new ImageIcon("images/DF.png");

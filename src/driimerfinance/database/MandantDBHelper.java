@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 
 import driimerfinance.models.Account;
 import driimerfinance.models.AccountType;
-import driimerfinance.models.Mandant;
 import driimerfinance.models.Transaction;
 
 /**

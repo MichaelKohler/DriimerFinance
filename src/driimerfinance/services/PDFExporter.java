@@ -6,11 +6,8 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import javax.swing.JTable;
-
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;

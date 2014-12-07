@@ -10,7 +10,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -46,6 +45,7 @@ import driimerfinance.models.User;
  * 
  * (c) 2014 Driimer Finance
 */
+@SuppressWarnings("unused")
 public class SetupWindow {
 	
 	ImageIcon icon = new ImageIcon("images/DF.png");

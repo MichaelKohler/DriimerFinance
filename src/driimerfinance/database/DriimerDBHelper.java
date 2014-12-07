@@ -13,7 +13,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import driimerfinance.models.AccountType;
 import driimerfinance.models.Mandant;
 import driimerfinance.models.User;
 

@@ -8,8 +8,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Properties;
 
-import javax.swing.JFileChooser;
-
 /**
  * Special case: this will save a SQL file with all the possible data from the
  * database. This can be used as a backup.

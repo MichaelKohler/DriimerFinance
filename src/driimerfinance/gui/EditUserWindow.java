@@ -4,12 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,11 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import driimerfinance.database.DriimerDBHelper;
-import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.User;
 

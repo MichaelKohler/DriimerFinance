@@ -12,7 +12,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -26,7 +25,6 @@ import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 import driimerfinance.models.ER;
-import driimerfinance.models.Mandant;
 import driimerfinance.services.PDFExporter;
 
 /**

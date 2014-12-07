@@ -3,8 +3,6 @@ package driimerfinance;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 import java.util.Properties;
 
@@ -12,8 +10,6 @@ import javax.swing.JOptionPane;
 
 import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.gui.EnterLicenseKeyWindow;
-import driimerfinance.gui.MainWindow;
-import driimerfinance.gui.LoginWindow;
 import driimerfinance.gui.MainWindowSingleton;
 import driimerfinance.gui.SetupWindow;
 import driimerfinance.helpers.FinanceHelper;
