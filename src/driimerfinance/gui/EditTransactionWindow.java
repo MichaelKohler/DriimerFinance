@@ -25,6 +25,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import driimerfinance.database.MandantDBHelper;
+import driimerfinance.helpers.ComboboxHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 import driimerfinance.models.Transaction;
@@ -50,8 +51,8 @@ public class EditTransactionWindow {
 	String receiptNumber;
 		
 	//JTextField dateField = null;
-	JComboBox sollField = null;
-	JComboBox habenField = null;
+	JComboBox sollField = new JComboBox();
+	JComboBox habenField = new JComboBox();
 	JTextField transactionField =null;
 	JTextField amountField = null;
 	JTextField receiptField = null;
@@ -69,21 +70,21 @@ public class EditTransactionWindow {
 		this.description = description;
 		this.amount = Double.toString(amount);
 		this.receiptNumber = Double.toString(receiptNumber);
-		setData();
+//		setData();
 		createGUI();	
 	}
 	
 	/**
      * Gets the necessary data from the DB
      */
-	private void setData() {
-		MandantDBHelper helper = new MandantDBHelper();
-		List<Account> accs = helper.getAllAccounts();
-		for (Account acc : accs) {
-			this.fromAccounts.add(acc.getName());
-			this.toAccounts.add(acc.getName());
-		}
-	}
+//	private void setData() {
+//		MandantDBHelper helper = new MandantDBHelper();
+//		List<Account> accs = helper.getAllAccounts();
+//		for (Account acc : accs) {
+//			this.fromAccounts.add(acc.getName());
+//			this.toAccounts.add(acc.getName());
+//		}
+//	}
 
 	/**
      * Creates the GUI
@@ -118,10 +119,20 @@ public class EditTransactionWindow {
 		//this.dateField = new JTextField();
 		//this.dateField.setPreferredSize(new Dimension(150, 20));
 		JLabel sollLabel = new JLabel("Soll Konto");
-		this.sollField = new JComboBox(this.fromAccounts.toArray());
+		
+		MandantDBHelper helper = new MandantDBHelper();
+		List<Account> accs = helper.getAllAccounts();
+		for (Account acc : accs) {
+			Object[] itemData = new Object[] {acc.getId(), acc.getName()};
+			this.sollField.addItem(itemData);
+			this.habenField.addItem(itemData);
+		}
+		this.sollField.setRenderer(new ComboboxHelper());
+//		this.sollField = new JComboBox(this.fromAccounts.toArray());
 		this.sollField.setPreferredSize(new Dimension(150, 20));
 		JLabel habenLabel = new JLabel("Haben Konto");
-		this.habenField = new JComboBox(this.toAccounts.toArray());
+//		this.habenField = new JComboBox(this.toAccounts.toArray());
+		this.habenField.setRenderer(new ComboboxHelper());
 		this.habenField.setPreferredSize(new Dimension(150, 20));
 		JLabel buchungLabel = new JLabel("Buchungssatz");
 		this.transactionField = new JTextField(description);
@@ -185,10 +196,12 @@ public class EditTransactionWindow {
 						errorMessage = "Datum muss ausgef\u00fcllt sein!";
 						hasError = true;
 					}
-					Account sollAccount = helper.getAccountByName(fromAccounts.get(sollField.getSelectedIndex()));
-					transToEdit.setFk_SollKonto(sollAccount.getId());
-					Account habenAccount = helper.getAccountByName(toAccounts.get(habenField.getSelectedIndex()));
-					transToEdit.setFk_HabenKonto(habenAccount.getId());
+					Object[] itemData = (Object[])sollField.getSelectedItem();
+					int sollAccountId = Integer.parseInt(itemData[0].toString());
+					itemData = (Object[])habenField.getSelectedItem();
+					int habenAccountId = Integer.parseInt(itemData[0].toString());
+					transToEdit.setFk_SollKonto(sollAccountId);
+					transToEdit.setFk_HabenKonto(habenAccountId);
 					transToEdit.setBezeichnung(transactionField.getText());
 					try {
 						transToEdit.setAmount(Integer.parseInt(amountField.getText()));

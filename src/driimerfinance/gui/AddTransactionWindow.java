@@ -49,10 +49,8 @@ public class AddTransactionWindow {
 
 	JFrame frame = new JFrame("DriimerFinance - Buchung hinzuf\u00fcgen");
 	ImageIcon icon = new ImageIcon("images/DF.png");
-	ArrayList<String> fromAccounts = new ArrayList<String>();
-	ArrayList<String> toAccounts = new ArrayList<String>();
-//	TreeMap<Integer, String> fromAccounts = new TreeMap<Integer, String>();
-//	TreeMap<Integer, String> toAccounts = new TreeMap<Integer, String>();
+//	ArrayList<String> fromAccounts = new ArrayList<String>();
+//	ArrayList<String> toAccounts = new ArrayList<String>();
 	
 	JTextField dateField = null;
 	JComboBox sollField = new JComboBox();
@@ -66,22 +64,9 @@ public class AddTransactionWindow {
 	 * Constructor
 	 */
 	public AddTransactionWindow() {
-	    //setData();
 		createGUI();
 	}
 	
-	/**
-     * Gets the necessary data from the DB
-     */
-	private void setData() {
-		MandantDBHelper helper = new MandantDBHelper();
-		List<Account> accs = helper.getAllAccounts();
-		for (Account acc : accs) {
-			this.fromAccounts.add(acc.getName());
-			this.toAccounts.add(acc.getName());
-		}
-	}
-
 	/**
      * Creates the GUI
      */
