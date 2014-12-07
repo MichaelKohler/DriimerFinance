@@ -71,10 +71,10 @@ public class Mandant implements IModel {
      * @return void
      */
 	public void setDBSchema(String dBSchema) {
-//		This will separate all of the accent marks from the characters.
 		String temp = Normalizer.normalize(dBSchema, Normalizer.Form.NFD);
-//		Then, you just need to compare each character against being a letter and throw out the ones that aren't.
 		temp = temp.replaceAll("[^\\p{ASCII}]", "");
+		temp = temp.replace(" ", "");
+		temp = temp.replace("-", "");
 		this.dbSchema = temp;
 	}
 
