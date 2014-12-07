@@ -33,6 +33,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
 import driimerfinance.helpers.GUIHelper;
+import driimerfinance.models.User;
 
 /**
  * Used at the beginning to install the software.
@@ -125,6 +126,8 @@ public class SetupWindow {
 				
 				if (pwOK && licenseOK) {
 					// User erstellen und Frame schliessen
+					User user = new User("admin", new String(pwField1.getPassword()));
+					user.createInDB();
 					frame.dispose();
 				}
 			}
