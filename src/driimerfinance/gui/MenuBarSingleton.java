@@ -137,9 +137,9 @@ public class MenuBarSingleton {
 		JMenu accountPlan = new JMenu("Kontenplan");
 		accountPlan.setMnemonic(KeyEvent.VK_K);
 		
-		JMenuItem addAccount = new JMenuItem("Konto hinzuf�gen...");
+		JMenuItem addAccount = new JMenuItem("Konto hinzuf\u00fcgen...");
 		addAccount.setMnemonic(KeyEvent.VK_H);
-		addAccount.setToolTipText("Konto hinzuf�gen");
+		addAccount.setToolTipText("Konto hinzuf\u00fcgen");
 		addAccount.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -186,6 +186,20 @@ public class MenuBarSingleton {
 			}
 		});
 		balanceMenu.add(showBalanceItem);
+		
+		JMenu finStatementMenu = new JMenu("Jahresabschluss");
+		balanceMenu.setMnemonic(KeyEvent.VK_B);
+
+		JMenuItem createFinStatement = new JMenuItem("Jahresabschluss erstellen...");
+		showBalanceItem.setMnemonic(KeyEvent.VK_B);
+		showBalanceItem.setToolTipText("Jahresabschluss erstellen");
+		showBalanceItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				
+			}
+		});
+		finStatementMenu.add(createFinStatement);
 
 		bar.add(file);
 
@@ -193,6 +207,7 @@ public class MenuBarSingleton {
 		bar.add(accountPlan);
 		bar.add(erMenu);
 		bar.add(balanceMenu);
+		bar.add(finStatementMenu);
 		bar.add(Box.createGlue());
 		bar.add(mandants);
 		return bar;
