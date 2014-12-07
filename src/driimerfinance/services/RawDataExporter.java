@@ -51,13 +51,20 @@ public class RawDataExporter extends Exporter implements Runnable {
 
 	@Override
 	public void run() {
-		String filename = path + File.separator + dbname + ".sql";
-		String pathToDump = new File("lib/mysqldump").getAbsolutePath();
+		String system = System.getProperty("os.name");
+		String pathToDump = "";
+		if (system.contains("Mac OS X")) {
+			pathToDump = new File("lib/mysqldump").getAbsolutePath();
+		}
+		else if (system.contains("Windows")) {
+			pathToDump = new File("lib/mysqldump.exe").getAbsolutePath();
+		}
 		String command = pathToDump + " -u " + username + " -p" + password + " " + dbname;
 		try {
 			Process proc = Runtime.getRuntime().exec(command);
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(
 					proc.getInputStream()));
+			String filename = path + File.separator + dbname + ".sql";
 			PrintWriter writer = new PrintWriter(filename, "UTF-8");
 			String tmp = "";
 			while ((tmp = stdInput.readLine()) != null) {
