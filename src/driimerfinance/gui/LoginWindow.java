@@ -90,6 +90,7 @@ public class LoginWindow {
 				}
 				else {
 					JOptionPane.showMessageDialog(frame, "Das Kennwort ist falsch", "Fehler", JOptionPane.ERROR_MESSAGE);
+					passwordText.setText("");
 				}
 			}	
 		});	
