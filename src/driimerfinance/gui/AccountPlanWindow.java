@@ -72,7 +72,7 @@ public class AccountPlanWindow {
 		       return false;
 		    }
 		});
-		accountTable.setPreferredScrollableViewportSize(new Dimension(400, 300));
+		accountTable.setPreferredScrollableViewportSize(new Dimension(640, 380));
 		accountTable.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(accountTable);
 		tablePanel.add(scrollPane);
