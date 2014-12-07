@@ -1,8 +1,11 @@
 package driimerfinance.services;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.Properties;
 
 import javax.swing.JFileChooser;
@@ -31,7 +34,7 @@ public class RawDataExporter extends Exporter {
     private void setDBPreferences() {
 	    	Properties properties = new Properties();
 	    	try {
-	    	  properties.load(new FileInputStream(new File("src/driimerfinance/database/database.properties").getAbsoluteFile()));
+	    	  properties.load(new FileInputStream(new File("bin/driimerfinance/database/database.properties").getAbsoluteFile()));
 	    	  host = properties.getProperty("host");
 	  	  username = properties.getProperty("user");
 	  	  dbname = properties.getProperty("databasename");
@@ -49,9 +52,18 @@ public class RawDataExporter extends Exporter {
      */
     public void exportToFile(String path) {
     	    String filename = path + File.separator + dbname + ".sql";
-    	    String command = "mysqldump -u " + username + " -p" + password + " " + dbname + " > " + filename;
+    	    String pathToDump = new File("lib/mysqldump").getAbsolutePath();
+    	    String command = pathToDump + " -u " + username + " -p" + password + " " + dbname;
 		try {
-			Runtime.getRuntime().exec(command);
+			Process proc = Runtime.getRuntime().exec(command);
+			BufferedReader stdInput = new BufferedReader(new 
+				     InputStreamReader(proc.getInputStream()));
+			PrintWriter writer = new PrintWriter(filename, "UTF-8");
+			String tmp = "";
+			while ((tmp = stdInput.readLine()) != null) {
+			    writer.println(tmp + "\n");
+			}
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

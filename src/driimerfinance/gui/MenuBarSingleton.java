@@ -52,7 +52,6 @@ public class MenuBarSingleton {
 			    if (returnValue == JFileChooser.APPROVE_OPTION) {
 			        File file = fc.getSelectedFile();
 			        path = file.getAbsolutePath();
-			        System.out.println(path);
 			    } else {
 			            return;
 			    }
@@ -138,9 +137,9 @@ public class MenuBarSingleton {
 		JMenu accountPlan = new JMenu("Kontenplan");
 		accountPlan.setMnemonic(KeyEvent.VK_K);
 		
-		JMenuItem addAccount = new JMenuItem("Konto hinzufügen...");
+		JMenuItem addAccount = new JMenuItem("Konto hinzufï¿½gen...");
 		addAccount.setMnemonic(KeyEvent.VK_H);
-		addAccount.setToolTipText("Konto hinzufügen");
+		addAccount.setToolTipText("Konto hinzufï¿½gen");
 		addAccount.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
