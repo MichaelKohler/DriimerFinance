@@ -74,13 +74,13 @@ public class JournalWindow extends OneColumnViewer {
 		String[] headers = { "ID", "Datum", "Soll-Konto", "Haben-Konto",
 				"Buchungssatz", "Betrag", "Beleg-Nr" };
 		Object[][] data = {};
-		transactionTable = new JTable(new DefaultTableModel(data, headers){
+		transactionTable = new JTable(new DefaultTableModel(data, headers) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-		    public boolean isCellEditable(int row, int column) {
-		       return false;
-		    }
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
 		});
 		transactionTable.setPreferredScrollableViewportSize(new Dimension(640,
 				490));
@@ -129,7 +129,8 @@ public class JournalWindow extends OneColumnViewer {
 				//
 				if (chooser.showOpenDialog((Component) e.getSource()) == JFileChooser.APPROVE_OPTION) {
 					PDFExporter pdf = new PDFExporter();
-					String filePath = chooser.getSelectedFile().getAbsolutePath();
+					String filePath = chooser.getSelectedFile()
+							.getAbsolutePath();
 					if (!filePath.endsWith(".pdf")) {
 						filePath = filePath + ".pdf";
 					}
@@ -160,17 +161,27 @@ public class JournalWindow extends OneColumnViewer {
 				// if there is a row selected
 				if (selRow != -1) {
 					MandantDBHelper helper = new MandantDBHelper();
-					DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
+					DefaultTableModel model = (DefaultTableModel) transactionTable
+							.getModel();
 					// get transaction data from table model
-					int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
+					int transactionId = Integer.parseInt(model.getValueAt(
+							selRow, 0).toString());
 					String date = model.getValueAt(selRow, 1).toString();
-					int fk_fromAccount = helper.getAccountByName(model.getValueAt(selRow, 2).toString()).getId();
-					int fk_toAccount = helper.getAccountByName(model.getValueAt(selRow, 3).toString()).getId();
+					int fk_fromAccount = helper.getAccountByName(
+							model.getValueAt(selRow, 2).toString()).getId();
+					int fk_toAccount = helper.getAccountByName(
+							model.getValueAt(selRow, 3).toString()).getId();
 					String description = model.getValueAt(selRow, 4).toString();
-					//double amount = Double.parseDouble(model.getValueAt(selRow, 5).toString());
-					double amount = FinanceHelper.unformatAmount(model.getValueAt(selRow, 5).toString());
-					int receiptNumber = Integer.parseInt(model.getValueAt(selRow, 6).toString());
-					new EditTransactionWindow(parent, transactionId, date, fk_fromAccount, fk_toAccount, description, amount, receiptNumber);
+					// double amount =
+					// Double.parseDouble(model.getValueAt(selRow,
+					// 5).toString());
+					double amount = FinanceHelper.unformatAmount(model
+							.getValueAt(selRow, 5).toString());
+					int receiptNumber = Integer.parseInt(model.getValueAt(
+							selRow, 6).toString());
+					new EditTransactionWindow(parent, transactionId, date,
+							fk_fromAccount, fk_toAccount, description, amount,
+							receiptNumber);
 				}
 			}
 		});
@@ -183,21 +194,21 @@ public class JournalWindow extends OneColumnViewer {
 				selRow = transactionTable.getSelectedRow();
 				// if there is a row selected
 				if (selRow != -1) {
-					Object[] options = {"Ja", "Nein"};
-					int eingabe = JOptionPane.showOptionDialog(
+					Object[] options = { "Ja", "Nein" };
+					int eingabe = JOptionPane
+							.showOptionDialog(
 									null,
 									"Sind Sie sicher, Buchung wird unwiderruflich gel\u00f6scht?",
 									"Best\u00e4tigung",
 									JOptionPane.YES_NO_OPTION,
-									JOptionPane.QUESTION_MESSAGE,
-								    null,
-								    options,
-								    options[1]);
+									JOptionPane.QUESTION_MESSAGE, null,
+									options, options[1]);
 					if (eingabe == 0) {
 						DefaultTableModel model = (DefaultTableModel) transactionTable
 								.getModel();
 						// get transactiontid from table model
-						int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
+						int transactionId = Integer.parseInt(model.getValueAt(
+								selRow, 0).toString());
 						// get the transaction from database and delete it. (in
 						// database as well as in the table)
 						db.deleteTransactionById(transactionId);
@@ -207,7 +218,7 @@ public class JournalWindow extends OneColumnViewer {
 
 			}
 		});
-	
+
 		JButton closeButton = new JButton("Fenster schliessen");
 		closeButton.addActionListener(new ActionListener() {
 			@Override
