@@ -9,6 +9,7 @@ import java.text.Normalizer;
 import java.util.Properties;
 
 import driimerfinance.database.DriimerDBHelper;
+import driimerfinance.gui.MenuBarSingleton;
 
 /**
  * Defines a mandant (client) to work for.
@@ -119,6 +120,7 @@ public class Mandant implements IModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		MenuBarSingleton.setEnabled(true);
 		
 		
     }

@@ -56,6 +56,7 @@ public class MainWindow {
 	private void addMenubar() {
 		JMenuBar menubar = MenuBarSingleton.getMenuBarInstance();
 		this.frame.setJMenuBar(menubar);
+		MenuBarSingleton.setEnabled(false);
 	}
 	
 	/**

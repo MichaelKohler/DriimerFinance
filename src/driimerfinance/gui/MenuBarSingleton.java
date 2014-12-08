@@ -1,5 +1,6 @@
 package driimerfinance.gui;
 
+import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -46,17 +47,17 @@ public class MenuBarSingleton {
 				final JFileChooser fc = new JFileChooser();
 				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnValue = fc.showOpenDialog(menuBar);
-			    if (returnValue == JFileChooser.APPROVE_OPTION) {
-			        File file = fc.getSelectedFile();
-			        path = file.getAbsolutePath();
-			    } else {
-			            return;
-			    }
-			    (new Thread(new RawDataExporter(path))).start();
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					path = file.getAbsolutePath();
+				} else {
+					return;
+				}
+				(new Thread(new RawDataExporter(path))).start();
 			}
 		});
 		file.add(exportMenuItem);
-		
+
 		JMenuItem pwMenuItem = new JMenuItem("Passwort wechseln..");
 		pwMenuItem.setMnemonic(KeyEvent.VK_E);
 		pwMenuItem.setToolTipText("Passwort des Benutzers wechseln..");
@@ -67,7 +68,7 @@ public class MenuBarSingleton {
 			}
 		});
 		file.add(pwMenuItem);
-		
+
 		JMenuItem eMenuItem = new JMenuItem("Exit");
 		eMenuItem.setMnemonic(KeyEvent.VK_E);
 		eMenuItem.setToolTipText("Applikation schliessen");
@@ -81,6 +82,7 @@ public class MenuBarSingleton {
 
 		mandants.setMnemonic(KeyEvent.VK_M);
 		mandants.setText("Kein Mandant ausgew\u00e4hlt");
+		mandants.setName("Mandanten");
 
 		JMenuItem addMenuItem = new JMenuItem("Hinzuf\u00fcgen...");
 		addMenuItem.setMnemonic(KeyEvent.VK_H);
@@ -144,7 +146,7 @@ public class MenuBarSingleton {
 
 		JMenu accountPlan = new JMenu("Kontenplan");
 		accountPlan.setMnemonic(KeyEvent.VK_K);
-		
+
 		JMenuItem addAccount = new JMenuItem("Konto hinzuf\u00fcgen...");
 		addAccount.setMnemonic(KeyEvent.VK_H);
 		addAccount.setToolTipText("Konto hinzuf\u00fcgen");
@@ -194,10 +196,11 @@ public class MenuBarSingleton {
 			}
 		});
 		balanceMenu.add(showBalanceItem);
-		
+
 		JMenu finStatementMenu = new JMenu("Jahresabschluss");
 		balanceMenu.setMnemonic(KeyEvent.VK_B);
-		JMenuItem createFinStatement = new JMenuItem("Jahresabschluss erstellen...");
+		JMenuItem createFinStatement = new JMenuItem(
+				"Jahresabschluss erstellen...");
 		createFinStatement.setMnemonic(KeyEvent.VK_B);
 		createFinStatement.setToolTipText("Jahresabschluss erstellen");
 		createFinStatement.addActionListener(new AnnualAccountsAction());
@@ -239,6 +242,30 @@ public class MenuBarSingleton {
 		} else {
 			menuBar = createGUI();
 			return menuBar;
+		}
+	}
+
+	/**
+	 * Enables or disables all Menuitems except mandanten
+	 * 
+	 * @return void
+	 */
+	public static void setEnabled(boolean bool) {
+		int menucount = menuBar.getMenuCount();
+		System.out.println("menucount: " + menucount);
+		if (menucount > 0) {
+			for (int i = 0; i < menucount; i++) {
+				// System.out.println("i = " + i);
+				JMenu menu = menuBar.getMenu(i);
+				if ((menu != null) && menu.getName() != "Mandanten") {
+					int menuitemcount = menu.getItemCount();
+					if (menuitemcount > 0) {
+						for (int a = 0; a < menuitemcount; a++) {
+							menu.getItem(a).setEnabled(bool);
+						}
+					}
+				}
+			}
 		}
 	}
 
