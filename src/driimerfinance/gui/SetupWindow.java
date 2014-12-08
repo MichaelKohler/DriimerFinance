@@ -9,11 +9,8 @@ import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import javax.swing.ImageIcon;
@@ -27,15 +24,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-
 import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.User;
@@ -45,7 +33,6 @@ import driimerfinance.models.User;
  * 
  * (c) 2014 Driimer Finance
 */
-@SuppressWarnings("unused")
 public class SetupWindow {
 	
 	ImageIcon icon = new ImageIcon("images/DF.png");
@@ -53,6 +40,10 @@ public class SetupWindow {
 	JPasswordField pwField1 = new JPasswordField();
 	JPasswordField pwField2 = new JPasswordField();
 	JTextField licenseField = new JTextField();
+	JTextField mysqlHost = new JTextField();
+	JTextField mysqlPort = new JTextField();
+	JTextField mysqlUser = new JTextField();
+	JPasswordField mysqlPassword = new JPasswordField();
 	
 	/**
 	 * Constructor
@@ -68,7 +59,7 @@ public class SetupWindow {
     		addDescription();
 		addForm();
 		addButtons();
-		this.frame.setSize(400, 300);
+		this.frame.setSize(400, 400);
 		GUIHelper.centerFrame(this.frame);
 		this.frame.setIconImage(icon.getImage());
 		this.frame.setVisible(true);
@@ -96,7 +87,7 @@ public class SetupWindow {
 	 */
     private void addForm() {
 		JPanel formPanel = new JPanel();
-		GridLayout layout = new GridLayout(3, 2);
+		GridLayout layout = new GridLayout(7, 2);
 		formPanel.setLayout(layout);
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		JLabel pw1Label = new JLabel("Passwort");
@@ -108,6 +99,20 @@ public class SetupWindow {
 		JLabel licenseLabel = new JLabel("Lizenzschlüssel");
 		formPanel.add(licenseLabel);
 		formPanel.add(licenseField);
+		JLabel mysqlHostLabel = new JLabel("MySQL Host");
+		formPanel.add(mysqlHostLabel);
+		mysqlHost.setText("localhost");
+		formPanel.add(mysqlHost);
+		JLabel mysqlPortLabel = new JLabel("MySQL Port");
+		formPanel.add(mysqlPortLabel);
+		mysqlPort.setText("3306");
+		formPanel.add(mysqlPort);
+		JLabel mysqlUserLabel = new JLabel("MySQL Benutzer");
+		formPanel.add(mysqlUserLabel);
+		formPanel.add(mysqlUser);
+		JLabel mysqlPasswordLabel = new JLabel("MySQL Passwort");
+		formPanel.add(mysqlPasswordLabel);
+		formPanel.add(mysqlPassword);
 		this.frame.getContentPane().add(formPanel, BorderLayout.CENTER);
     }
     
@@ -146,6 +151,8 @@ public class SetupWindow {
 				JOptionPane.showMessageDialog(frame, "Der Lizenzschlüssel ist nicht gültig!", "Fehler", JOptionPane.ERROR_MESSAGE);
 			}
 			
+			saveMySQLConfig();
+			
 			if (pwOK && licenseOK) {
 				// User erstellen und Frame schliessen
 				User user = new User("admin", new String(pwField1.getPassword()));
@@ -164,6 +171,21 @@ public class SetupWindow {
 				frame.dispose();
 				MainWindowSingleton.getMainWindowInstance();
 			}
+		}
+	}
+	
+	public void saveMySQLConfig() {
+		Properties prop = new Properties();
+		URL url = getClass().getResource("../../driimerfinance/database/database.properties");
+		try {
+			prop.load(new FileInputStream(url.toURI().getPath()));
+			prop.setProperty("host", mysqlHost.getText());
+			prop.setProperty("user", mysqlUser.getText());
+			prop.setProperty("port", mysqlPort.getText());
+			prop.setProperty("password", new String(mysqlPassword.getPassword()));
+			prop.store(new FileOutputStream(url.toURI().getPath()), null);
+		} catch (IOException | URISyntaxException e) {
+			e.printStackTrace();
 		}
 	}
 }

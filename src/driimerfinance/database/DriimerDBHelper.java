@@ -1,9 +1,13 @@
 package driimerfinance.database;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import driimerfinance.models.Mandant;
 import driimerfinance.models.User;
@@ -24,10 +29,10 @@ public class DriimerDBHelper {
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
-	private static String host = "localhost";
+	private static String host = "";
 	private static String databasename = "driimerfinance";
-	private static String user = "root";
-	private static String password = "mysql";
+	private static String user = "";
+	private static String password = "";
 	private DBConnection db = null;
 
 	/**
@@ -35,8 +40,27 @@ public class DriimerDBHelper {
 	 * with the given properties.
 	 */
 	public DriimerDBHelper() {
+		initConfig();
 		db = new DBConnection();
 		dbconnection = db.createConnection(host, databasename, user, password);
+	}
+	
+	/**
+	 * Initializes the config for mysql (host, user and password).
+	 */
+	public void initConfig() {
+		Properties prop = new Properties();
+		try {
+			URL url = getClass().getResource("../../driimerfinance/database/database.properties");
+			prop.load(new FileInputStream(url.toURI().getPath()));
+			host = prop.getProperty("host");
+			user = prop.getProperty("user");
+			password = prop.getProperty("password");
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} catch (URISyntaxException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	/**
