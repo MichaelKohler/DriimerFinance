@@ -1,20 +1,11 @@
 package driimerfinance.services;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.Properties;
-
 import driimerfinance.database.DriimerDBHelper;
-import driimerfinance.database.MandantDBHelper;
 import driimerfinance.models.Mandant;
 
 /**
- * Special case: this will save a SQL file with all the possible data from the
- * database. This can be used as a backup.
+ * Special case: this will read data from a backup and import it to the
+ * database. This can be used for restoring data.
  * 
  * (c) 2014 Driimer Finance
  */
@@ -32,7 +23,10 @@ public class RawDataImporter extends Exporter implements Runnable {
 
 	@Override
 	public void run() {
+		//Create Mandant in DB's
 		DriimerDBHelper db = new DriimerDBHelper();
 		db.addMandant(mandant);
+		//import data from source to clients DB
+		db.importMandantDatabase(mandant.getDBSchema(), source);
 	}
 }
