@@ -251,16 +251,19 @@ public class MenuBarSingleton {
 	 * @return void
 	 */
 	public static void setEnabled(boolean bool) {
+		//count Jmenus
 		int menucount = menuBar.getMenuCount();
-		System.out.println("menucount: " + menucount);
 		if (menucount > 0) {
 			for (int i = 0; i < menucount; i++) {
-				// System.out.println("i = " + i);
+				//get JMenu
 				JMenu menu = menuBar.getMenu(i);
+				//Only continue if next menu is not the one used for mandant selection
 				if ((menu != null) && menu.getName() != "Mandanten") {
+					//count menuitems
 					int menuitemcount = menu.getItemCount();
 					if (menuitemcount > 0) {
 						for (int a = 0; a < menuitemcount; a++) {
+							//enable or disable menuitem
 							menu.getItem(a).setEnabled(bool);
 						}
 					}
