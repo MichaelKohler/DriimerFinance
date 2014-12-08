@@ -25,8 +25,9 @@ public class RawDataImporter extends Exporter implements Runnable {
 	public void run() {
 		//Create Mandant in DB's
 		DriimerDBHelper db = new DriimerDBHelper();
-		db.addMandant(mandant);
+//		db.addMandant(mandant);
 		//import data from source to clients DB
+		System.out.println("Source: " + source);
 		db.importMandantDatabase(mandant.getDBSchema(), source);
 	}
 }

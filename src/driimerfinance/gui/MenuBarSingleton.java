@@ -57,6 +57,17 @@ public class MenuBarSingleton {
 			}
 		});
 		file.add(exportMenuItem);
+		
+		JMenuItem importMenuItem = new JMenuItem("Import Raw Data..");
+		importMenuItem.setMnemonic(KeyEvent.VK_E);
+		importMenuItem.setToolTipText("Daten importieren..");
+		importMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				new ImportWindow();
+			}
+		});
+		file.add(importMenuItem);
 
 		JMenuItem pwMenuItem = new JMenuItem("Passwort wechseln..");
 		pwMenuItem.setMnemonic(KeyEvent.VK_E);

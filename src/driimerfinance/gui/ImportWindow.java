@@ -5,37 +5,24 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import driimerfinance.database.DriimerDBHelper;
-import driimerfinance.database.MandantDBHelper;
-import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
-import driimerfinance.models.Account;
 import driimerfinance.models.Mandant;
-import driimerfinance.models.Transaction;
-import driimerfinance.helpers.ComboboxHelper;
+import driimerfinance.services.RawDataImporter;
 
 /**
  * Add a new transaction with this window.
@@ -54,11 +41,10 @@ public class ImportWindow {
 	public ImportWindow() {
 		createGUI();
 	}
-	
-	
+
 	/**
-     * Creates the GUI
-     */
+	 * Creates the GUI
+	 */
 	private void createGUI() {
 		addForm();
 		addButtons();
@@ -73,24 +59,23 @@ public class ImportWindow {
 		GridLayout layout = new GridLayout(1, 2);
 		formPanel.setLayout(layout);
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-	
-		JLabel nameLabel = new JLabel("Name");
+
+		JLabel nameLabel = new JLabel("Mandant Name");
 		this.nameField = new JTextField();
 		this.nameField.setPreferredSize(new Dimension(150, 20));
-	
+
 		formPanel.add(nameLabel);
 		formPanel.add(this.nameField);
-	
+
 		this.frame.getContentPane().add(formPanel, BorderLayout.CENTER);
 	}
 
-
 	/**
-     * Adds the buttons on the bottom of the frame.
-     */
+	 * Adds the buttons on the bottom of the frame.
+	 */
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
-		JButton okButton = new JButton("OK");
+		JButton okButton = new JButton("Choose File");
 		okButton.addActionListener(new SaveMandantAction());
 		JButton cancelButton = new JButton("Abbrechen");
 		cancelButton.addActionListener(new FrameCloseAction(frame));
@@ -99,30 +84,50 @@ public class ImportWindow {
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		this.frame.getRootPane().setDefaultButton(okButton);
 	}
-	
-	
-	
+
 	public class SaveMandantAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (nameField.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(frame, "Der Name muss ausgef\u00fcllt sein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(frame,
+						"Der Name muss ausgef\u00fcllt sein!", "Fehler",
+						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			DriimerDBHelper helper = new DriimerDBHelper();
-			String mandantName = nameField.getText();
-			Mandant existingMandant = helper.getMandantByName(mandantName);
-			if (existingMandant == null) {
-				Mandant newMandant = new Mandant();
-				newMandant.setName(mandantName);
-				newMandant.setDBSchema(nameField.getText());
-				newMandant.createInDB();
-				MainWindowSingleton.getMainWindowInstance().reload();
-				frame.dispose();
-			}
-			else {
-				JOptionPane.showMessageDialog(frame, "Der Name darf nicht bereits existieren!", "Fehler", JOptionPane.ERROR_MESSAGE);
+			String path = "";
+			JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(new java.io.File("."));
+			chooser.setDialogTitle("Select Destination");
+			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			chooser.setFileFilter(new FileNameExtensionFilter("SQL Files",
+					"SQL", "sql"));
+			// disable the "All files" option.
+			chooser.setAcceptAllFileFilterUsed(false);
+			if (chooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+				path = chooser.getSelectedFile().getAbsolutePath();
+				DriimerDBHelper helper = new DriimerDBHelper();
+				String mandantName = nameField.getText();
+				Mandant existingMandant = helper.getMandantByName(mandantName);
+				Mandant newMandant = null;
+				if (existingMandant == null) {
+					System.out.println("Mandant existiert noch nicht. Anlegen...");
+					newMandant = new Mandant();
+					newMandant.setName(mandantName);
+					newMandant.setDBSchema(nameField.getText());
+					newMandant.createInDB();
+					(new Thread(new RawDataImporter(path, newMandant))).start();
+					MainWindowSingleton.getMainWindowInstance().reload();
+					frame.dispose();
+				} else {
+					System.out
+							.println("Mandant exisitert. Daten importieren...");
+					System.out.println("path: " + path);
+					(new Thread(new RawDataImporter(path, existingMandant)))
+							.start();
+					frame.dispose();
+				}
 			}
 		}
 	}
+
 }

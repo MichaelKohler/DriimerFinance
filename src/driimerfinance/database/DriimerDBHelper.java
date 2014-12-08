@@ -527,14 +527,14 @@ public class DriimerDBHelper {
 	public void importMandantDatabase(String schemaName, String source) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection connection = null;
-
-			connection = DriverManager
-					.getConnection("jdbc:mysql://localhost/mysql"
-							+ "?user=root&password=mysql");
-
-			Statement statement = connection.createStatement();
-			statement.executeUpdate("CREATE DATABASE " + schemaName);
+//			Connection connection = null;
+//
+//			connection = DriverManager
+//					.getConnection("jdbc:mysql://localhost/mysql"
+//							+ "?user=root&password=mysql");
+//
+//			Statement statement = connection.createStatement();
+//			statement.executeUpdate("CREATE DATABASE " + schemaName);
 
 			Connection updateConnection = null;
 			updateConnection = DriverManager
@@ -542,8 +542,8 @@ public class DriimerDBHelper {
 							+ "?user=root&password=mysql");
 			ScriptRunner runner = new ScriptRunner(updateConnection, false,
 					true);
-			InputStream in = getClass().getResourceAsStream(
-					source);
+			InputStream in = new FileInputStream(source);
+			System.out.println("In: " + in);
 			runner.runScript(new InputStreamReader(in, "utf-8"));
 
 		} catch (ClassNotFoundException e) {
