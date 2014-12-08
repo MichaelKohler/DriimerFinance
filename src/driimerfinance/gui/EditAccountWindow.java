@@ -184,24 +184,10 @@ public class EditAccountWindow {
 					helper.updateAccount(accToEdit);
 					
 					//Update Jtable in GUI
-					String accounttype = "Null";
-					int acctype = accToEdit.getFk_AccountType();
-					if (acctype == 1) {
-						accounttype = "Aktiv";
-					}
-					if (acctype == 2) {
-						accounttype = "Passiv";
-					}
-					if (acctype == 3) {
-						accounttype = "Aufwand";
-					}
-					if (acctype == 4) {
-						accounttype = "Ertrag";
-					}
 					accToEdit.getFk_AccountType();
 					Object[] newRow = { accToEdit.getId().toString(),
 							accToEdit.getNumber(), accToEdit.getName(),
-							accounttype, accToEdit.getCapitalAccount()};
+							helper.getAccountTypeById(accToEdit.getFk_AccountType()).getName(), accToEdit.getCapitalAccount()};
 					for(int i=0; i< newRow.length; i++) {
 						model.setValueAt(newRow[i].toString(), row, i);
 					}
