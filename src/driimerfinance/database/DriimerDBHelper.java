@@ -444,7 +444,7 @@ public class DriimerDBHelper {
 	 * @return void
 	 */
 
-	public void createMandantDatabase(String schemaName) {
+	private void createMandantDatabase(String schemaName) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = null;
@@ -521,7 +521,53 @@ public class DriimerDBHelper {
 				}
 			}
 		}
-
 	}
+	
+	
+	public void importMandantDatabase(String schemaName, String source) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection connection = null;
 
+			connection = DriverManager
+					.getConnection("jdbc:mysql://localhost/mysql"
+							+ "?user=root&password=mysql");
+
+			Statement statement = connection.createStatement();
+			statement.executeUpdate("CREATE DATABASE " + schemaName);
+
+			Connection updateConnection = null;
+			updateConnection = DriverManager
+					.getConnection("jdbc:mysql://localhost/" + schemaName
+							+ "?user=root&password=mysql");
+			ScriptRunner runner = new ScriptRunner(updateConnection, false,
+					true);
+			InputStream in = getClass().getResourceAsStream(
+					source);
+			runner.runScript(new InputStreamReader(in, "utf-8"));
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }
+
