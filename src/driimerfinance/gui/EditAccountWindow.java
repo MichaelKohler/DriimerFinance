@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -27,6 +28,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.ComboboxHelper;
+import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 import driimerfinance.models.AccountType;
@@ -48,6 +50,8 @@ public class EditAccountWindow {
 	private int fk_AccountType = 0;
 	private boolean capitalAccount = false;
 	ArrayList<String> types = new ArrayList<String>();
+	private DefaultTableModel model = null;
+	private int row = 0;
 
 	JComboBox typeField = new JComboBox();
 	JTextField numberField = null;
@@ -57,13 +61,15 @@ public class EditAccountWindow {
 	/**
 	 * Constructor
 	 */
-	public EditAccountWindow(AccountPlanWindow accWin, int accountId, int number, String name, int fk_AccountType, boolean capitalAccount) {
+	public EditAccountWindow(AccountPlanWindow accWin, int accountId, int number, String name, int fk_AccountType, boolean capitalAccount, DefaultTableModel model, int row) {
 		this.parent = accWin;
 		this.accountId = accountId;
 		this.number = number;
 		this.name = name;
 		this.fk_AccountType = fk_AccountType;
 		this.capitalAccount = capitalAccount;
+		this.model = model;
+		this.row = row;
 		getData();
 		createGUI();	
 	}
@@ -176,6 +182,30 @@ public class EditAccountWindow {
 				accToEdit.setCapitalAccount(isCapAccount.isSelected());
 				if (!hasError) {
 					helper.updateAccount(accToEdit);
+					
+					//Update Jtable in GUI
+					String accounttype = "Null";
+					int acctype = accToEdit.getFk_AccountType();
+					if (acctype == 1) {
+						accounttype = "Aktiv";
+					}
+					if (acctype == 2) {
+						accounttype = "Passiv";
+					}
+					if (acctype == 3) {
+						accounttype = "Aufwand";
+					}
+					if (acctype == 4) {
+						accounttype = "Ertrag";
+					}
+					accToEdit.getFk_AccountType();
+					Object[] newRow = { accToEdit.getId().toString(),
+							accToEdit.getNumber(), accToEdit.getName(),
+							accounttype, accToEdit.getCapitalAccount()};
+					for(int i=0; i< newRow.length; i++) {
+						model.setValueAt(newRow[i].toString(), row, i);
+					}
+					
 					frame.dispose();
 				} else {
 					JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);
