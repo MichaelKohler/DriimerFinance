@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -70,7 +71,10 @@ public class EditTransactionWindow {
 		this.fk_fromAccount = fk_fromAccount;
 		this.fk_toAccount = fk_toAccount;
 		this.description = description;
-		this.amount = Double.toString(amount);
+		NumberFormat formatter = NumberFormat.getNumberInstance();
+		formatter.setMinimumFractionDigits(2);
+		formatter.setGroupingUsed(false); // we don't want to use separators here
+		this.amount = formatter.format(amount);
 		this.receiptNumber = Integer.toString(receiptNumber);
 		this.model = model;
 		this.row = row;
