@@ -126,22 +126,23 @@ public class ERViewer {
         rows[maxLength] = emptyRow;
         double totalSpending = new AnnualAccounts().calculateTotalSpending();
         double totalEarning = new AnnualAccounts().calculateTotalEarning();
-        rows[maxLength+1] = prepareWinRow(totalSpending, totalEarning);
+        double winOrLoss = totalEarning - totalSpending;
+        double addWin = winOrLoss >= 0 ? Math.abs(winOrLoss) : 0;
+        double addLoss = winOrLoss < 0 ? Math.abs(winOrLoss) : 0;
+        rows[maxLength+1] = prepareWinRow(winOrLoss);
         rows[maxLength+2] = emptyRow;
-        Object[] totalsRow = { "Total", FinanceHelper.formatAmount(totalSpending), "Total", FinanceHelper.formatAmount(totalEarning) };
+        Object[] totalsRow = { "Total", FinanceHelper.formatAmount(totalSpending + addWin), "Total", FinanceHelper.formatAmount(totalEarning + addLoss) };
         rows[maxLength+3] = totalsRow;
         return rows;
     }
     
     /**
-     * Calculates the win or loss and adds them to a tablerow
+     * Adds tje win or loss correctly to a tablerow
      * 
-     * @param total spending
-     * @param total earning
+     * @param win or loss
      * @return table row with the appropriate cells filled with earning or loss
      */
-    public static Object[] prepareWinRow(double totalSpending, double totalEarning) {
-    	    double winOrLoss = totalEarning - totalSpending;
+    public static Object[] prepareWinRow(double winOrLoss) {
     	    if (winOrLoss >= 0) { // win or neutral
     	    	    Object[] row = { "Gewinn", FinanceHelper.formatAmount(Math.abs(winOrLoss)), "", "" };
     	    	    return row;
