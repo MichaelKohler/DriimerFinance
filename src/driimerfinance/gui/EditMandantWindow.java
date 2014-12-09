@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,7 +14,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Mandant;
@@ -91,7 +89,7 @@ public class EditMandantWindow {
 		JButton deleteButton = new JButton("Mandant l\u00f6schen");
 		deleteButton.addActionListener(new DeleteMandantAction());
 		JButton editButton = new JButton("Mandant editieren");
-		editButton.addActionListener(new SaveEditedMandantAction());
+		editButton.addActionListener(new UpdateMandantAction());
 		JButton cancelButton = new JButton("Abbrechen");
 		cancelButton.addActionListener(new FrameCloseAction(frame));
 		buttonPanel.add(deleteButton, BorderLayout.WEST);
@@ -104,8 +102,7 @@ public class EditMandantWindow {
 	public class DeleteMandantAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int selRow = 0;
-			selRow = mandantTable.getSelectedRow();
+			int selRow = mandantTable.getSelectedRow();
 			//if there is a row selected
 			if ( selRow != -1 ) {
 				Object[] options = {"Ja", "Nein"};
@@ -135,10 +132,36 @@ public class EditMandantWindow {
 		}
 	}
 	
-	public class SaveEditedMandantAction implements ActionListener {
+	
+	public class UpdateMandantAction implements ActionListener {
 		@Override
-		public void actionPerformed(ActionEvent e) {	
+		public void actionPerformed(ActionEvent e) {
+			int selRow = mandantTable.getSelectedRow();
+			//if there is a row selected
+			if ( selRow != -1 ) {
+				//Ask user for new Name
+				String name = JOptionPane.showInputDialog("Neuer Name:");
+				
+				if (name != null) {
+					DefaultTableModel model = (DefaultTableModel) mandantTable
+							.getModel();
+					//get mandantid from table model
+					int mandantId = Integer.parseInt(model
+							.getValueAt(selRow, 0).toString());
+					//get the mandant from database and modify it. (in database as well as in the table)
+					Mandant mandant = driimerdb.getMandantById(mandantId);
+					mandant.setName(name);
+					mandant.updateInDB();
+					//GUI aktualisieren
+					mandantTable.setValueAt(name, selRow, 1);
+					mandantTable.repaint();
+					MainWindowSingleton.getMainWindowInstance().reload();
+					frame.toFront();
+					//model.removeRow(selRow);
+					//MainWindowSingleton.getMainWindowInstance().reload();
+					//frame.toFront();
+				}
+			}
 		}
 	}
-
 }
