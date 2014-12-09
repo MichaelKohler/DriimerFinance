@@ -32,6 +32,8 @@ import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
+import driimerfinance.models.AccountType;
+import driimerfinance.models.AccountTypeEnum;
 import driimerfinance.models.Transaction;
 import driimerfinance.helpers.ComboboxHelper;
 
@@ -182,22 +184,22 @@ public class AddTransactionWindow {
 		double newHabenBalance = 0.00;
 
 		// Active Account or Expenses Account -> Soll +
-		if (soll.getFk_AccountType() == 1 || soll.getFk_AccountType() == 3) {
+		if (soll.getFk_AccountType() == AccountTypeEnum.ACTIVE.getId() || soll.getFk_AccountType() == AccountTypeEnum.SPENDING.getId()) {
 			newSollBalance = soll.getBalance() + amount;
 		}
 		
 		// Active Account or Expenses Account -> Haben -
-		if (haben.getFk_AccountType() == 1 || haben.getFk_AccountType() == 3) {
+		if (haben.getFk_AccountType() == AccountTypeEnum.ACTIVE.getId() || haben.getFk_AccountType() == AccountTypeEnum.SPENDING.getId()) {
 			newHabenBalance = haben.getBalance() - amount;
 		}
 		
 		// Passive Account or Earnings Account -> Soll -
-		if (soll.getFk_AccountType() == 2 || soll.getFk_AccountType() == 4) {
+		if (soll.getFk_AccountType() == AccountTypeEnum.PASSIVE.getId() || soll.getFk_AccountType() == AccountTypeEnum.EARNING.getId()) {
 			newSollBalance = soll.getBalance() - amount;
 		}
 		
 		// Passive Account or Earnings Account -> Haben +
-		if (haben.getFk_AccountType() == 2 || haben.getFk_AccountType() == 4) {
+		if (haben.getFk_AccountType() == AccountTypeEnum.PASSIVE.getId() || haben.getFk_AccountType() == AccountTypeEnum.EARNING.getId()) {
 			newHabenBalance = haben.getBalance() + amount;
 		}
 		

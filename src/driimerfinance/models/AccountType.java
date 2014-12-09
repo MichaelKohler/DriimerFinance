@@ -19,7 +19,6 @@ public class AccountType implements IModel {
 	 * Constructor
 	 */
 	public AccountType() {
-
 	}
 
 	/**
