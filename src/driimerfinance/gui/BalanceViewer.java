@@ -23,6 +23,7 @@ import com.itextpdf.text.DocumentException;
 import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
+import driimerfinance.models.AnnualAccounts;
 import driimerfinance.models.Balance;
 import driimerfinance.services.PDFExporter;
 
@@ -101,7 +102,7 @@ public class BalanceViewer {
 		int maxLength = active.size() >= passive.size() ? active.size()
 				: passive.size();
 		int columns = 4;
-		Object[][] rows = new Object[maxLength + 2][columns];
+		Object[][] rows = new Object[maxLength + 4][columns];
 		double totalActive = 0;
 		double totalPassive = 0;
 		for (int i = 0; i < maxLength; i++) {
@@ -129,10 +130,32 @@ public class BalanceViewer {
 		Object[] totalsRow = { "Total",
 				FinanceHelper.formatAmount(totalActive), "Total",
 				FinanceHelper.formatAmount(totalPassive) };
-		rows[maxLength] = emptyRow;
-		rows[maxLength + 1] = totalsRow;
+		double totalSpending = new AnnualAccounts().calculateTotalSpending();
+        double totalEarning = new AnnualAccounts().calculateTotalEarning();
+        rows[maxLength] = emptyRow;
+        rows[maxLength + 1] = prepareWinRow(totalSpending, totalEarning);
+		rows[maxLength + 2] = emptyRow;
+		rows[maxLength + 3] = totalsRow;
 		return rows;
 	}
+	
+	/**
+     * Calculates the win or loss and adds them to a tablerow
+     * 
+     * @param total spending
+     * @param total earning
+     * @return table row with the appropriate cells filled with earning or loss
+     */
+    public static Object[] prepareWinRow(double totalSpending, double totalEarning) {
+    	    double winOrLoss = totalEarning - totalSpending;
+    	    if (winOrLoss < 0) { // loss
+    	    	    Object[] row = { "Verlust", FinanceHelper.formatAmount(Math.abs(winOrLoss)), "", "" };
+    	    	    return row;
+    	    } else { // loss
+    	    	    Object[] row = { "", "", "Gewinn", FinanceHelper.formatAmount(Math.abs(winOrLoss)) };
+    	    	    return row;
+    	    }
+    }
 
 	public void exportPDF() {
 		JFileChooser chooser = new JFileChooser();

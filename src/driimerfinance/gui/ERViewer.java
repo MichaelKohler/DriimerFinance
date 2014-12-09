@@ -134,16 +134,16 @@ public class ERViewer {
     }
     
     /**
-     * Calculates the win or loss.
+     * Calculates the win or loss and adds them to a tablerow
      * 
      * @param total spending
      * @param total earning
      * @return table row with the appropriate cells filled with earning or loss
      */
-    private Object[] prepareWinRow(double totalSpending, double totalEarning) {
+    public static Object[] prepareWinRow(double totalSpending, double totalEarning) {
     	    double winOrLoss = totalEarning - totalSpending;
     	    if (winOrLoss >= 0) { // win or neutral
-    	    	    Object[] row = { "Gewinn", FinanceHelper.formatAmount(winOrLoss), "", "" };
+    	    	    Object[] row = { "Gewinn", FinanceHelper.formatAmount(Math.abs(winOrLoss)), "", "" };
     	    	    return row;
     	    } else { // loss
     	    	    Object[] row = { "", "", "Verlust", FinanceHelper.formatAmount(Math.abs(winOrLoss)) };
