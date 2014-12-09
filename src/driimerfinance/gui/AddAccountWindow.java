@@ -39,6 +39,7 @@ public class AddAccountWindow {
 	JTextField numberField = null;
 	JTextField nameField = null;
 	JComboBox typeField = null;
+	JTextField amountField = null;
 	JCheckBox isCapAccount = null;
 	
 	/**
@@ -68,7 +69,7 @@ public class AddAccountWindow {
     private void createGUI() {
         addForm();
 		addButtons();
-		this.frame.setSize(400, 200);
+		this.frame.setSize(400, 230);
 		GUIHelper.centerFrame(this.frame);
 		this.frame.setIconImage(icon.getImage());
 		this.frame.setVisible(true);
@@ -79,7 +80,7 @@ public class AddAccountWindow {
      */
     private void addForm() {
 		JPanel formPanel = new JPanel();
-		GridLayout layout = new GridLayout(4, 2);
+		GridLayout layout = new GridLayout(5, 2);
 		formPanel.setLayout(layout);
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -92,6 +93,9 @@ public class AddAccountWindow {
 		JLabel typeLabel = new JLabel("Typ");
 		this.typeField = new JComboBox(types.toArray());
 		this.typeField.setPreferredSize(new Dimension(150, 20));
+		JLabel amountLabel = new JLabel("Saldo");
+	    this.amountField = new JTextField();
+	    this.amountField.setText("0");
 		JLabel capLabel = new JLabel("Kapitalkonto?");
 		this.isCapAccount = new JCheckBox();
 
@@ -101,6 +105,8 @@ public class AddAccountWindow {
 		formPanel.add(this.nameField);
 		formPanel.add(typeLabel);
 		formPanel.add(this.typeField);
+		formPanel.add(amountLabel);
+		formPanel.add(this.amountField);
 		formPanel.add(capLabel);
 		formPanel.add(this.isCapAccount);
 
@@ -156,6 +162,7 @@ public class AddAccountWindow {
 			System.out.println(typeCode);
 			newAcc.setFk_AccountType(typeCode);
 			newAcc.setCapitalAccount(isCapAccount.isSelected());
+			newAcc.setBalance(Double.parseDouble(amountField.getText()));
 			newAcc.createInDB();
 			frame.dispose();
 		}
