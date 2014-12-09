@@ -223,7 +223,7 @@ public class MandantDBHelper {
 		try {
 			statement = dbconnection.createStatement();
 			// resultSet gets the result of the SQL query
-			resultSet = statement.executeQuery("select * from konto");
+			resultSet = statement.executeQuery("select * from konto order by Nummer ASC");
 			while (resultSet.next()) {
 				Account account = new Account();
 				account.setId(resultSet.getInt("idKonto"));

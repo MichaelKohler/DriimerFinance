@@ -4,17 +4,23 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultRowSorter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.FinanceHelper;
@@ -72,6 +78,13 @@ public class AccountPlanWindow {
 		       return false;
 		    }
 		});
+		
+		accountTable.removeColumn(accountTable.getColumn(headers[0])); // remove the first column (id) from the view
+		// center the first column of the view
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		accountTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+	    
 		accountTable.setPreferredScrollableViewportSize(new Dimension(640, 380));
 		accountTable.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(accountTable);
@@ -90,7 +103,8 @@ public class AccountPlanWindow {
 			Account acc = allAccounts.get(i);
 			AccountType type = new AccountType();
 			type.setId(acc.getFk_AccountType());
-			Object[] row = { acc.getId(), acc.getNumber(), acc.getName(), type.getTypeAsString(), acc.getCapitalAccount() };
+			String isCapitalAccount = acc.getCapitalAccount() ? "Ja" : "Nein";
+			Object[] row = { acc.getId(), acc.getNumber(), acc.getName(), type.getTypeAsString(), isCapitalAccount };
 			rows[i] = row;
 		}
 		return rows;
