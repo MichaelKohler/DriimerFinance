@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.Normalizer;
 import java.util.Properties;
+import java.util.UUID;
 
 import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.gui.MenuBarSingleton;
@@ -66,7 +67,7 @@ public class Mandant implements IModel {
 	}
 
 	/**
-     * Setter: Sets the object's dbschema to the one specified
+     * Setter: Sets the object's dbschema to the one specified String
      * 
      * @param database schema  to set
      * @return void
@@ -77,6 +78,18 @@ public class Mandant implements IModel {
 		temp = temp.replace(" ", "");
 		temp = temp.replace("-", "");
 		this.dbSchema = temp;
+	}
+	
+	/**
+     * Setter: Creates a new random String for dbSchema
+     * 
+     * @param database schema  to set
+     * @return void
+     */
+	public void createDBSchema() {
+		//Generiert eine einmalige UUID. Entfernt "-" da in datenbankname nicht erlaubt
+		String unique = UUID.randomUUID().toString().replace("-", "");
+		this.dbSchema = unique;
 	}
 
 	/**

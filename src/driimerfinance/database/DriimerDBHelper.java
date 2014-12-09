@@ -446,6 +446,7 @@ public class DriimerDBHelper {
 
 	private void createMandantDatabase(String schemaName) {
 		try {
+			System.out.println("Neues Schema: " + schemaName);
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = null;
 

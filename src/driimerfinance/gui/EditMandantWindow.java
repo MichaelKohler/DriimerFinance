@@ -27,7 +27,7 @@ import driimerfinance.models.Mandant;
  */
 public class EditMandantWindow {
 
-	JFrame frame = new JFrame("DriimerFinance - Mandant editieren");
+	final JFrame frame = new JFrame("DriimerFinance - Mandant editieren");
 	ImageIcon icon = new ImageIcon("images/DF.png");
 	JTable mandantTable = new JTable();
 	JPanel tablePanel = new JPanel();
@@ -127,6 +127,9 @@ public class EditMandantWindow {
 					driimerdb.deleteMandantById(mandantId);
 					model.removeRow(selRow);
 					MainWindowSingleton.getMainWindowInstance().reload();
+					frame.toFront();
+					
+					
 				}
 			}
 		}

@@ -104,7 +104,7 @@ public class AddMandantWindow {
 			if (existingMandant == null) {
 				Mandant newMandant = new Mandant();
 				newMandant.setName(mandantName);
-				newMandant.setDBSchema(nameField.getText());
+				newMandant.createDBSchema();
 				newMandant.createInDB();
 				MainWindowSingleton.getMainWindowInstance().reload();
 				frame.dispose();

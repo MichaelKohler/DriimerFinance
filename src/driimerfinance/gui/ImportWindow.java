@@ -113,7 +113,7 @@ public class ImportWindow {
 					System.out.println("Mandant existiert noch nicht. Anlegen...");
 					newMandant = new Mandant();
 					newMandant.setName(mandantName);
-					newMandant.setDBSchema(nameField.getText());
+					newMandant.createDBSchema();
 					newMandant.createInDB();
 					(new Thread(new RawDataImporter(path, newMandant))).start();
 					MainWindowSingleton.getMainWindowInstance().reload();

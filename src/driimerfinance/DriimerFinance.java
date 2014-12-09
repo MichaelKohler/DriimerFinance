@@ -62,33 +62,6 @@ public class DriimerFinance {
 		} else {
 			new SetupWindow();
 		}
-
-		// TEST CODE BELOW
-		DriimerDBHelper driimerdb = new DriimerDBHelper();
-
-		System.out.println("Listing all Users: ");
-		List<User> users = driimerdb.getAllUsers();
-		for (User user : users) {
-			System.out.println("ID: " + user.getId() + " Name: "
-					+ user.getName() + " Vorname: " + user.getVorname()
-					+ " username: " + user.getUsername() + " Password: "
-					+ user.getPassword());
-		}
-		// Mandant testmandant = new Mandant();
-		// testmandant.setName("stampfli");
-		// testmandant.setDBSchema("stampfli");
-		// testmandant.createInDB();
-		// driimerdb.addMandant(testmandant);
-
-		System.out.println("Listing all Clients: ");
-		List<Mandant> mandanten = driimerdb.getAllMantanten();
-		for (Mandant mandant : mandanten) {
-			System.out
-					.println("ID: " + mandant.getId() + " Name: "
-							+ mandant.getName() + " DBSchema: "
-							+ mandant.getDBSchema());
-		}
-		driimerdb.closeConnection();
 	}
 
 }
