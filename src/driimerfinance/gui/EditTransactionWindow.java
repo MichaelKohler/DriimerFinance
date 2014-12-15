@@ -60,6 +60,7 @@ public class EditTransactionWindow {
 	JDatePickerImpl datePicker = null;
 	private DefaultTableModel model = null;
 	private int row = 0;
+	private double initialValue = 0;
 
 	/**
 	 * Constructor
@@ -78,6 +79,7 @@ public class EditTransactionWindow {
 		this.receiptNumber = Integer.toString(receiptNumber);
 		this.model = model;
 		this.row = row;
+		this.initialValue = amount;
 		createGUI();	
 	}
 
@@ -228,9 +230,11 @@ public class EditTransactionWindow {
 				if (!hasError) {
 					transToEdit.updateInDB();
 					
-					//Update Jtable in GUI
+					// Update JTable in GUI and recalculate amounts
 					Account sollAccount = helper.getAccountById(transToEdit.getFk_SollKonto());
 					Account habenAccount = helper.getAccountById(transToEdit.getFk_HabenKonto());
+					double difference = transToEdit.getBetrag() - initialValue;
+					FinanceHelper.calculateAccountAmounts(sollAccount, habenAccount, difference);
 					Object[] newRow = { transToEdit.getId().toString(),
 							transToEdit.getStringDate(), sollAccount.getName(),
 							habenAccount.getName(), transToEdit.getBezeichnung(),
