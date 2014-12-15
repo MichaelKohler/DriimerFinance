@@ -80,12 +80,21 @@ public class MainWindow {
 		this.frame.getContentPane().add(pane, BorderLayout.CENTER);
 	}
 	
+	/**
+	 * Creates a button for a given mandant
+	 * 
+	 * @param mandant to be painted on the button
+	 * @return button to be added to the main window
+	 */
 	private JButton makeButton(final Mandant mandant) {
 		JButton button = new JButton(mandant.getName());
 		button.addActionListener(new ChangeMandantAction(mandant));
 		return button;
 	}
 	
+	/**
+	 * Reload the Main window
+	 */
 	public void reload() {
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
@@ -93,6 +102,9 @@ public class MainWindow {
 		MainWindowSingleton.getMainWindowInstance();
 	}
 	
+	/**
+	 * ActionListener to change the current working mandant
+	 */
 	public class ChangeMandantAction implements ActionListener {
 		Mandant mandant = null;
 		

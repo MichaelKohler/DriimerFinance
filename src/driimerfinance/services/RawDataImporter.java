@@ -9,10 +9,11 @@ import driimerfinance.models.Mandant;
  * 
  * (c) 2014 Driimer Finance
  */
-public class RawDataImporter extends Exporter implements Runnable {
+public class RawDataImporter implements Runnable {
 	
 	private String source = null;
 	private Mandant mandant = null;
+	
 		/**
 	 * Constructor
 	 */
@@ -21,6 +22,9 @@ public class RawDataImporter extends Exporter implements Runnable {
 		this.mandant = mandant;
 	}
 
+	/**
+	 * Runs the export in a thread
+	 */
 	@Override
 	public void run() {
 		DriimerDBHelper db = new DriimerDBHelper();

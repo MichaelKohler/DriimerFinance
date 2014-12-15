@@ -21,16 +21,13 @@ public class DBUtil {
 			try {
 				connection.close();
 			} catch (SQLException e) {
-				/* Ignore */
 			}
 		}
 
 		try {
 			if (connection.isClosed()) {
-				System.out.println("Database connection closed");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -69,7 +66,6 @@ public class DBUtil {
 			try {
 				resultSet.close();
 			} catch (SQLException e) {
-				/* Ignore */
 			}
 		}
 

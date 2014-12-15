@@ -21,7 +21,6 @@ public class Account implements IModel {
 	 * Constructor
 	 */
     public Account() {
-        // TODO: create ID automatically from DB
     }
     
     /**
@@ -65,7 +64,6 @@ public class Account implements IModel {
      * Setter: Sets the object's number to the one specified
      * 
      * @param number to set
-     * @return void
      */
 	public void setNumber(Integer number) {
 		this.number = number;
@@ -84,7 +82,6 @@ public class Account implements IModel {
      * Setter: Sets the object's name to the one specified
      * 
      * @param name to set
-     * @return void
      */
 	public void setName(String name) {
 		this.name = name;
@@ -103,7 +100,6 @@ public class Account implements IModel {
      * Setter: Sets the object's account type to the one specified
      * 
      * @param account type to set
-     * @return void
      */
 	public void setFk_AccountType(int fk_AccountType) {
 		this.fk_AccountType = fk_AccountType;
@@ -122,7 +118,6 @@ public class Account implements IModel {
      * Setter: Sets the object's balance to the one specified
      * 
      * @param balance to set
-     * @return void
      */
 	public void setBalance(double balance) {
 		this.balance = balance;
@@ -141,7 +136,6 @@ public class Account implements IModel {
      * Setter: Sets the object's capital account check to the valze specified
      * 
      * @param whether it's a capital account or not
-     * @return void
      */
 	public void setCapitalAccount(Boolean capitalAccount) {
 		this.capitalAccount = capitalAccount;
@@ -149,8 +143,6 @@ public class Account implements IModel {
     
 	/**
      * Stores a new object in the database.
-     * 
-     * @return void
      */
     public void createInDB() {
         MandantDBHelper db = new MandantDBHelper();
@@ -160,8 +152,6 @@ public class Account implements IModel {
     
     /**
      * Updates the object in the database if already existing.
-     * 
-     * @return void
      */
     public void updateInDB() {
         MandantDBHelper db = new MandantDBHelper();
@@ -171,8 +161,6 @@ public class Account implements IModel {
     
     /**
      * Deletes the object from the database.
-     * 
-     * @return void
      */
     public void deleteInDB() {
     	MandantDBHelper db = new MandantDBHelper();

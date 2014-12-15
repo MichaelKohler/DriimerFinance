@@ -1,7 +1,6 @@
 package driimerfinance.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -111,6 +110,9 @@ public class JournalWindow {
 		frame.getContentPane().add(tablePanel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Adds the buttons to the GUI
+	 */
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 
@@ -138,10 +140,16 @@ public class JournalWindow {
 		this.frame.getRootPane().setDefaultButton(closeButton);
 	}
 
+	/**
+	 * Refreshes the table after action happened.
+	 */
 	public void refreshTable() {
 		frame.repaint();
 	}
 
+	/**
+	 * ActionListener to add a new transaction
+	 */
 	public class AddNewTransactionAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -149,6 +157,9 @@ public class JournalWindow {
 		}
 	}
 	
+	/**
+	 * ActionListener to update an edited transaction
+	 */
 	public class EditTransactionAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -171,6 +182,9 @@ public class JournalWindow {
 		}
 	}
 
+	/**
+	 * ActionListener to delete a transaction
+	 */
 	public class DeleteTransactionAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -207,13 +221,15 @@ public class JournalWindow {
 		}
 	}
 	
+	/**
+	 * Exports the Journal to a PDF after asking the user for a path to export it to.
+	 */
 	public void exportPDF() {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setCurrentDirectory(new java.io.File("."));
 		chooser.setDialogTitle("Select Destination");
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		chooser.setFileFilter(new FileNameExtensionFilter("PDF Files",
-				"PDF", "pdf"));
+		chooser.setFileFilter(new FileNameExtensionFilter("PDF Files", "PDF", "pdf"));
 		// disable the "All files" option.
 		chooser.setAcceptAllFileFilterUsed(false);
 
@@ -234,6 +250,9 @@ public class JournalWindow {
 		}
 	}
 	
+	/**
+	 * ActionListener to export the Journal PDF
+	 */
 	public class PDFExportAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {

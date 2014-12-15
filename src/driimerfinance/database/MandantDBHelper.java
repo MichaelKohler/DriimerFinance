@@ -2,7 +2,6 @@ package driimerfinance.database;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,43 +35,47 @@ public class MandantDBHelper {
 		Properties prop = new Properties();
 		InputStream in;
 		try {
-			URL url = getClass().getResource("database.properties");
 			in = getClass().getResourceAsStream("database.properties");
 			prop.load(in);
 			in.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+		// read the config from the properties file
 		String host = prop.getProperty("host");
 		String user = prop.getProperty("user");
 		String databasename = prop.getProperty("databasename");
 		String password = prop.getProperty("password");
 
-		db = new DBConnection();
-		dbconnection = db.createConnection(host, databasename, user, password);
-	}
-	
-	/**
-	 * Initializes the connection.
-	 * 
-	 * @param host to connect to
-	 * @param databasename to use
-	 * @param user login for this database
-	 * @param password of the database's user
-	 */
-	public MandantDBHelper(String host, String databasename,
-			String user, String password) {
+		// instantiate the connection to the datbase with the given credentials
 		db = new DBConnection();
 		dbconnection = db.createConnection(host, databasename, user, password);
 	}
 
 	/**
-     * Getter: Returns the transactions of this mandant in the database
-     * 
-     * @return list of all transactions
-     */
+	 * Initializes the connection.
+	 * 
+	 * @param host
+	 *            to connect to
+	 * @param databasename
+	 *            to use
+	 * @param user
+	 *            login for this database
+	 * @param password
+	 *            of the database's user
+	 */
+	public MandantDBHelper(String host, String databasename, String user,
+			String password) {
+		db = new DBConnection();
+		dbconnection = db.createConnection(host, databasename, user, password);
+	}
+
+	/**
+	 * Getter: Returns the transactions of this mandant in the database
+	 * 
+	 * @return list of all transactions
+	 */
 	public List<Transaction> getAllTransactions() {
 		List<Transaction> transactions = new ArrayList<Transaction>();
 		try {
@@ -99,10 +102,10 @@ public class MandantDBHelper {
 	}
 
 	/**
-     * Getter: Returns the transaction by id of this mandant in the database
-     * 
-     * @return transaction with the given id
-     */
+	 * Getter: Returns the transaction by id of this mandant in the database
+	 * 
+	 * @return transaction with the given id
+	 */
 	public Transaction getTransactionById(int transactionId) {
 		Transaction transaction = new Transaction();
 		try {
@@ -132,25 +135,29 @@ public class MandantDBHelper {
 	/**
 	 * Adds a transaction to the database.
 	 * 
-	 * @param transaction to add
+	 * @param transaction
+	 *            to add
+	 * @return database id of the added transaction
 	 */
 	public int addTransaction(Transaction transaction) {
 		int returnedKey = 0;
 		try {
-			preparedStatement = dbconnection.prepareStatement("insert into buchung(Datum, fk_SollKonto, fk_HabenKonto, Bezeichnung, Betrag, `Beleg-Nr`) values (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+			preparedStatement = dbconnection
+					.prepareStatement(
+							"insert into buchung(Datum, fk_SollKonto, fk_HabenKonto, Bezeichnung, Betrag, `Beleg-Nr`) values (?,?,?,?,?,?)",
+							Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setDate(1, transaction.getDate());
 			preparedStatement.setInt(2, transaction.getFk_SollKonto());
 			preparedStatement.setInt(3, transaction.getFk_HabenKonto());
-			preparedStatement.setString(4,  transaction.getBezeichnung());
+			preparedStatement.setString(4, transaction.getBezeichnung());
 			preparedStatement.setDouble(5, transaction.getBetrag());
 			preparedStatement.setInt(6, transaction.getBelegNr());
 			preparedStatement.execute();
-			ResultSet rs =  preparedStatement.getGeneratedKeys();
-			if (rs.next()){
-				returnedKey = rs.getInt(1);
+			ResultSet rs = preparedStatement.getGeneratedKeys();
+			if (rs.next()) {
+				returnedKey = rs.getInt(1); // ID is the first value of the
+											// result
 			}
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -160,10 +167,11 @@ public class MandantDBHelper {
 	}
 
 	/**
-     * Updates a transaction in the database.
-     * 
-     * @param transaction to update
-     */
+	 * Updates a transaction in the database.
+	 * 
+	 * @param transaction
+	 *            to update
+	 */
 	public void updateTransaction(Transaction transaction) {
 		try {
 			preparedStatement = dbconnection
@@ -176,7 +184,7 @@ public class MandantDBHelper {
 			preparedStatement.setInt(6, transaction.getBelegNr());
 			preparedStatement.setInt(7, transaction.getId());
 			preparedStatement.execute();
-	
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -187,14 +195,21 @@ public class MandantDBHelper {
 	/**
 	 * Deletes a transaction from the database.
 	 * 
-	 * @param transaction to delete
+	 * @param transaction
+	 *            to delete
 	 */
 	public void deleteTransaction(Transaction transaction) {
 		deleteTransactionById(transaction.getId());
 	}
-	
+
+	/**
+	 * Deletes a transaction by it's ID.
+	 * 
+	 * @param id
+	 *            to be deleted from the database
+	 */
 	public void deleteTransactionById(int transactionId) {
-		try {			
+		try {
 			preparedStatement = dbconnection
 					.prepareStatement("delete from buchung where idbuchung=?");
 			preparedStatement.setInt(1, transactionId);
@@ -207,16 +222,17 @@ public class MandantDBHelper {
 	}
 
 	/**
-     * Getter: Returns the accounts of this mandant in the database
-     * 
-     * @return list of all accounts
-     */
+	 * Getter: Returns the accounts of this mandant in the database
+	 * 
+	 * @return list of all accounts
+	 */
 	public List<Account> getAllAccounts() {
 		List<Account> accounts = new ArrayList<Account>();
 		try {
 			statement = dbconnection.createStatement();
 			// resultSet gets the result of the SQL query
-			resultSet = statement.executeQuery("select * from konto order by Nummer ASC");
+			resultSet = statement
+					.executeQuery("select * from konto order by Nummer ASC");
 			while (resultSet.next()) {
 				Account account = new Account();
 				account.setId(resultSet.getInt("idKonto"));
@@ -234,31 +250,31 @@ public class MandantDBHelper {
 		}
 		return accounts;
 	}
-	
+
 	public TreeMap getAllAccountsInMap() {
-	TreeMap accountMap = new TreeMap<Integer, String>();
-	try {
-		statement = dbconnection.createStatement();
-		// resultSet gets the result of the SQL query
-		resultSet = statement.executeQuery("select * from konto");
-		while (resultSet.next()) {
-			accountMap.put(resultSet.getInt("idKonto"), resultSet.getString("Name"));
+		TreeMap accountMap = new TreeMap<Integer, String>();
+		try {
+			statement = dbconnection.createStatement();
+			// resultSet gets the result of the SQL query
+			resultSet = statement.executeQuery("select * from konto");
+			while (resultSet.next()) {
+				accountMap.put(resultSet.getInt("idKonto"), resultSet.getString("Name"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
 		}
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally {
-		close();
+		return accountMap;
 	}
-	return accountMap;
-}
-	
+
 	/**
-     * Getter: Returns the account with this id of this mandant in the database
-     * 
-     * @return account found or a new account
-     */
+	 * Getter: Returns the account with this id of this mandant in the database
+	 * 
+	 * @return account found or a new account
+	 */
 	public Account getAccountById(int accountId) {
-		Account account= new Account();
+		Account account = new Account();
 		try {
 			preparedStatement = dbconnection
 					.prepareStatement("select * from konto where idKonto=?");
@@ -281,11 +297,13 @@ public class MandantDBHelper {
 		}
 		return account;
 	}
+
 	/**
-     * Getter: Returns the account with this name of this mandant in the database
-     * 
-     * @return account found or a new account
-     */
+	 * Getter: Returns the account with this name of this mandant in the
+	 * database
+	 * 
+	 * @return account found or a new account
+	 */
 	public Account getAccountByName(String accountName) {
 		Account account = null;
 		try {
@@ -311,16 +329,17 @@ public class MandantDBHelper {
 		}
 		return account;
 	}
-	
+
 	/**
-     * Getter: Returns the capital account
-     * 
-     * @return account found
-     */
+	 * Getter: Returns the capital account
+	 * 
+	 * @return account found
+	 */
 	public Account getCapitalAccount() {
 		Account account = null;
 		try {
-			preparedStatement = dbconnection.prepareStatement("select * from konto where Kapitalkonto=?");
+			preparedStatement = dbconnection
+					.prepareStatement("select * from konto where Kapitalkonto=?");
 			preparedStatement.setInt(1, 1); // 1 == Kapitalaccount
 
 			resultSet = preparedStatement.executeQuery();
@@ -341,7 +360,7 @@ public class MandantDBHelper {
 		}
 		return account;
 	}
-	
+
 	/**
 	 * Adds an account to this mandant's database.
 	 * 
@@ -355,7 +374,7 @@ public class MandantDBHelper {
 			preparedStatement.setString(2, account.getName());
 			preparedStatement.setInt(3, account.getFk_AccountType());
 			preparedStatement.setDouble(4, account.getBalance());
-			preparedStatement.setBoolean(5,  account.getCapitalAccount());
+			preparedStatement.setBoolean(5, account.getCapitalAccount());
 			preparedStatement.execute();
 
 		} catch (SQLException e) {
@@ -364,12 +383,12 @@ public class MandantDBHelper {
 			close();
 		}
 	}
-	
+
 	/**
-     * Updates an account in the database.
-     * 
-     * @param account to update
-     */
+	 * Updates an account in the database.
+	 * 
+	 * @param account to update
+	 */
 	public void updateAccount(Account account) {
 		try {
 			preparedStatement = dbconnection
@@ -378,7 +397,7 @@ public class MandantDBHelper {
 			preparedStatement.setString(2, account.getName());
 			preparedStatement.setInt(3, account.getFk_AccountType());
 			preparedStatement.setDouble(4, account.getBalance());
-			preparedStatement.setBoolean(5,  account.getCapitalAccount());
+			preparedStatement.setBoolean(5, account.getCapitalAccount());
 			preparedStatement.setInt(6, account.getId());
 			preparedStatement.execute();
 		} catch (SQLException e) {
@@ -387,7 +406,7 @@ public class MandantDBHelper {
 			close();
 		}
 	}
-	
+
 	/**
 	 * Deletes an account from this mandant's database.
 	 * 
@@ -404,17 +423,25 @@ public class MandantDBHelper {
 			close();
 		}
 	}
-	
+
+	/**
+	 * Deletes an account by ID in the database
+	 * 
+	 * @param accountId to delete
+	 * @return true if the deletion was successful, false otherwise
+	 */
 	public boolean deleteAccountById(int accountId) {
-		try {			
+		try {
 			preparedStatement = dbconnection
 					.prepareStatement("delete from konto where idkonto=?");
 			preparedStatement.setInt(1, accountId);
 			preparedStatement.execute();
 		} catch (SQLException e) {
-			if (e.getSQLState().startsWith("23"))
-			{
-				JOptionPane.showMessageDialog(null, "Konto kann nicht gel\u00f6scht werden, da es von Buchungen noch verwendet wird", "Fehler", JOptionPane.ERROR_MESSAGE);
+			// If the account still has dependent transaction, inform the user and abort
+			if (e.getSQLState().startsWith("23")) {
+				JOptionPane.showMessageDialog(null,
+								"Konto kann nicht gel\u00f6scht werden, da es von Buchungen noch verwendet wird",
+								"Fehler", JOptionPane.ERROR_MESSAGE);
 			}
 			e.printStackTrace();
 			return false;
@@ -423,12 +450,12 @@ public class MandantDBHelper {
 		}
 		return true;
 	}
-	
+
 	/**
-     * Getter: Returns the account types of this mandant in the database
-     * 
-     * @return list of all account types
-     */
+	 * Getter: Returns the account types of this mandant in the database
+	 * 
+	 * @return list of all account types
+	 */
 	public List<AccountType> getAllAccountTypes() {
 		List<AccountType> accounttypes = new ArrayList<AccountType>();
 		try {
@@ -448,12 +475,12 @@ public class MandantDBHelper {
 		}
 		return accounttypes;
 	}
-	
+
 	/**
-     * Getter: Returns the account type by id of this mandant in the database
-     * 
-     * @return transaction type by id
-     */
+	 * Getter: Returns the account type by id of this mandant in the database
+	 * 
+	 * @return transaction type by id
+	 */
 	public AccountType getAccountTypeById(int accounttypeId) {
 		AccountType accounttype = new AccountType();
 		try {
@@ -474,7 +501,7 @@ public class MandantDBHelper {
 		}
 		return accounttype;
 	}
-	
+
 	/**
 	 * Getter: Returns account type id by name
 	 */
@@ -484,9 +511,9 @@ public class MandantDBHelper {
 			preparedStatement = dbconnection
 					.prepareStatement("select idKontotyp from kontotyp where Name=?");
 			preparedStatement.setString(1, accountTypeName);
-			
+
 			resultSet = preparedStatement.executeQuery();
-			
+
 			if (resultSet.next()) {
 				accountTypeId = resultSet.getInt("idKontotyp");
 			}
@@ -497,8 +524,7 @@ public class MandantDBHelper {
 		}
 		return accountTypeId;
 	}
-	
-	
+
 	/**
 	 * Adds an accounttype to this mandant's database.
 	 * 
@@ -518,12 +544,12 @@ public class MandantDBHelper {
 			close();
 		}
 	}
-	
+
 	/**
-     * Updates an accounttype in the database.
-     * 
-     * @param accounttype to update
-     */
+	 * Updates an Account Type in the database.
+	 * 
+	 * @param accounttype to update
+	 */
 	public void updateAccountType(AccountType accounttype) {
 		try {
 			preparedStatement = dbconnection
@@ -537,9 +563,9 @@ public class MandantDBHelper {
 			close();
 		}
 	}
-	
+
 	/**
-	 * Deletes an accounttype from this mandant's database.
+	 * Deletes an account type from this mandant's database.
 	 * 
 	 * @param accounttype to delete
 	 */
@@ -554,7 +580,7 @@ public class MandantDBHelper {
 			close();
 		}
 	}
-	
+
 	/**
 	 * Closes the database connection.
 	 */
@@ -574,5 +600,4 @@ public class MandantDBHelper {
 			DBUtil.close(resultSet);
 		}
 	}
-
 }

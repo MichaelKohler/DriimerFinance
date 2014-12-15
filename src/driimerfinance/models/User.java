@@ -23,10 +23,8 @@ public class User implements IModel {
 	/**
 	 * Initializes a User with a name and password.
 	 * 
-	 * @param name
-	 *            to give
-	 * @param password
-	 *            to set
+	 * @param name to give
+	 * @param password to set
 	 */
 	public User(String name, String password) {
 		this.setName(name);
@@ -45,9 +43,7 @@ public class User implements IModel {
 	/**
 	 * Setter: Sets the object's first name to the one specified
 	 * 
-	 * @param first
-	 *            name to set
-	 * @return void
+	 * @param first name to set
 	 */
 	public void setVorname(String firstName) {
 		this.firstName = firstName;
@@ -56,7 +52,7 @@ public class User implements IModel {
 	/**
 	 * Getter: Returns the object's id
 	 * 
-	 * @return id
+	 * @return id of the user
 	 */
 	public Integer getId() {
 		return this.id;
@@ -65,9 +61,7 @@ public class User implements IModel {
 	/**
 	 * Setter: Sets the object's id to the one specified
 	 * 
-	 * @param id
-	 *            to set
-	 * @return void
+	 * @param id to set
 	 */
 	public void setId(Integer id) {
 		this.id = id;
@@ -76,7 +70,7 @@ public class User implements IModel {
 	/**
 	 * Getter: Returns the object's username
 	 * 
-	 * @return username
+	 * @return username of this user
 	 */
 	public String getUsername() {
 		return this.username;
@@ -85,9 +79,7 @@ public class User implements IModel {
 	/**
 	 * Setter: Sets the object's username to the one specified
 	 * 
-	 * @param username
-	 *            to set
-	 * @return void
+	 * @param username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -114,9 +106,7 @@ public class User implements IModel {
 	/**
 	 * Setter: Sets the object's name to the one specified
 	 * 
-	 * @param name
-	 *            to set
-	 * @return void
+	 * @param name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -125,9 +115,7 @@ public class User implements IModel {
 	/**
 	 * Setter: Sets the object's password to the one specified
 	 * 
-	 * @param password
-	 *            to set
-	 * @return void
+	 * @param password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -135,8 +123,6 @@ public class User implements IModel {
 
 	/**
 	 * Stores a new object in the database.
-	 * 
-	 * @return void
 	 */
 	public void createInDB() {
 		DriimerDBHelper driimerdb = new DriimerDBHelper();
@@ -146,8 +132,6 @@ public class User implements IModel {
 
 	/**
 	 * Updates the object in the database if already existing.
-	 * 
-	 * @return void
 	 */
 	public void updateInDB() {
 		DriimerDBHelper driimerdb = new DriimerDBHelper();
@@ -157,8 +141,6 @@ public class User implements IModel {
 
 	/**
 	 * Deletes the object from the database.
-	 * 
-	 * @return void
 	 */
 	public void deleteInDB() {
 		DriimerDBHelper driimerdb = new DriimerDBHelper();

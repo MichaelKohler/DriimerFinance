@@ -6,8 +6,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.io.File;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -54,6 +52,9 @@ public class ImportWindow {
 		this.frame.setVisible(true);
 	}
 
+	/**
+	 * Add the form to the GUI
+	 */
 	private void addForm() {
 		JPanel formPanel = new JPanel();
 		GridLayout layout = new GridLayout(1, 2);
@@ -85,6 +86,9 @@ public class ImportWindow {
 		this.frame.getRootPane().setDefaultButton(okButton);
 	}
 
+	/**
+	 * ActionListener to save the imported mandant after verifying it
+	 */
 	public class SaveMandantAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -99,8 +103,7 @@ public class ImportWindow {
 			chooser.setCurrentDirectory(new java.io.File("."));
 			chooser.setDialogTitle("Select Destination");
 			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			chooser.setFileFilter(new FileNameExtensionFilter("SQL Files",
-					"SQL", "sql"));
+			chooser.setFileFilter(new FileNameExtensionFilter("SQL Files", "SQL", "sql"));
 			// disable the "All files" option.
 			chooser.setAcceptAllFileFilterUsed(false);
 			if (chooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
@@ -114,8 +117,8 @@ public class ImportWindow {
 					newMandant.setName(mandantName);
 					newMandant.createDBSchema();
 					newMandant.createInDB();
-					(new Thread(new RawDataImporter(path, newMandant))).start();
-					MainWindowSingleton.getMainWindowInstance().reload();
+					(new Thread(new RawDataImporter(path, newMandant))).start(); // start the export
+					MainWindowSingleton.getMainWindowInstance().reload(); // reload the GUI
 					frame.dispose();
 				} else {
 					(new Thread(new RawDataImporter(path, existingMandant))).start();
@@ -124,5 +127,4 @@ public class ImportWindow {
 			}
 		}
 	}
-
 }

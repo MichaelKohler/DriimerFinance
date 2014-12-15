@@ -14,9 +14,9 @@ public class AnnualAccountsAction implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		AnnualAccounts annualAccounts = new AnnualAccounts();
-		annualAccounts.processEarnings();
-		annualAccounts.createStatements();
-		annualAccounts.clearEarningPositions();
-		annualAccounts.clearSpendingPositions();
+		annualAccounts.processEarnings(); // calculate the win and book it
+		annualAccounts.createStatements(); // print all the export in PDF
+		annualAccounts.clearEarningPositions(); // reset all positions to 0 for the new year
+		annualAccounts.clearSpendingPositions(); // reset all positions to 0 for the new year
 	}
 }

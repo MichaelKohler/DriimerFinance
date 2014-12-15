@@ -6,9 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,17 +20,10 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-
 import driimerfinance.database.MandantDBHelper;
-import driimerfinance.helpers.ComboboxHelper;
-import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 import driimerfinance.models.AccountType;
-import driimerfinance.models.Transaction;
 
 /**
  * Add a new transaction with this window.
@@ -146,9 +137,13 @@ public class EditAccountWindow {
 		this.frame.getRootPane().setDefaultButton(okButton);
 	}
 	
+	/**
+	 * ActionListener save an edited transaction
+	 */
 	public class SaveEditedTransactionAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			// ask the user for confirmation
 			Object[] options = {"Ja", "Nein"};
 			int eingabe = JOptionPane.showOptionDialog(
 							null,
@@ -159,7 +154,7 @@ public class EditAccountWindow {
 						    null,
 						    options,
 						    options[1]);
-			if (eingabe == 0) {
+			if (eingabe == 0) { // if the user said yes, (abort otherwise)
 				boolean hasError = false;
 				String errorMessage = "";
 				MandantDBHelper helper = new MandantDBHelper();
@@ -181,8 +176,7 @@ public class EditAccountWindow {
 				accToEdit.setCapitalAccount(isCapAccount.isSelected());
 				if (!hasError) {
 					helper.updateAccount(accToEdit);
-					
-					//Update Jtable in GUI
+					//Update JTable in GUI
 					accToEdit.getFk_AccountType();
 					Object[] newRow = { accToEdit.getId().toString(),
 							accToEdit.getNumber(), accToEdit.getName(),

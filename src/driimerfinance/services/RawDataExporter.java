@@ -14,7 +14,7 @@ import java.util.Properties;
  * 
  * (c) 2014 Driimer Finance
  */
-public class RawDataExporter extends Exporter implements Runnable {
+public class RawDataExporter implements Runnable {
 	private String host = "";
 	private String username = "";
 	private String password = "";
@@ -47,10 +47,14 @@ public class RawDataExporter extends Exporter implements Runnable {
 		}
 	}
 
+	/**
+	 * Run the export in as a thread
+	 */
 	@Override
 	public void run() {
 		String system = System.getProperty("os.name");
 		String pathToDump = "";
+		// get the mysqldump executable path
 		if (system.contains("Mac OS X")) {
 			pathToDump = new File("lib/mysqldump").getAbsolutePath();
 		}

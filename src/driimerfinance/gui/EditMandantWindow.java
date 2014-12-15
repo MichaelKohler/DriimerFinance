@@ -61,6 +61,7 @@ public class EditMandantWindow {
 		mandantTable = new JTable(new DefaultTableModel(data, headers) {
 			private static final long serialVersionUID = 1L;
 
+			// make table non-editable
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       return false;
@@ -71,6 +72,7 @@ public class EditMandantWindow {
 		JScrollPane scrollPane = new JScrollPane(mandantTable);
 		tablePanel.add(scrollPane);
 		
+		// Add all mandants from the DB to the list
 		List<Mandant> mandanten = driimerdb.getAllMantanten();
 		for ( Mandant mandant : mandanten) {
 			DefaultTableModel model = (DefaultTableModel) (mandantTable.getModel());
@@ -99,12 +101,16 @@ public class EditMandantWindow {
 		this.frame.getRootPane().setDefaultButton(cancelButton);
 	}
 	
+	/**
+	 * ActionListener to delete a mandant
+	 */
 	public class DeleteMandantAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int selRow = mandantTable.getSelectedRow();
 			//if there is a row selected
 			if ( selRow != -1 ) {
+				// ask the user for confirmation
 				Object[] options = {"Ja", "Nein"};
 				int eingabe = JOptionPane.showOptionDialog(
 								null,
@@ -125,14 +131,14 @@ public class EditMandantWindow {
 					model.removeRow(selRow);
 					MainWindowSingleton.getMainWindowInstance().reload();
 					frame.toFront();
-					
-					
 				}
 			}
 		}
 	}
 	
-	
+	/**
+	 * ActionListener to update a mandant
+	 */
 	public class UpdateMandantAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -152,14 +158,11 @@ public class EditMandantWindow {
 					Mandant mandant = driimerdb.getMandantById(mandantId);
 					mandant.setName(name);
 					mandant.updateInDB();
-					//GUI aktualisieren
+					//GUI update
 					mandantTable.setValueAt(name, selRow, 1);
 					mandantTable.repaint();
 					MainWindowSingleton.getMainWindowInstance().reload();
 					frame.toFront();
-					//model.removeRow(selRow);
-					//MainWindowSingleton.getMainWindowInstance().reload();
-					//frame.toFront();
 				}
 			}
 		}

@@ -6,6 +6,11 @@ import java.util.Calendar;
 
 import javax.swing.JFormattedTextField.AbstractFormatter;
 
+/**
+ * Creates a DateLabelFormatter instance to format the given date to a user-readble format.
+ * 
+ * (C) 2014 Driimer Finance
+ */
 public class DateLabelFormatter extends AbstractFormatter {
 
 	private static final long serialVersionUID = 885389720578704977L;
@@ -26,5 +31,4 @@ public class DateLabelFormatter extends AbstractFormatter {
 
         return "";
     }
-
 }

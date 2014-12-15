@@ -24,7 +24,7 @@ import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 
 /**
- * Used at the beginning to install the software.
+ * Re-enter the license key once it's expired.
  * 
  * (c) 2014 Driimer Finance
 */
@@ -82,6 +82,9 @@ public class EnterLicenseKeyWindow {
 		this.frame.getRootPane().setDefaultButton(okButton);
 	}
 	
+	/**
+	 * ActionListener to save the new license
+	 */
 	public class SaveLicenseAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -92,6 +95,7 @@ public class EnterLicenseKeyWindow {
 			else {
 				Properties prop = new Properties();
 				try {
+					// save the new key to the properties file
 					URL url = getClass().getResource("../../driimerfinance/database/database.properties");
 					prop.load(new FileInputStream(url.toURI().getPath()));
 					prop.setProperty("licensekey", licenseField.getText());
@@ -101,8 +105,9 @@ public class EnterLicenseKeyWindow {
 				} catch (URISyntaxException ex) {
 					ex.printStackTrace();
 				}
+				
 				frame.dispose();
-				MainWindowSingleton.getMainWindowInstance();
+				MainWindowSingleton.getMainWindowInstance(); // start the GUI
 			}
 		}
 	}

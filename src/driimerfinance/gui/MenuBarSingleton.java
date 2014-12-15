@@ -1,6 +1,5 @@
 package driimerfinance.gui;
 
-import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -19,7 +18,8 @@ import driimerfinance.services.RawDataExporter;
 
 /**
  * Singleton which returns a new menu bar or the existing one. This is included
- * in different windows.
+ * in different windows. Like that we always only have once instance of the
+ * MenuBar since it doesn't change on every frame.
  * 
  * (c) 2014 Driimer Finance
  */
@@ -228,8 +228,14 @@ public class MenuBarSingleton {
 		return bar;
 	}
 
-	public static JMenuItem makeMenuItem(final Mandant mandant,
-			final JMenu jmenu) {
+	/**
+	 * Adds a menu item for the given mandant to the main bar
+	 * 
+	 * @param mandant to be printed
+	 * @param jmenu to add the item to
+	 * @return jmenuitem of the given mandant to be included in the menu bar
+	 */
+	public static JMenuItem makeMenuItem(final Mandant mandant, final JMenu jmenu) {
 		JMenuItem menuItem = new JMenuItem(mandant.getName());
 		menuItem.setMnemonic(KeyEvent.VK_M);
 		menuItem.addActionListener(new ActionListener() {
@@ -249,17 +255,17 @@ public class MenuBarSingleton {
 	 */
 	public static JMenuBar getMenuBarInstance() {
 		if (menuBar != null) {
-			return menuBar;
+			return menuBar; // return the existing instance
 		} else {
-			menuBar = createGUI();
+			menuBar = createGUI(); // create a new instance to be returned
 			return menuBar;
 		}
 	}
 
 	/**
-	 * Enables or disables all Menuitems except mandanten
+	 * Enables or disables all Menuitems except Mandanten
 	 * 
-	 * @return void
+	 * @param enable or disable as boolean value
 	 */
 	public static void setEnabled(boolean bool) {
 		//count Jmenus
@@ -282,5 +288,4 @@ public class MenuBarSingleton {
 			}
 		}
 	}
-
 }

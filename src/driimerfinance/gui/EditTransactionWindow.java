@@ -104,6 +104,7 @@ public class EditTransactionWindow {
 		formPanel.setLayout(layout);
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
+		// Pre-fill the Date
 		UtilDateModel model = new UtilDateModel();
 		Properties p = new Properties();
 		p.put("text.today", "Today");
@@ -186,9 +187,13 @@ public class EditTransactionWindow {
 		this.frame.getRootPane().setDefaultButton(okButton);
 	}
 	
+	/**
+	 * ActionListener to save an edited transaction after verifying it
+	 */
 	public class SaveEditedTransactionAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			// ask the user for confirmation
 			Object[] options = {"Ja", "Nein"};
 			int eingabe = JOptionPane.showOptionDialog(
 							null,

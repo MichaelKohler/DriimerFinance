@@ -1,7 +1,6 @@
 package driimerfinance.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -86,6 +85,9 @@ public class ERViewer {
 		addButtons();
     }
     
+    /**
+     * Adds the buttons the frame
+     */
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton PDFExportButton = new JButton("PDF Export");
@@ -144,10 +146,10 @@ public class ERViewer {
     }
     
     /**
-     * Adds tje win or loss correctly to a tablerow
+     * Prepares a Table Row to be added to the table depending on loss/earning
      * 
      * @param win or loss
-     * @return table row with the appropriate cells filled with earning or loss
+     * @return data with the appropriate cells filled with earning or loss
      */
     public static Object[] prepareWinRow(double winOrLoss) {
     	    if (winOrLoss >= 0) { // win or neutral
@@ -159,6 +161,9 @@ public class ERViewer {
     	    }
     }
     
+    /**
+     * Export the ER to a PDF after asking the user for the path to export it to.
+     */
     public void exportPDF() {
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
@@ -187,6 +192,9 @@ public class ERViewer {
 		}
     }
     
+    /**
+	 * ActionListener to export the ER PDF
+	 */
     public class PDFExportAction implements ActionListener {
     	    @Override
 		public void actionPerformed(ActionEvent e) {

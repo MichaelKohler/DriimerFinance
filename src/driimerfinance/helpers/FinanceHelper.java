@@ -67,7 +67,7 @@ public class FinanceHelper {
 		HttpClient httpclient = HttpClients.createDefault();
 		HttpPost httppost = new HttpPost("http://driimerfinance.michaelkohler.info/checkLicense");
 		List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-		params.add(new BasicNameValuePair("key", licenseKey));
+		params.add(new BasicNameValuePair("key", licenseKey)); // pass the key to the server
 		try {
 			httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
@@ -76,7 +76,7 @@ public class FinanceHelper {
 
 		HttpResponse response = null;
 		try {
-			response = httpclient.execute(httppost);
+			response = httpclient.execute(httppost); // get the response from the server
 		} catch (IOException e) {
 			return false;
 		}
@@ -87,10 +87,10 @@ public class FinanceHelper {
 			try {
 				instream = entity.getContent();
 				@SuppressWarnings("resource")
-				java.util.Scanner s = new java.util.Scanner(instream).useDelimiter("\\A");
+				java.util.Scanner s = new java.util.Scanner(instream).useDelimiter("\\A"); // parse the response
 			    String responseString =  s.hasNext() ? s.next() : "";
 			    instream.close();
-			    return responseString.contains("\"valid\":true");
+			    return responseString.contains("\"valid\":true"); // if the license is valid, return true, else false
 			} catch (IllegalStateException | IOException e) {
 				return false;
 			}
@@ -98,6 +98,14 @@ public class FinanceHelper {
 		return false;
 	}
 	
+	/**
+	 * Calculates the new amounts of the given accounts depending on the amount specified. This also
+	 * takes into account that there are different business cases.
+	 * 
+	 * @param soll account to use for calculation
+	 * @param haben account to use for calculation
+	 * @param amount to be used as base
+	 */
 	public static void calculateAccountAmounts(Account soll, Account haben, double amount) {
 		double newSollBalance = 0.00;
 		double newHabenBalance = 0.00;

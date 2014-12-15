@@ -2,7 +2,6 @@ package driimerfinance.database;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,6 +22,8 @@ import driimerfinance.models.User;
 
 /**
  * Useful helper methods for DB access and DB related tasks.
+ * 
+ * (C) 2014 Driimer Finance
  */
 public class DriimerDBHelper {
 	private Connection dbconnection;
@@ -94,8 +95,7 @@ public class DriimerDBHelper {
 	/**
 	 * Finds a user by id specified.
 	 * 
-	 * @param id
-	 *            to search
+	 * @param id to search
 	 * @return user which was found or an empty user
 	 */
 	public User getUserById(int userId) {
@@ -182,9 +182,7 @@ public class DriimerDBHelper {
 	/**
 	 * Adds a user to the database.
 	 * 
-	 * @param user
-	 *            to be added
-	 * @return void
+	 * @param user to be added
 	 */
 	public void addUser(User user) {
 		try {
@@ -206,9 +204,7 @@ public class DriimerDBHelper {
 	/**
 	 * Deletes a user on the database.
 	 * 
-	 * @param user
-	 *            to be deleted
-	 * @return void
+	 * @param user to be deleted
 	 */
 	public void deleteUser(User user) {
 		try {
@@ -225,9 +221,7 @@ public class DriimerDBHelper {
 	/**
 	 * Updates a specific user on the database.
 	 * 
-	 * @param user
-	 *            to be updated
-	 * @return void
+	 * @param user to be updated
 	 */
 	public void updateUser(User user) {
 		try {
@@ -276,8 +270,7 @@ public class DriimerDBHelper {
 	/**
 	 * Searches a mandant on the database with a given id.
 	 * 
-	 * @param id
-	 *            to search
+	 * @param id to search
 	 * @return found mandant if existing or new mandant
 	 */
 	public Mandant getMandantById(int mandantId) {
@@ -367,12 +360,10 @@ public class DriimerDBHelper {
 	}
 
 	/**
-	 * Deletes a mandant from the database and calls deleteMandantDatabase()
+	 * Deletes a mandant from the database
 	 * 
-	 * @param Id
-	 *            of the mandant to be deleted
-	 * @return void
-	 */
+	 * @param Id of the mandant to be deleted
+     */
 	public void deleteMandantById(int mandantId) {
 		try {
 			Mandant mandant = getMandantById(mandantId);
@@ -392,9 +383,7 @@ public class DriimerDBHelper {
 	/**
 	 * Updates a specific mandant on the database.
 	 * 
-	 * @param mandant
-	 *            to be updated
-	 * @return void
+	 * @param mandant to be updated
 	 */
 	public void updateMandant(Mandant mandant) {
 		try {
@@ -414,8 +403,6 @@ public class DriimerDBHelper {
 
 	/**
 	 * Closes all open database connections.
-	 * 
-	 * @return void
 	 */
 	public void closeConnection() {
 		close();
@@ -424,8 +411,6 @@ public class DriimerDBHelper {
 
 	/**
 	 * Closes all database related connections.
-	 *
-	 * @return void
 	 */
 	private void close() {
 		if (statement != null) {
@@ -439,9 +424,7 @@ public class DriimerDBHelper {
 	/**
 	 * Creates a new Database for the mandant
 	 * 
-	 * @param Id
-	 *            of the mandant to be deleted
-	 * @return void
+	 * @param name of the mandant to be created
 	 */
 
 	private void createMandantDatabase(String schemaName) {
@@ -467,23 +450,18 @@ public class DriimerDBHelper {
 			runner.runScript(new InputStreamReader(in, "utf-8"));
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -491,78 +469,67 @@ public class DriimerDBHelper {
 	}
 
 	/**
-	 * Deletes the mandants Database
+	 * Deletes the mandant's Database
 	 * 
-	 * @param Id
-	 *            of the mandant to be deleted
-	 * @return void
+	 * @param name of the mandant to be deleted
 	 */
 	public void deleteMandantDatabase(String schemaName) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = null;
+			// connect to the mandant db
 			connection = DriverManager.getConnection("jdbc:mysql://localhost/"
 					+ schemaName + "?user=root&password=mysql");
 			Statement statement = connection.createStatement();
+			// drop the database to delete it
 			statement.executeUpdate("DROP DATABASE " + schemaName);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}
 	}
 	
-	
+	/**
+	 * Imports a previously exported instance of a mandant's datbase
+	 * 
+	 * @param schema name to be imported
+	 * @param source file path of the sql file
+	 */
 	public void importMandantDatabase(String schemaName, String source) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-//			Connection connection = null;
-//
-//			connection = DriverManager
-//					.getConnection("jdbc:mysql://localhost/mysql"
-//							+ "?user=root&password=mysql");
-//
-//			Statement statement = connection.createStatement();
-//			statement.executeUpdate("CREATE DATABASE " + schemaName);
-
 			Connection updateConnection = null;
 			updateConnection = DriverManager
 					.getConnection("jdbc:mysql://localhost/" + schemaName
 							+ "?user=root&password=mysql");
+			// Call the script runner to actually important it
 			ScriptRunner runner = new ScriptRunner(updateConnection, false,
 					true);
 			InputStream in = new FileInputStream(source);
 			runner.runScript(new InputStreamReader(in, "utf-8"));
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

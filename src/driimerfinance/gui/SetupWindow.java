@@ -32,9 +32,9 @@ import driimerfinance.models.User;
  * Used at the beginning to install the software.
  * 
  * (c) 2014 Driimer Finance
-*/
+ */
 public class SetupWindow {
-	
+
 	ImageIcon icon = new ImageIcon("images/DF.png");
 	JFrame frame = new JFrame("DriimerFinance - Konfiguration");
 	JPasswordField pwField1 = new JPasswordField();
@@ -44,19 +44,19 @@ public class SetupWindow {
 	JTextField mysqlPort = new JTextField();
 	JTextField mysqlUser = new JTextField();
 	JPasswordField mysqlPassword = new JPasswordField();
-	
+
 	/**
 	 * Constructor
 	 */
-    public SetupWindow() {
-        createGUI();
-    }
-    
-    /**
-     * Creates the GUI
-     */
-    private void createGUI() {
-    		addDescription();
+	public SetupWindow() {
+		createGUI();
+	}
+
+	/**
+	 * Creates the GUI
+	 */
+	private void createGUI() {
+		addDescription();
 		addForm();
 		addButtons();
 		this.frame.setSize(400, 400);
@@ -64,28 +64,29 @@ public class SetupWindow {
 		this.frame.setIconImage(icon.getImage());
 		this.frame.setVisible(true);
 	}
-    
-    /**
-     * Adds the description
-     */
-    private void addDescription() {
-    		JPanel descriptionPanel = new JPanel();
-    		JTextArea label = new JTextArea("Danke, dass Sie sich für DriimerFinance entschieden haben. Bitte beachten Sie, dass wir keine Möglichkeit haben, das Passwort zurückzusetzen, falls Sie dieses vergessen sollten. Zudem wird für die Lizenzüberprüfung eine Internetverbindung vorausgesetzt.");
-    		label.setPreferredSize(new Dimension(350, 100));
-    		label.setEditable(false);
-    		label.setColumns(30);
-    		label.setLineWrap(true);
-    		label.setWrapStyleWord(true);
-    		label.setBackground(new Color(238, 238, 238));
-    		descriptionPanel.add(label);
-    		descriptionPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-    		this.frame.getContentPane().add(descriptionPanel, BorderLayout.NORTH);
-    }
-    
-    /**
+
+	/**
+	 * Adds the description
+	 */
+	private void addDescription() {
+		JPanel descriptionPanel = new JPanel();
+		JTextArea label = new JTextArea(
+				"Danke, dass Sie sich für DriimerFinance entschieden haben. Bitte beachten Sie, dass wir keine Möglichkeit haben, das Passwort zurückzusetzen, falls Sie dieses vergessen sollten. Zudem wird für die Lizenzüberprüfung eine Internetverbindung vorausgesetzt.");
+		label.setPreferredSize(new Dimension(350, 100));
+		label.setEditable(false);
+		label.setColumns(30);
+		label.setLineWrap(true);
+		label.setWrapStyleWord(true);
+		label.setBackground(new Color(238, 238, 238));
+		descriptionPanel.add(label);
+		descriptionPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		this.frame.getContentPane().add(descriptionPanel, BorderLayout.NORTH);
+	}
+
+	/**
 	 * Adds the form
 	 */
-    private void addForm() {
+	private void addForm() {
 		JPanel formPanel = new JPanel();
 		GridLayout layout = new GridLayout(7, 2);
 		formPanel.setLayout(layout);
@@ -114,11 +115,11 @@ public class SetupWindow {
 		formPanel.add(mysqlPasswordLabel);
 		formPanel.add(mysqlPassword);
 		this.frame.getContentPane().add(formPanel, BorderLayout.CENTER);
-    }
-    
-    /**
-     * Adds the buttons on the bottom of the frame.
-     */
+	}
+
+	/**
+	 * Adds the buttons on the bottom of the frame.
+	 */
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton okButton = new JButton("OK");
@@ -130,39 +131,52 @@ public class SetupWindow {
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		this.frame.getRootPane().setDefaultButton(okButton);
 	}
-	
+
 	/**
 	 * Checks if the entered password match
 	 */
 	private boolean checkPasswords() {
-		return new String(pwField1.getPassword()).equals(new String(pwField2.getPassword()));
+		return new String(pwField1.getPassword()).equals(new String(pwField2
+				.getPassword()));
 	}
-	
+
+	/**
+	 * ActionListener to save the new config
+	 */
 	public class SaveConfigAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			boolean pwOK = checkPasswords();
 			if (!pwOK) {
-				JOptionPane.showMessageDialog(frame, "Passwörter stimmen nicht überein!", "Fehler", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(frame,
+						"Passwörter stimmen nicht überein!", "Fehler",
+						JOptionPane.ERROR_MESSAGE);
 			}
-			
-			boolean licenseOK = FinanceHelper.checkLicense(licenseField.getText());
+
+			boolean licenseOK = FinanceHelper.checkLicense(licenseField
+					.getText());
 			if (!licenseOK) {
-				JOptionPane.showMessageDialog(frame, "Der Lizenzschlüssel ist nicht gültig!", "Fehler", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(frame,
+						"Der Lizenzschlüssel ist nicht gültig!", "Fehler",
+						JOptionPane.ERROR_MESSAGE);
 			}
-			
+
 			saveMySQLConfig();
-			
+
 			if (pwOK && licenseOK) {
 				// User erstellen und Frame schliessen
-				User user = new User("admin", new String(pwField1.getPassword()));
+				User user = new User("admin",
+						new String(pwField1.getPassword()));
 				user.createInDB();
 				Properties prop = new Properties();
 				try {
-					URL url = getClass().getResource("../../driimerfinance/database/database.properties");
+					URL url = getClass()
+							.getResource(
+									"../../driimerfinance/database/database.properties");
 					prop.load(new FileInputStream(url.toURI().getPath()));
 					prop.setProperty("licensekey", licenseField.getText());
-					prop.store(new FileOutputStream(url.toURI().getPath()), null);
+					prop.store(new FileOutputStream(url.toURI().getPath()),
+							null);
 				} catch (IOException ex) {
 					ex.printStackTrace();
 				} catch (URISyntaxException ex) {
@@ -173,16 +187,21 @@ public class SetupWindow {
 			}
 		}
 	}
-	
+
+	/**
+	 * Saves the config to the properties file which is used later
+	 */
 	public void saveMySQLConfig() {
 		Properties prop = new Properties();
-		URL url = getClass().getResource("../../driimerfinance/database/database.properties");
+		URL url = getClass().getResource(
+				"../../driimerfinance/database/database.properties");
 		try {
 			prop.load(new FileInputStream(url.toURI().getPath()));
 			prop.setProperty("host", mysqlHost.getText());
 			prop.setProperty("user", mysqlUser.getText());
 			prop.setProperty("port", mysqlPort.getText());
-			prop.setProperty("password", new String(mysqlPassword.getPassword()));
+			prop.setProperty("password",
+					new String(mysqlPassword.getPassword()));
 			prop.store(new FileOutputStream(url.toURI().getPath()), null);
 		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();

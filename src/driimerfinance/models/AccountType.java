@@ -5,7 +5,7 @@ import java.util.List;
 import driimerfinance.database.MandantDBHelper;
 
 /**
- * ...
+ * AccountType Model to be used for the different account types.
  * 
  * (c) 2014 Driimer Finance
  */
@@ -53,7 +53,6 @@ public class AccountType implements IModel {
 	 * Setter: Sets the object's id to the one specified
 	 * 
 	 * @param id to set
-	 * @return void
 	 */
 	public void setId(Integer id) {
 		this.id = id;
@@ -72,7 +71,6 @@ public class AccountType implements IModel {
 	 * Setter: Sets the object's name to the one specified
 	 * 
 	 * @param name to set
-	 * @return void
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -80,8 +78,6 @@ public class AccountType implements IModel {
 
 	/**
 	 * Stores a new object in the database.
-	 * 
-	 * @return void
 	 */
 	public void createInDB() {
 		MandantDBHelper db = new MandantDBHelper();
@@ -91,8 +87,6 @@ public class AccountType implements IModel {
 
 	/**
 	 * Updates the object in the database if already existing.
-	 * 
-	 * @return void
 	 */
 	public void updateInDB() {
 		MandantDBHelper db = new MandantDBHelper();
@@ -102,8 +96,6 @@ public class AccountType implements IModel {
 
 	/**
 	 * Deletes the object from the database.
-	 * 
-	 * @return void
 	 */
 	public void deleteInDB() {
 		MandantDBHelper db = new MandantDBHelper();

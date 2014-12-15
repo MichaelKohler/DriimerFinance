@@ -19,7 +19,7 @@ import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.User;
 
 /**
- * Used at the beginning to install the software.
+ * Edit the user's password once it's set
  * 
  * (c) 2014 Driimer Finance
 */
@@ -81,6 +81,9 @@ public class EditUserWindow {
 		this.frame.getRootPane().setDefaultButton(okButton);
 	}
 	
+	/**
+	 * ActionListener to save an edited user
+	 */
 	public class SaveEditedUserAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {

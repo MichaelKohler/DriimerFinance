@@ -71,19 +71,22 @@ public class BalanceViewer {
 		accountTable = new JTable(new DefaultTableModel(data, headers) {
 			private static final long serialVersionUID = 1L;
 
+			// make the table non-editable
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       return false;
 		    }
 		});
-		accountTable
-				.setPreferredScrollableViewportSize(new Dimension(490, 390));
+		accountTable.setPreferredScrollableViewportSize(new Dimension(490, 390));
 		accountTable.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(accountTable);
 		tablePanel.add(scrollPane);
 		this.frame.getContentPane().add(tablePanel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Add the buttons to the form
+	 */
 	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		JButton PDFExportButton = new JButton("PDF Export");
@@ -106,8 +109,7 @@ public class BalanceViewer {
 		List<Account> active = balance.getActivePositions();
 		List<Account> passive = balance.getPassivePositions();
 
-		int maxLength = active.size() >= passive.size() ? active.size()
-				: passive.size();
+		int maxLength = active.size() >= passive.size() ? active.size() : passive.size(); // either the size of the passive or active accounts to calculate the max height
 		int columns = 4;
 		Object[][] rows = new Object[maxLength + 4][columns];
 		double totalActive = 0;
@@ -117,8 +119,7 @@ public class BalanceViewer {
 			String balanceActive = "";
 			if (i < active.size()) {
 				nameActive = active.get(i).getName();
-				balanceActive = FinanceHelper.formatAmount(active.get(i)
-						.getBalance());
+				balanceActive = FinanceHelper.formatAmount(active.get(i).getBalance());
 				totalActive += active.get(i).getBalance();
 			}
 			String namePassive = "";
@@ -163,13 +164,15 @@ public class BalanceViewer {
     	    }
     }
 
+    /**
+     * Ask the user where to save the file and export the balane into a PDF
+     */
 	public void exportPDF() {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setCurrentDirectory(new java.io.File("."));
 		chooser.setDialogTitle("Select Destination");
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		chooser.setFileFilter(new FileNameExtensionFilter("PDF Files", "PDF",
-				"pdf"));
+		chooser.setFileFilter(new FileNameExtensionFilter("PDF Files", "PDF", "pdf"));
 		// disable the "All files" option.
 		chooser.setAcceptAllFileFilterUsed(false);
 
@@ -190,6 +193,9 @@ public class BalanceViewer {
 		}
 	}
 
+	/**
+	 * ActionListener to export the PDF
+	 */
 	public class PDFExportAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {

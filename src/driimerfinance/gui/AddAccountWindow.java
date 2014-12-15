@@ -128,6 +128,9 @@ public class AddAccountWindow {
 		this.frame.getRootPane().setDefaultButton(okButton);
 	}
 	
+	/**
+	 * ActionListener save an account after verifying it
+	 */
 	public class SaveAccountAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {

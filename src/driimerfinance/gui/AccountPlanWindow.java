@@ -4,10 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultRowSorter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,11 +17,8 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 import driimerfinance.database.MandantDBHelper;
-import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
 import driimerfinance.models.AccountType;
@@ -73,6 +68,7 @@ public class AccountPlanWindow {
 		accountTable = new JTable(new DefaultTableModel(data, headers) {
 			private static final long serialVersionUID = 1L;
 
+			// make the table non-editable
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       return false;
@@ -95,6 +91,8 @@ public class AccountPlanWindow {
 
 	/**
 	 * Gets the data for the view once the window is started
+	 * 
+	 * @return array of all the data to be used in the table
 	 */
 	private Object[][] getData() {
 		List<Account> allAccounts = db.getAllAccounts();
@@ -103,7 +101,7 @@ public class AccountPlanWindow {
 			Account acc = allAccounts.get(i);
 			AccountType type = new AccountType();
 			type.setId(acc.getFk_AccountType());
-			String isCapitalAccount = acc.getCapitalAccount() ? "Ja" : "Nein";
+			String isCapitalAccount = acc.getCapitalAccount() ? "Ja" : "Nein"; // convert the database entry to an user-readable string
 			Object[] row = { acc.getId(), acc.getNumber(), acc.getName(), type.getTypeAsString(), isCapitalAccount };
 			rows[i] = row;
 		}
@@ -135,8 +133,7 @@ public class AccountPlanWindow {
 	/**
 	 * Adds the new account to the account table.
 	 * 
-	 * @param acc
-	 *            to add to the table
+	 * @param acc to add to the table
 	 */
 	public void addAccountToTable(Account acc) {
 		DefaultTableModel model = (DefaultTableModel) (accountTable.getModel());
@@ -166,6 +163,9 @@ public class AccountPlanWindow {
 		}
 	}
 	
+	/**
+	 * ActionListener to delete an account
+	 */
 	public class AccountDeleteAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -173,6 +173,7 @@ public class AccountPlanWindow {
 			selRow = accountTable.getSelectedRow();
 			// if there is a row selected
 			if (selRow != -1) {
+				// ask the user if he really wants to delete the entry
 				Object[] options = {"Ja", "Nein"};
 				int eingabe = JOptionPane.showOptionDialog(
 								null,
@@ -184,8 +185,7 @@ public class AccountPlanWindow {
 							    options,
 							    options[1]);
 				if (eingabe == 0) {
-					DefaultTableModel model = (DefaultTableModel) accountTable
-							.getModel();
+					DefaultTableModel model = (DefaultTableModel) accountTable.getModel();
 					// get accountid from table model
 					int accountId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
 					// get the transaction from database and delete it. (in

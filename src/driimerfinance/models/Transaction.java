@@ -23,18 +23,6 @@ public class Transaction implements IModel {
 	 * Constructor
 	 */
     public Transaction() {
-        // TODO: create ID automatically from DB
-    }
-    
-    /**
-     * Initializes a transaction with the given arguments.
-     * 
-     * @param positionFrom account source
-     * @param positionTo account destination
-     * @param amount to book
-     */
-    public Transaction(Account positionFrom, Account positionTo, int amount) {
-
     }
     
     /**
@@ -46,13 +34,11 @@ public class Transaction implements IModel {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-    
-    
-	
+
     /**
      * Getter: Returns the object's id
      * 
-     * @return id
+     * @return id used for this transaction
      */
 	public Integer getId() {
 		return this.id;
@@ -62,7 +48,6 @@ public class Transaction implements IModel {
      * Setter: Sets the object's id to the one specified
      * 
      * @param id to set
-     * @return void
      */
 	public void setId(Integer id) {
 		this.id = id;
@@ -77,6 +62,11 @@ public class Transaction implements IModel {
 		return this.date;
 	}
 	
+	/**
+	 * Get the date as a readable string
+	 * 
+	 * @return String representation of the date
+	 */
 	public String getStringDate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");  
 		String dateString = sdf.format(date);
@@ -87,7 +77,6 @@ public class Transaction implements IModel {
      * Setter: Sets the object's date to the one specified
      * 
      * @param date to set
-     * @return void
      */
 	public void setDate(java.sql.Date date) {
 		this.date = date;
@@ -106,7 +95,6 @@ public class Transaction implements IModel {
      * Setter: Sets the object's from account to the one specified
      * 
      * @param fromAccount to set
-     * @return void
      */
 	public void setFk_SollKonto(int sollKonto) {
 		this.fk_fromAccount = sollKonto;
@@ -125,7 +113,6 @@ public class Transaction implements IModel {
      * Setter: Sets the object's toAccount to the one specified
      * 
      * @param toAccount to set
-     * @return void
      */
 	public void setFk_HabenKonto(int habenKonto) {
 		this.fk_toAccount = habenKonto;
@@ -144,7 +131,6 @@ public class Transaction implements IModel {
      * Setter: Sets the object's description to the one specified
      * 
      * @param description to set
-     * @return void
      */
 	public void setBezeichnung(String description) {
 		this.description = description;
@@ -163,7 +149,6 @@ public class Transaction implements IModel {
      * Setter: Sets the object's amount to the one specified
      * 
      * @param amount to set
-     * @return void
      */
 	public void setBetrag(double betrag) {
 		this.amount = betrag;
@@ -182,7 +167,6 @@ public class Transaction implements IModel {
      * Setter: Sets the object's receipt number to the one specified
      * 
      * @param receipt number to set
-     * @return void
      */
 	public void setBelegNr(Integer receipt) {
 		this.receiptNumber = receipt;
@@ -190,35 +174,28 @@ public class Transaction implements IModel {
 	
 	/**
      * Stores a new object in the database.
-     * 
-     * @return void
      */
     public void createInDB() {
-    	MandantDBHelper db = new MandantDBHelper();
-    	this.setId(db.addTransaction(this));
-    	db.closeConnection();
+    	    MandantDBHelper db = new MandantDBHelper();
+    	    this.setId(db.addTransaction(this));
+    	    db.closeConnection();
     }
     
     /**
      * Updates the object in the database if already existing.
-     * 
-     * @return void
      */
     public void updateInDB() {
-    	MandantDBHelper db = new MandantDBHelper();
-    	db.updateTransaction(this);
-    	db.closeConnection();
+    	    MandantDBHelper db = new MandantDBHelper();
+    	    db.updateTransaction(this);
+        db.closeConnection();
     }
     
     /**
      * Deletes the object from the database.
-     * 
-     * @return void
      */
     public void deleteInDB() {
-    	MandantDBHelper db = new MandantDBHelper();
-    	db.deleteTransaction(this);
-    	db.closeConnection();
-        
+    	    MandantDBHelper db = new MandantDBHelper();
+        db.deleteTransaction(this);
+    	    db.closeConnection();
     }
 }

@@ -52,6 +52,7 @@ public class LoginWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel mainpanel = new JPanel() {
+			// Paint the background image
 			public void paintComponent(Graphics g) {  
 			Image img = Toolkit.getDefaultToolkit().getImage(new File("images/driimer.jpg").getAbsolutePath());
 			g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);  
@@ -66,6 +67,11 @@ public class LoginWindow {
 		frame.setVisible(true);
     }
     
+    /**
+     * Prints the different components of the login form.
+     * 
+     * @param panel to paint on
+     */
 	private void placeComponents(JPanel panel) {
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -84,6 +90,9 @@ public class LoginWindow {
 		loginButton.addActionListener(new LoginAction());	
 	}
 	
+	/**
+	 * ActionListener to login a user
+	 */
 	public class LoginAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -99,4 +108,3 @@ public class LoginWindow {
 		}
 	}
 }
-

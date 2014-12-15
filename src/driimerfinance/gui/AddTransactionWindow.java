@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -32,8 +30,6 @@ import driimerfinance.database.MandantDBHelper;
 import driimerfinance.helpers.FinanceHelper;
 import driimerfinance.helpers.GUIHelper;
 import driimerfinance.models.Account;
-import driimerfinance.models.AccountType;
-import driimerfinance.models.AccountTypeEnum;
 import driimerfinance.models.Transaction;
 import driimerfinance.helpers.ComboboxHelper;
 
@@ -71,10 +67,20 @@ public class AddTransactionWindow {
 		createGUI();
 	}
 	
+	/**
+	 * Returns the used table.
+	 * 
+	 * @return table that is used for the transaction window
+	 */
 	public JTable getTable() {
 		return table;
 	}
 
+	/**
+	 * Sets the table to be used by the transaction window
+	 * 
+	 * @param table object to be used
+	 */
 	public void setTable(JTable table) {
 		this.table = table;
 	}
@@ -99,7 +105,6 @@ public class AddTransactionWindow {
 		GridLayout layout = new GridLayout(6, 2);
 		formPanel.setLayout(layout);
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-
 		
 		//DatePicker
 		UtilDateModel model = new UtilDateModel();
@@ -179,6 +184,9 @@ public class AddTransactionWindow {
 		this.frame.getRootPane().setDefaultButton(okButton);
 	}
 
+	/**
+	 * ActionListener to save a transaction after verifying it
+	 */
 	public class SaveTransactionAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {

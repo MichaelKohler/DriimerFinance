@@ -33,6 +33,7 @@ public class AnnualAccounts {
     			return;
     		}
     		
+    		// calculate win and act on it
     		double win = calculateTotalEarning() - calculateTotalSpending();
     		if (win > 0) {
     			capAccount.setBalance(capAccount.getBalance() + win);
@@ -71,7 +72,7 @@ public class AnnualAccounts {
     }
     
     /**
-     * Creates all the needed statements
+     * Creates all the needed statements as PDF
      */
     public void createStatements() {
     		ERViewer erViewer = new ERViewer(false);

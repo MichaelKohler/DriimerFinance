@@ -26,7 +26,6 @@ public class Mandant implements IModel {
 	 * Constructor
 	 */
 	public Mandant() {
-        // TODO: create ID acc. to DB automatically
     }
 	
     /**
@@ -51,7 +50,6 @@ public class Mandant implements IModel {
      * Setter: Sets the object's id to the one specified
      * 
      * @param id to set
-     * @return void
      */
 	public void setID(Integer iD) {
 		this.id = iD;
@@ -60,7 +58,7 @@ public class Mandant implements IModel {
 	/**
      * Getter: Returns the object's database schema
      * 
-     * @return dbschema
+     * @return dbschema used
      */
 	public String getDBSchema() {
 		return this.dbSchema;
@@ -70,11 +68,10 @@ public class Mandant implements IModel {
      * Setter: Sets the object's dbschema to the one specified String
      * 
      * @param database schema  to set
-     * @return void
      */
 	public void setDBSchema(String dBSchema) {
 		String temp = Normalizer.normalize(dBSchema, Normalizer.Form.NFD);
-		temp = temp.replaceAll("[^\\p{ASCII}]", "");
+		temp = temp.replaceAll("[^\\p{ASCII}]", ""); // replace all non valid characters for the "Normalform"
 		temp = temp.replace(" ", "");
 		temp = temp.replace("-", "");
 		this.dbSchema = temp;
@@ -84,7 +81,6 @@ public class Mandant implements IModel {
      * Setter: Creates a new random String for dbSchema
      * 
      * @param database schema  to set
-     * @return void
      */
 	public void createDBSchema() {
 		//Generiert eine einmalige UUID. Entfernt "-" da in datenbankname nicht erlaubt
@@ -105,7 +101,6 @@ public class Mandant implements IModel {
      * Setter: Sets the object's name to the one specified
      * 
      * @param name to set
-     * @return void
      */
     public void setName(String name) {
         this.name = name;
@@ -113,60 +108,46 @@ public class Mandant implements IModel {
     
     /**
      * Setter: Sets the current mandant to work on
-     * 
-     * @param mandant to change to
-     * @return void
      */
     public void setCurrentWorkingMandant() {
-    	Properties prop = new Properties();
-		//InputStream in;
+    	    Properties prop = new Properties();
 		try {
 			URL url = getClass().getResource("../../driimerfinance/database/database.properties");
 			prop.load(new FileInputStream(url.toURI().getPath()));
-			prop.setProperty("databasename", this.getDBSchema());
+			prop.setProperty("databasename", this.getDBSchema()); // sets the name of the schema as value in the properties file
 			prop.store(new FileOutputStream(url.toURI().getPath()), null);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		MenuBarSingleton.setEnabled(true);
-		
-		
+		MenuBarSingleton.setEnabled(true); // set all the menu items to enabled since we have a working mandant now
     }
     
     /**
      * Stores a new object in the database.
-     * 
-     * @return void
      */
     public void createInDB() {
-    	DriimerDBHelper driimerdb = new DriimerDBHelper();
-    	driimerdb.addMandant(this);
-    	driimerdb.closeConnection();
+    	    DriimerDBHelper driimerdb = new DriimerDBHelper();
+    	    driimerdb.addMandant(this);
+    	    driimerdb.closeConnection();
     }
     
     /**
      * Updates the object in the database if already existing.
-     * 
-     * @return void
      */
     public void updateInDB() {
-    	DriimerDBHelper driimerdb = new DriimerDBHelper();
-    	driimerdb.updateMandant(this);
-    	driimerdb.closeConnection();
+    	    DriimerDBHelper driimerdb = new DriimerDBHelper();
+    	    driimerdb.updateMandant(this);
+    	    driimerdb.closeConnection();
     }
     
     /**
      * Deletes the object from the database.
-     * 
-     * @return void
      */
     public void deleteInDB() {
-    	DriimerDBHelper driimerdb = new DriimerDBHelper();
-    	driimerdb.deleteMandant(this);
-    	driimerdb.closeConnection();
+    	    DriimerDBHelper driimerdb = new DriimerDBHelper();
+    	    driimerdb.deleteMandant(this);
+    	    driimerdb.closeConnection();
     }
 }
