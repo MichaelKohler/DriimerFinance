@@ -86,12 +86,10 @@ public class MainWindow {
 		return button;
 	}
 	
-	public void reload(){
-		System.out.println("relaod mainwindow");
+	public void reload() {
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 		MainWindowSingleton.main = null;
-		System.out.println("frame nulled");
 		MainWindowSingleton.getMainWindowInstance();
 	}
 	

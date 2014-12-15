@@ -110,7 +110,6 @@ public class ImportWindow {
 				Mandant existingMandant = helper.getMandantByName(mandantName);
 				Mandant newMandant = null;
 				if (existingMandant == null) {
-					System.out.println("Mandant existiert noch nicht. Anlegen...");
 					newMandant = new Mandant();
 					newMandant.setName(mandantName);
 					newMandant.createDBSchema();
@@ -119,11 +118,7 @@ public class ImportWindow {
 					MainWindowSingleton.getMainWindowInstance().reload();
 					frame.dispose();
 				} else {
-					System.out
-							.println("Mandant exisitert. Daten importieren...");
-					System.out.println("path: " + path);
-					(new Thread(new RawDataImporter(path, existingMandant)))
-							.start();
+					(new Thread(new RawDataImporter(path, existingMandant))).start();
 					frame.dispose();
 				}
 			}

@@ -36,13 +36,10 @@ public class DBConnection {
 			String user, String password) {
 		try {
 			// setup the connection with the DB.
-			System.out.println("Connecting to database");
 			connection = DriverManager.getConnection("jdbc:mysql://" + host
 					+ "/" + databasename + "?user=" + user + "&password="
 					+ password);
-			System.out.println("Success");
 		} catch (SQLException e) {
-			System.out.println("ERROR: Unable to Connect to Database.");
 		}
 		return connection;
 	}

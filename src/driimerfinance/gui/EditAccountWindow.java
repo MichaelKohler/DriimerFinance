@@ -176,7 +176,6 @@ public class EditAccountWindow {
 				}
 				accToEdit.setName(nameField.getText());
 				int typeCode = typeField.getSelectedIndex()+1;
-				System.out.println(typeCode);
 				accToEdit.setFk_AccountType(typeCode);
 				accToEdit.setBalance(helper.getAccountById(accountId).getBalance());
 				accToEdit.setCapitalAccount(isCapAccount.isSelected());

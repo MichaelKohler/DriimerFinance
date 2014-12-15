@@ -105,7 +105,6 @@ public class PDFExporter {
 		addTitlePage(titleParagraph);
 		chapter.add(titleParagraph);
 		addEmptyLine(titleParagraph, 1);
-		System.out.println("createertable");
 		createErTable(chapter, jtable);
 
 		document.add(chapter);
@@ -139,7 +138,6 @@ public class PDFExporter {
 		addTitlePage(titleParagraph);
 		chapter.add(titleParagraph);
 		addEmptyLine(titleParagraph, 1);
-		System.out.println("createertable");
 		createBalanceTable(chapter, jtable);
 
 		document.add(chapter);
@@ -226,19 +224,15 @@ public class PDFExporter {
 	private void createErTable(Section subCatPart, JTable jtable)
 			throws BadElementException {
 		int count = jtable.getRowCount();
-		System.out.println("count: " + count);
 		PdfPTable table = new PdfPTable(4);
 		table.addCell("Aufwand");
 		table.addCell("Betrag");
 		table.addCell("Ertrag");
 		table.addCell("Betrag");
 		for (int i = 0; i < count; i++) {
-			System.out.println("I: " + i);
 			for (int a = 0; a <= 3; a++) {
-				System.out.println("a: " + a);
 				Object obj1 = GetTableData(jtable, i, a);
 				String value1 = obj1.toString();
-				System.out.println("TableCellValue: " + value1);
 				table.addCell(value1);
 			}
 		}
@@ -252,27 +246,21 @@ public class PDFExporter {
 	private void createBalanceTable(Section subCatPart, JTable jtable)
 			throws BadElementException {
 		int count = jtable.getRowCount();
-		System.out.println("count: " + count);
 		PdfPTable table = new PdfPTable(4);
 		table.addCell("Aktiven");
 		table.addCell("Betrag");
 		table.addCell("Passiven");
 		table.addCell("Betrag");
 		for (int i = 0; i < count; i++) {
-			System.out.println("I: " + i);
 			for (int a = 0; a <= 3; a++) {
-				System.out.println("a: " + a);
 				Object obj1 = GetTableData(jtable, i, a);
 				String value1 = obj1.toString();
-				System.out.println("TableCellValue: " + value1);
 				table.addCell(value1);
 			}
 		}
 
 		table.setHeaderRows(1);
-
 		subCatPart.add(table);
-
 	}
 
 	public Object GetTableData(JTable table, int row_index, int col_index) {

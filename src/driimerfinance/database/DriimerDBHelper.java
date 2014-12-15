@@ -446,7 +446,6 @@ public class DriimerDBHelper {
 
 	private void createMandantDatabase(String schemaName) {
 		try {
-			System.out.println("Neues Schema: " + schemaName);
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = null;
 
@@ -544,7 +543,6 @@ public class DriimerDBHelper {
 			ScriptRunner runner = new ScriptRunner(updateConnection, false,
 					true);
 			InputStream in = new FileInputStream(source);
-			System.out.println("In: " + in);
 			runner.runScript(new InputStreamReader(in, "utf-8"));
 
 		} catch (ClassNotFoundException e) {

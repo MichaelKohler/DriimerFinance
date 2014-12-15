@@ -52,10 +52,8 @@ public class DBUtil {
 
 		try {
 			if (statement.isClosed()) {
-				System.out.println("Statement connection closed");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -77,10 +75,8 @@ public class DBUtil {
 
 		try {
 			if (resultSet.isClosed()) {
-				System.out.println("resultSet connection closed");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

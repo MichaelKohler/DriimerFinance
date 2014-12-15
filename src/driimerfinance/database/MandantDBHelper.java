@@ -38,7 +38,6 @@ public class MandantDBHelper {
 		try {
 			URL url = getClass().getResource("database.properties");
 			in = getClass().getResourceAsStream("database.properties");
-			System.out.println(url);
 			prop.load(in);
 			in.close();
 		} catch (IOException e) {
@@ -50,11 +49,7 @@ public class MandantDBHelper {
 		String user = prop.getProperty("user");
 		String databasename = prop.getProperty("databasename");
 		String password = prop.getProperty("password");
-		
-		System.out.println("Host: " + host);
-		System.out.println("User: " + user);
-		System.out.println("Databasename: " + databasename);
-		System.out.println("Password: " + password);
+
 		db = new DBConnection();
 		dbconnection = db.createConnection(host, databasename, user, password);
 	}
@@ -152,9 +147,7 @@ public class MandantDBHelper {
 			preparedStatement.execute();
 			ResultSet rs =  preparedStatement.getGeneratedKeys();
 			if (rs.next()){
-				
 				returnedKey = rs.getInt(1);
-				System.out.println("returnes id: " + returnedKey);
 			}
 			
 			
@@ -363,7 +356,6 @@ public class MandantDBHelper {
 			preparedStatement.setInt(3, account.getFk_AccountType());
 			preparedStatement.setDouble(4, account.getBalance());
 			preparedStatement.setBoolean(5,  account.getCapitalAccount());
-			System.out.println(preparedStatement);
 			preparedStatement.execute();
 
 		} catch (SQLException e) {

@@ -159,7 +159,6 @@ public class AddAccountWindow {
 			}
 			newAcc.setName(nameField.getText());
 			int typeCode = typeField.getSelectedIndex()+1;
-			System.out.println(typeCode);
 			newAcc.setFk_AccountType(typeCode);
 			newAcc.setCapitalAccount(isCapAccount.isSelected());
 			newAcc.setBalance(Double.parseDouble(amountField.getText()));

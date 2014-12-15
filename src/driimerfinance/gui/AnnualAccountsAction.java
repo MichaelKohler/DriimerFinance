@@ -13,7 +13,6 @@ import driimerfinance.models.AnnualAccounts;
 public class AnnualAccountsAction implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		System.out.println("Running action...");
 		AnnualAccounts annualAccounts = new AnnualAccounts();
 		annualAccounts.processEarnings();
 		annualAccounts.createStatements();

@@ -223,18 +223,14 @@ public class JournalWindow {
 			if (!filePath.endsWith(".pdf")) {
 				filePath = filePath + ".pdf";
 			}
-			System.out.println("Filepath: " + filePath);
 			pdf.setOutputPath(filePath);
 			try {
-				System.out.println("creating pdf");
 				pdf.createJournalPdf();
 			} catch (DocumentException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-		} else {
-			System.out.println("No Selection ");
 		}
 	}
 	

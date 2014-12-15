@@ -122,7 +122,6 @@ public class Mandant implements IModel {
 		//InputStream in;
 		try {
 			URL url = getClass().getResource("../../driimerfinance/database/database.properties");
-			System.out.println("URL: " + url);
 			prop.load(new FileInputStream(url.toURI().getPath()));
 			prop.setProperty("databasename", this.getDBSchema());
 			prop.store(new FileOutputStream(url.toURI().getPath()), null);
