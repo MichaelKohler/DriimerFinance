@@ -68,7 +68,14 @@ public class BalanceViewer {
 		String[] headers = { "Aktiven", "Betrag", "Passiven", "Betrag" };
 		Object[][] data = prepareData();
 
-		accountTable = new JTable(new DefaultTableModel(data, headers));
+		accountTable = new JTable(new DefaultTableModel(data, headers) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		});
 		accountTable
 				.setPreferredScrollableViewportSize(new Dimension(490, 390));
 		accountTable.setFillsViewportHeight(true);

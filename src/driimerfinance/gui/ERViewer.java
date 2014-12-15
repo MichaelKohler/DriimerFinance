@@ -70,7 +70,14 @@ public class ERViewer {
 		String[] headers = { "Aufwand", "Betrag", "Ertrag", "Betrag" };
 		Object[][] data = prepareData();
 		
-		accountTable = new JTable(new DefaultTableModel(data, headers));
+		accountTable = new JTable(new DefaultTableModel(data, headers) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		});
 		accountTable.setPreferredScrollableViewportSize(new Dimension(490, 390));
 		accountTable.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(accountTable);
