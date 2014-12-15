@@ -178,36 +178,6 @@ public class AddTransactionWindow {
 		this.frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		this.frame.getRootPane().setDefaultButton(okButton);
 	}
-	
-	private void calculateAccountAmounts(Account soll, Account haben, double amount) {
-		double newSollBalance = 0.00;
-		double newHabenBalance = 0.00;
-
-		// Active Account or Expenses Account -> Soll +
-		if (soll.getFk_AccountType() == AccountTypeEnum.ACTIVE.getId() || soll.getFk_AccountType() == AccountTypeEnum.SPENDING.getId()) {
-			newSollBalance = soll.getBalance() + amount;
-		}
-		
-		// Active Account or Expenses Account -> Haben -
-		if (haben.getFk_AccountType() == AccountTypeEnum.ACTIVE.getId() || haben.getFk_AccountType() == AccountTypeEnum.SPENDING.getId()) {
-			newHabenBalance = haben.getBalance() - amount;
-		}
-		
-		// Passive Account or Earnings Account -> Soll -
-		if (soll.getFk_AccountType() == AccountTypeEnum.PASSIVE.getId() || soll.getFk_AccountType() == AccountTypeEnum.EARNING.getId()) {
-			newSollBalance = soll.getBalance() - amount;
-		}
-		
-		// Passive Account or Earnings Account -> Haben +
-		if (haben.getFk_AccountType() == AccountTypeEnum.PASSIVE.getId() || haben.getFk_AccountType() == AccountTypeEnum.EARNING.getId()) {
-			newHabenBalance = haben.getBalance() + amount;
-		}
-		
-		soll.setBalance(newSollBalance);
-		soll.updateInDB();
-		haben.setBalance(newHabenBalance);
-		haben.updateInDB();
-	}
 
 	public class SaveTransactionAction implements ActionListener {
 		@Override
@@ -256,7 +226,7 @@ public class AddTransactionWindow {
 						newTrans.getBelegNr() };
 				model.addRow(newRow);
 				
-				calculateAccountAmounts(sollAccount, habenAccount, amount);
+				FinanceHelper.calculateAccountAmounts(sollAccount, habenAccount, amount);
 				frame.dispose();
 			} else {
 				JOptionPane.showMessageDialog(frame, errorMessage, "Fehler", JOptionPane.ERROR_MESSAGE);

@@ -17,6 +17,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
+import driimerfinance.models.Account;
+import driimerfinance.models.AccountTypeEnum;
+
 /**
  * Useful methods for financial tasks.
  * 
@@ -93,5 +96,35 @@ public class FinanceHelper {
 			}
 		}
 		return false;
+	}
+	
+	public static void calculateAccountAmounts(Account soll, Account haben, double amount) {
+		double newSollBalance = 0.00;
+		double newHabenBalance = 0.00;
+
+		// Active Account or Expenses Account -> Soll +
+		if (soll.getFk_AccountType() == AccountTypeEnum.ACTIVE.getId() || soll.getFk_AccountType() == AccountTypeEnum.SPENDING.getId()) {
+			newSollBalance = soll.getBalance() + amount;
+		}
+		
+		// Active Account or Expenses Account -> Haben -
+		if (haben.getFk_AccountType() == AccountTypeEnum.ACTIVE.getId() || haben.getFk_AccountType() == AccountTypeEnum.SPENDING.getId()) {
+			newHabenBalance = haben.getBalance() - amount;
+		}
+		
+		// Passive Account or Earnings Account -> Soll -
+		if (soll.getFk_AccountType() == AccountTypeEnum.PASSIVE.getId() || soll.getFk_AccountType() == AccountTypeEnum.EARNING.getId()) {
+			newSollBalance = soll.getBalance() - amount;
+		}
+		
+		// Passive Account or Earnings Account -> Haben +
+		if (haben.getFk_AccountType() == AccountTypeEnum.PASSIVE.getId() || haben.getFk_AccountType() == AccountTypeEnum.EARNING.getId()) {
+			newHabenBalance = haben.getBalance() + amount;
+		}
+		
+		soll.setBalance(newSollBalance);
+		soll.updateInDB();
+		haben.setBalance(newHabenBalance);
+		haben.updateInDB();
 	}
 }

@@ -195,8 +195,13 @@ public class JournalWindow {
 					int transactionId = Integer.parseInt(model.getValueAt(selRow, 0).toString());
 					// get the transaction from database and delete it. (in
 					// database as well as in the table)
-					db.deleteTransactionById(transactionId);
+					Transaction trans = db.getTransactionById(transactionId);
+					Account fromAccount = db.getAccountById(trans.getFk_SollKonto());
+					Account toAccount = db.getAccountById(trans.getFk_HabenKonto());
+					double amountToDelete = trans.getBetrag() * -1;
+					FinanceHelper.calculateAccountAmounts(fromAccount, toAccount, amountToDelete);
 					model.removeRow(selRow);
+					db.deleteTransactionById(transactionId);
 				}
 			}
 		}
