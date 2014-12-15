@@ -3,18 +3,15 @@ package driimerfinance;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
-import driimerfinance.database.DriimerDBHelper;
 import driimerfinance.gui.EnterLicenseKeyWindow;
+import driimerfinance.gui.LoginWindow;
 import driimerfinance.gui.MainWindowSingleton;
 import driimerfinance.gui.SetupWindow;
 import driimerfinance.helpers.FinanceHelper;
-import driimerfinance.models.Mandant;
-import driimerfinance.models.User;
 
 /**
  * Main entry point class
@@ -22,8 +19,6 @@ import driimerfinance.models.User;
  * (c) 2014 Driimer Finance
  */
 public class DriimerFinance {
-
-	// random comment
 
 	/**
 	 * The main method starts everything. This includes initializing settings
@@ -50,9 +45,7 @@ public class DriimerFinance {
 			// existing key, checking validity
 			boolean validity = FinanceHelper.checkLicense(licenseKey);
 			if (validity) {
-				// new LoginWindow(); // TODO: enable for production
-				MainWindowSingleton.getMainWindowInstance(); // TODO: remove for
-																// production
+				new LoginWindow();
 			} else {
 				JOptionPane.showMessageDialog(null,
 						"Der Lizenzschlüssel ist nicht gültig!", "Fehler",
