@@ -29,6 +29,15 @@ public class MandantDBHelper {
 	private DBConnection db = null;
 
 	/**
+	 * Constructor
+	 * 
+	 * @param connection to use
+	 */
+	public MandantDBHelper(Connection connection) {
+		this.dbconnection = connection;
+	}
+	
+	/**
 	 * Changes the connection to the desired mandant
 	 */
 	public MandantDBHelper() {
@@ -90,7 +99,7 @@ public class MandantDBHelper {
 				transaction.setFk_HabenKonto(resultSet.getInt("fk_HabenKonto"));
 				transaction.setBezeichnung(resultSet.getString("Bezeichnung"));
 				transaction.setBetrag(resultSet.getDouble("Betrag"));
-				transaction.setBelegNr(resultSet.getInt("Beleg-Nr"));
+				transaction.setBelegNr(resultSet.getInt("BelegNr"));
 				transactions.add(transaction);
 			}
 		} catch (Exception e) {
@@ -122,7 +131,7 @@ public class MandantDBHelper {
 				transaction.setFk_HabenKonto(resultSet.getInt("fk_HabenKonto"));
 				transaction.setBezeichnung(resultSet.getString("bezeichnung"));
 				transaction.setBetrag(resultSet.getDouble("Betrag"));
-				transaction.setBelegNr(resultSet.getInt("Beleg-Nr"));
+				transaction.setBelegNr(resultSet.getInt("BelegNr"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -144,7 +153,7 @@ public class MandantDBHelper {
 		try {
 			preparedStatement = dbconnection
 					.prepareStatement(
-							"insert into buchung(Datum, fk_SollKonto, fk_HabenKonto, Bezeichnung, Betrag, `Beleg-Nr`) values (?,?,?,?,?,?)",
+							"insert into buchung(Datum, fk_SollKonto, fk_HabenKonto, Bezeichnung, Betrag, BelegNr) values (?,?,?,?,?,?)",
 							Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setDate(1, transaction.getDate());
 			preparedStatement.setInt(2, transaction.getFk_SollKonto());
@@ -175,7 +184,7 @@ public class MandantDBHelper {
 	public void updateTransaction(Transaction transaction) {
 		try {
 			preparedStatement = dbconnection
-					.prepareStatement("update buchung set Datum=?, fk_SollKonto=?, fk_HabenKonto=?, Bezeichnung=?, Betrag=?, `Beleg-Nr`=? where idBuchung=?");
+					.prepareStatement("update buchung set Datum=?, fk_SollKonto=?, fk_HabenKonto=?, Bezeichnung=?, Betrag=?, `BelegNr`=? where idBuchung=?");
 			preparedStatement.setDate(1, transaction.getDate());
 			preparedStatement.setInt(2, transaction.getFk_SollKonto());
 			preparedStatement.setInt(3, transaction.getFk_HabenKonto());
@@ -239,7 +248,7 @@ public class MandantDBHelper {
 				account.setNumber(resultSet.getInt("Nummer"));
 				account.setName(resultSet.getString("Name"));
 				account.setFk_AccountType(resultSet.getInt("fk_KontoTyp"));
-				account.setBalance(resultSet.getInt("Guthaben"));
+				account.setBalance(resultSet.getDouble("Guthaben"));
 				account.setCapitalAccount(resultSet.getBoolean("Kapitalkonto"));
 				accounts.add(account);
 			}
@@ -287,7 +296,7 @@ public class MandantDBHelper {
 				account.setNumber(resultSet.getInt("Nummer"));
 				account.setName(resultSet.getString("Name"));
 				account.setFk_AccountType(resultSet.getInt("fk_KontoTyp"));
-				account.setBalance(resultSet.getInt("Guthaben"));
+				account.setBalance(resultSet.getDouble("Guthaben"));
 				account.setCapitalAccount(resultSet.getBoolean("Kapitalkonto"));
 			}
 		} catch (SQLException e) {
@@ -319,7 +328,7 @@ public class MandantDBHelper {
 				account.setNumber(resultSet.getInt("Nummer"));
 				account.setName(resultSet.getString("Name"));
 				account.setFk_AccountType(resultSet.getInt("fk_KontoTyp"));
-				account.setBalance(resultSet.getInt("Guthaben"));
+				account.setBalance(resultSet.getDouble("Guthaben"));
 				account.setCapitalAccount(resultSet.getBoolean("Kapitalkonto"));
 			}
 		} catch (SQLException e) {
@@ -350,7 +359,7 @@ public class MandantDBHelper {
 				account.setNumber(resultSet.getInt("Nummer"));
 				account.setName(resultSet.getString("Name"));
 				account.setFk_AccountType(resultSet.getInt("fk_KontoTyp"));
-				account.setBalance(resultSet.getInt("Guthaben"));
+				account.setBalance(resultSet.getDouble("Guthaben"));
 				account.setCapitalAccount(resultSet.getBoolean("Kapitalkonto"));
 			}
 		} catch (SQLException e) {

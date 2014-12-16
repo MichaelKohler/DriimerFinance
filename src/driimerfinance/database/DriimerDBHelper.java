@@ -37,6 +37,15 @@ public class DriimerDBHelper {
 	private DBConnection db = null;
 
 	/**
+	 * Constructor
+	 * 
+	 * @param connection to use
+	 */
+	public DriimerDBHelper(Connection connection) {
+		this.dbconnection = connection;
+	}
+	
+	/**
 	 * Constructor to initialize the Helper. It initializes the DB connection
 	 * with the given properties.
 	 */

@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `DRIIMERGMBH`.`Buchung` (
   `fk_HabenKonto` INT NOT NULL,
   `Bezeichnung` LONGTEXT NULL,
   `Betrag` DECIMAL(10,2) NOT NULL,
-  `Beleg-Nr` VARCHAR(250) NULL,
+  `BelegNr` VARCHAR(250) NULL,
   PRIMARY KEY (`idBuchung`),
   INDEX `fk_SollKonto_idx` (`fk_SollKonto` ASC),
   INDEX `fk_HabenKonto_idx` (`fk_HabenKonto` ASC),
@@ -115,8 +115,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `DRIIMERGMBH`;
-INSERT INTO `DRIIMERGMBH`.`Buchung` (`idBuchung`, `Datum`, `fk_SollKonto`, `fk_HabenKonto`, `Bezeichnung`, `Betrag`, `Beleg-Nr`) VALUES (NULL, '2013-09-23', 3, 8, 'Verkauf auf Rechnung', 1000, '1');
-INSERT INTO `DRIIMERGMBH`.`Buchung` (`idBuchung`, `Datum`, `fk_SollKonto`, `fk_HabenKonto`, `Bezeichnung`, `Betrag`, `Beleg-Nr`) VALUES (NULL, '2013-09-21', 1, 3, 'Einzahlung von Debitor', 1000, '2');
+INSERT INTO `DRIIMERGMBH`.`Buchung` (`idBuchung`, `Datum`, `fk_SollKonto`, `fk_HabenKonto`, `Bezeichnung`, `Betrag`, `BelegNr`) VALUES (NULL, '2013-09-23', 3, 8, 'Verkauf auf Rechnung', 1000, '1');
+INSERT INTO `DRIIMERGMBH`.`Buchung` (`idBuchung`, `Datum`, `fk_SollKonto`, `fk_HabenKonto`, `Bezeichnung`, `Betrag`, `BelegNr`) VALUES (NULL, '2013-09-21', 1, 3, 'Einzahlung von Debitor', 1000, '2');
 
 COMMIT;
 

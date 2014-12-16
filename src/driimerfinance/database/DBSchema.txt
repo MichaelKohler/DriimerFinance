@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `Buchung` (
   `fk_HabenKonto` INT NOT NULL,
   `Bezeichnung` LONGTEXT NULL,
   `Betrag` DECIMAL(10,2) NOT NULL,
-  `Beleg-Nr` VARCHAR(250) NULL,
+  `BelegNr` VARCHAR(250) NULL,
   PRIMARY KEY (`idBuchung`),
   INDEX `fk_SollKonto_idx` (`fk_SollKonto` ASC),
   INDEX `fk_HabenKonto_idx` (`fk_HabenKonto` ASC),
