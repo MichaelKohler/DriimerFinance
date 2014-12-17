@@ -6,11 +6,10 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Properties;
 
 import javax.swing.ImageIcon;
@@ -170,16 +169,15 @@ public class SetupWindow {
 				user.createInDB();
 				Properties prop = new Properties();
 				try {
-					URL url = getClass()
-							.getResource(
-									"../../driimerfinance/database/database.properties");
-					prop.load(new FileInputStream(url.toURI().getPath()));
+					File propertiesFile = new File("bin/driimerfinance/database/database.properties");
+					if (!propertiesFile.exists()) {
+						propertiesFile = new File("../../driimerfinance/database/database.properties");
+					}
+					prop.load(new FileInputStream(propertiesFile.getAbsolutePath()));
 					prop.setProperty("licensekey", licenseField.getText());
-					prop.store(new FileOutputStream(url.toURI().getPath()),
+					prop.store(new FileOutputStream(propertiesFile.getAbsolutePath()),
 							null);
 				} catch (IOException ex) {
-					ex.printStackTrace();
-				} catch (URISyntaxException ex) {
 					ex.printStackTrace();
 				}
 				frame.dispose();
@@ -193,17 +191,19 @@ public class SetupWindow {
 	 */
 	public void saveMySQLConfig() {
 		Properties prop = new Properties();
-		URL url = getClass().getResource(
-				"../../driimerfinance/database/database.properties");
+		File propertiesFile = new File("bin/driimerfinance/database/database.properties");
+		if (!propertiesFile.exists()) {
+			propertiesFile = new File("../../driimerfinance/database/database.properties");
+		}
 		try {
-			prop.load(new FileInputStream(url.toURI().getPath()));
+			prop.load(new FileInputStream(propertiesFile.getAbsolutePath()));
 			prop.setProperty("host", mysqlHost.getText());
 			prop.setProperty("user", mysqlUser.getText());
 			prop.setProperty("port", mysqlPort.getText());
 			prop.setProperty("password",
 					new String(mysqlPassword.getPassword()));
-			prop.store(new FileOutputStream(url.toURI().getPath()), null);
-		} catch (IOException | URISyntaxException e) {
+			prop.store(new FileOutputStream(propertiesFile.getAbsolutePath()), null);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

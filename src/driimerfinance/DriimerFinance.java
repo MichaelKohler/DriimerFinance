@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 
 import driimerfinance.gui.EnterLicenseKeyWindow;
 import driimerfinance.gui.LoginWindow;
-import driimerfinance.gui.MainWindowSingleton;
 import driimerfinance.gui.SetupWindow;
 import driimerfinance.helpers.FinanceHelper;
 
@@ -26,16 +25,17 @@ public class DriimerFinance {
 	 * 
 	 * @param args
 	 *            the command line arguments
-	 * @throws Exception
-	 *             this is only used for the test code -- to be removed
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		Properties properties = new Properties();
 		String licenseKey = "";
 		try {
-			properties.load(new FileInputStream(new File(
-					"bin/driimerfinance/database/database.properties")
-					.getAbsoluteFile()));
+			File file = new File("bin/driimerfinance/database/database.properties");
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+			}
+			properties.load(new FileInputStream(file.getAbsoluteFile()));
 			licenseKey = properties.getProperty("licensekey");
 		} catch (IOException e) {
 			e.printStackTrace();

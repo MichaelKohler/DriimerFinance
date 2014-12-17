@@ -1,12 +1,11 @@
 package driimerfinance.database;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -61,14 +60,15 @@ public class DriimerDBHelper {
 	public void initConfig() {
 		Properties prop = new Properties();
 		try {
-			URL url = getClass().getResource("../../driimerfinance/database/database.properties");
-			prop.load(new FileInputStream(url.toURI().getPath()));
+			File propertiesFile = new File("bin/driimerfinance/database/database.properties");
+			if (!propertiesFile.exists()) {
+				propertiesFile = new File("../../driimerfinance/database/database.properties");
+			}
+			prop.load(new FileInputStream(propertiesFile.getAbsolutePath()));
 			host = prop.getProperty("host");
 			user = prop.getProperty("user");
 			password = prop.getProperty("password");
 		} catch (IOException ex) {
-			ex.printStackTrace();
-		} catch (URISyntaxException ex) {
 			ex.printStackTrace();
 		}
 	}
