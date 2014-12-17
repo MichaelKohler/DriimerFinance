@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" language="java" name="driimerfinance.DriimerFinance" project="DriimerFinance" 
     file="/DriimerFinance/src/driimerfinance/DriimerFinance.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="140" y="82"/>    
+    <position height="-1" width="-1" x="138" y="77"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,310 +12,788 @@
   </class>  
   <class id="2" language="java" name="driimerfinance.database.DBConnection" project="DriimerFinance" 
     file="/DriimerFinance/src/driimerfinance/database/DBConnection.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="289" y="83"/>    
+    <position height="-1" width="-1" x="462" y="84"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="driimerfinance.database.DBSchema" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/database/DBSchema.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="431" y="83"/>    
+  <class id="3" language="java" name="driimerfinance.database.DBUtil" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/database/DBUtil.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="748" y="52"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="driimerfinance.helpers.FInanceHelper" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/helpers/FInanceHelper.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="801" y="83"/>    
+  <class id="4" language="java" name="driimerfinance.database.DriimerDBHelper" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/database/DriimerDBHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="152" y="441"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="driimerfinance.models.Account" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/models/Account.java" binary="false" corner="BOTTOM_LEFT">    
-    <position height="-1" width="-1" x="125" y="279"/>    
+  <class id="5" language="java" name="driimerfinance.database.MandantDBHelper" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/database/MandantDBHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="790" y="437"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="driimerfinance.models.AccountPlan" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/models/AccountPlan.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="327" y="251"/>    
+  <class id="6" language="java" name="driimerfinance.database.ScriptRunner" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/database/ScriptRunner.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="464" y="468"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="driimerfinance.models.Balance" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/models/Balance.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="573" y="279"/>    
+  <class id="7" language="java" name="driimerfinance.helpers.ComboboxHelper" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/helpers/ComboboxHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1187" y="552"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="driimerfinance.models.ER" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/models/ER.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="853" y="271"/>    
+  <class id="8" language="java" name="driimerfinance.helpers.FinanceHelper" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/helpers/FinanceHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1363" y="396"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="driimerfinance.models.AnnualAccounts" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/models/AnnualAccounts.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="317" y="390"/>    
+  <class id="9" language="java" name="driimerfinance.helpers.GUIHelper" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/helpers/GUIHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1062" y="385"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="driimerfinance.models.License" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/models/License.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="121" y="450"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="11" language="java" name="driimerfinance.models.Mandant" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/models/Mandant.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="540" y="438"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="12" language="java" name="driimerfinance.models.Transaction" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/models/Transaction.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="791" y="452"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="13" language="java" name="driimerfinance.models.User" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/models/User.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="993" y="436"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="14" language="java" name="driimerfinance.services.Exporter" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/services/Exporter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="105" y="604"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="15" language="java" name="driimerfinance.services.Importer" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/services/Importer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="800" y="610"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="16" language="java" name="driimerfinance.services.LicenseCheckService" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/services/LicenseCheckService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1002" y="618"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="17" language="java" name="driimerfinance.services.PDFExporter" project="DriimerFinance" 
+  <class id="10" language="java" name="driimerfinance.services.PDFExporter" project="DriimerFinance" 
     file="/DriimerFinance/src/driimerfinance/services/PDFExporter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="323" y="555"/>    
+    <position height="-1" width="-1" x="1089" y="138"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="18" language="java" name="driimerfinance.services.RawDataExporter" project="DriimerFinance" 
+  <class id="11" language="java" name="driimerfinance.services.RawDataExporter" project="DriimerFinance" 
     file="/DriimerFinance/src/driimerfinance/services/RawDataExporter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="508" y="640"/>    
+    <position height="-1" width="-1" x="1338" y="95"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="19" language="java" name="driimerfinance.gui.AboutWindow" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/gui/AboutWindow.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="88" y="758"/>    
+  <class id="12" language="java" name="driimerfinance.services.RawDataImporter" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/services/RawDataImporter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1006" y="2371"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="20" language="java" name="driimerfinance.gui.AccountPlanWindow" project="DriimerFinance" 
+  <class id="13" language="java" name="driimerfinance.models.Account" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/models/Account.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="126" y="2065"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="driimerfinance.models.AccountType" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/models/AccountType.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="319" y="2120"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="15" language="java" name="driimerfinance.models.AccountTypeEnum" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/models/AccountTypeEnum.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="509" y="2017"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="16" language="java" name="driimerfinance.models.AnnualAccounts" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/models/AnnualAccounts.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="728" y="2254"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="driimerfinance.models.Balance" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/models/Balance.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="966" y="2135"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="driimerfinance.models.ER" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/models/ER.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="137" y="2383"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="19" language="java" name="driimerfinance.models.IModel" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/models/IModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="525" y="2274"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="20" language="java" name="driimerfinance.models.Mandant" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/models/Mandant.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="598" y="2668"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="driimerfinance.models.Transaction" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/models/Transaction.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="359" y="2660"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="driimerfinance.models.User" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/models/User.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="131" y="2692"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="driimerfinance.gui.AccountPlanWindow.AccountEditAction" project="DriimerFinance" 
     file="/DriimerFinance/src/driimerfinance/gui/AccountPlanWindow.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="98" width="167" x="169" y="676"/>    
+    <position height="-1" width="-1" x="510" y="996"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="21" language="java" name="driimerfinance.gui.AddAccountWindow" project="DriimerFinance" 
+  <class id="24" language="java" name="driimerfinance.gui.AccountPlanWindow" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/AccountPlanWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="532" y="800"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="driimerfinance.gui.AccountPlanWindow.AccountDeleteAction" 
+    project="DriimerFinance" file="/DriimerFinance/src/driimerfinance/gui/AccountPlanWindow.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="730" y="985"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="driimerfinance.gui.AddAccountWindow.SaveAccountAction" project="DriimerFinance" 
     file="/DriimerFinance/src/driimerfinance/gui/AddAccountWindow.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="418" y="757"/>    
+    <position height="-1" width="-1" x="132" y="1137"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="22" language="java" name="driimerfinance.gui.BalanceViewer" project="DriimerFinance" 
+  <class id="27" language="java" name="driimerfinance.gui.AddAccountWindow" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/AddAccountWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="110" y="900"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="driimerfinance.gui.AddMandantWindow.SaveMandantAction" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/AddMandantWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="357" y="1118"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="driimerfinance.gui.AddMandantWindow" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/AddMandantWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="308" y="847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="driimerfinance.gui.AddTransactionWindow" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/AddTransactionWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1400" y="833"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="driimerfinance.gui.AddTransactionWindow.SaveTransactionAction" 
+    project="DriimerFinance" file="/DriimerFinance/src/driimerfinance/gui/AddTransactionWindow.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1407" y="1106"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="driimerfinance.gui.AnnualAccountsAction" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/AnnualAccountsAction.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="768" y="803"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="driimerfinance.gui.BalanceViewer" project="DriimerFinance" 
     file="/DriimerFinance/src/driimerfinance/gui/BalanceViewer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="592" y="912"/>    
+    <position height="-1" width="-1" x="126" y="1339"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="23" language="java" name="driimerfinance.gui.ERViewer" project="DriimerFinance" 
+  <class id="34" language="java" name="driimerfinance.gui.BalanceViewer.PDFExportAction" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/BalanceViewer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="133" y="1550"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="driimerfinance.gui.DateLabelFormatter" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/DateLabelFormatter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1406" y="1269"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="driimerfinance.gui.EditAccountWindow" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/EditAccountWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="751" y="1295"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="driimerfinance.gui.EditAccountWindow.SaveEditedTransactionAction" 
+    project="DriimerFinance" file="/DriimerFinance/src/driimerfinance/gui/EditAccountWindow.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="955" y="1014"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="driimerfinance.gui.EditMandantWindow" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/EditMandantWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="346" y="1296"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="driimerfinance.gui.EditMandantWindow.UpdateMandantAction" 
+    project="DriimerFinance" file="/DriimerFinance/src/driimerfinance/gui/EditMandantWindow.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="351" y="1470"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="driimerfinance.gui.EditMandantWindow.DeleteMandantAction" 
+    project="DriimerFinance" file="/DriimerFinance/src/driimerfinance/gui/EditMandantWindow.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="365" y="1591"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" name="driimerfinance.gui.EditTransactionWindow" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/EditTransactionWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="903" y="1734"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="42" language="java" name="driimerfinance.gui.EditTransactionWindow.SaveEditedTransactionAction" 
+    project="DriimerFinance" file="/DriimerFinance/src/driimerfinance/gui/EditTransactionWindow.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="732" y="2051"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="driimerfinance.gui.EditUserWindow.SaveEditedUserAction" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/EditUserWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1048" y="909"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="driimerfinance.gui.EditUserWindow" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/EditUserWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1025" y="717"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="driimerfinance.gui.EnterLicenseKeyWindow.SaveLicenseAction" 
+    project="DriimerFinance" file="/DriimerFinance/src/driimerfinance/gui/EnterLicenseKeyWindow.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1177" y="1251"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="46" language="java" name="driimerfinance.gui.EnterLicenseKeyWindow" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/EnterLicenseKeyWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1167" y="1068"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="47" language="java" name="driimerfinance.gui.ERViewer" project="DriimerFinance" 
     file="/DriimerFinance/src/driimerfinance/gui/ERViewer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="787" y="911"/>    
+    <position height="-1" width="-1" x="1326" y="1487"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="24" language="java" name="driimerfinance.gui.TwoColumnsViewer" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/gui/TwoColumnsViewer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="682" y="755"/>    
+  <class id="48" language="java" name="driimerfinance.gui.ERViewer.PDFExportAction" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/ERViewer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1331" y="1697"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="25" language="java" name="driimerfinance.gui.AnnualAccountsWindow" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/gui/AnnualAccountsWindow.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="904" y="745"/>    
+  <class id="49" language="java" name="driimerfinance.gui.FrameCloseAction" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/FrameCloseAction.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="126" y="1705"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="26" language="java" name="driimerfinance.gui.JournalWindow" project="DriimerFinance" 
+  <class id="50" language="java" name="driimerfinance.gui.ImportWindow" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/ImportWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="326" y="1774"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="51" language="java" name="driimerfinance.gui.ImportWindow.SaveMandantAction" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/ImportWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="515" y="1831"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="52" language="java" name="driimerfinance.gui.JournalWindow.PDFExportAction" project="DriimerFinance" 
     file="/DriimerFinance/src/driimerfinance/gui/JournalWindow.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="89" y="987"/>    
+    <position height="-1" width="-1" x="1302" y="1877"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="27" language="java" name="driimerfinance.gui.OneColumnViewer" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/gui/OneColumnViewer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="262" y="857"/>    
+  <class id="53" language="java" name="driimerfinance.gui.JournalWindow.AddNewTransactionAction" 
+    project="DriimerFinance" file="/DriimerFinance/src/driimerfinance/gui/JournalWindow.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1557" y="1877"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="28" language="java" name="driimerfinance.gui.LoginWindow" project="DriimerFinance" 
+  <class id="54" language="java" name="driimerfinance.gui.JournalWindow.EditTransactionAction" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/JournalWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1780" y="2012"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="55" language="java" name="driimerfinance.gui.JournalWindow.DeleteTransactionAction" 
+    project="DriimerFinance" file="/DriimerFinance/src/driimerfinance/gui/JournalWindow.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2015" y="2021"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="56" language="java" name="driimerfinance.gui.JournalWindow" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/JournalWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1660" y="1648"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="57" language="java" name="driimerfinance.gui.LoginWindow.LoginAction" project="DriimerFinance" 
     file="/DriimerFinance/src/driimerfinance/gui/LoginWindow.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="98" width="119" x="360" y="850"/>    
+    <position height="-1" width="-1" x="1642" y="864"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="29" language="java" name="driimerfinance.gui.MainWindow" project="DriimerFinance" 
+  <class id="58" language="java" name="driimerfinance.gui.LoginWindow" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/LoginWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1634" y="690"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="59" language="java" name="driimerfinance.gui.MainWindow.ChangeMandantAction" project="DriimerFinance" 
     file="/DriimerFinance/src/driimerfinance/gui/MainWindow.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="966" y="903"/>    
+    <position height="-1" width="-1" x="1655" y="1246"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="30" language="java" name="driimerfinance.gui.SetupWindow" project="DriimerFinance" 
+  <class id="60" language="java" name="driimerfinance.gui.MainWindow" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/MainWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1643" y="1054"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="61" language="java" name="driimerfinance.gui.MainWindowSingleton" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/MainWindowSingleton.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1907" y="1034"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="62" language="java" name="driimerfinance.gui.MenuBarSingleton" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/MenuBarSingleton.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1922" y="1356"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="63" language="java" name="driimerfinance.gui.SetupWindow" project="DriimerFinance" 
     file="/DriimerFinance/src/driimerfinance/gui/SetupWindow.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="819" y="1035"/>    
+    <position height="-1" width="-1" x="1988" y="1644"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="31" language="java" name="driimerfinance.gui.TransactionWindow" project="DriimerFinance" 
-    file="/DriimerFinance/src/driimerfinance/gui/TransactionWindow.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="264" y="1011"/>    
+  <class id="64" language="java" name="driimerfinance.gui.SetupWindow.SaveConfigAction" project="DriimerFinance" 
+    file="/DriimerFinance/src/driimerfinance/gui/SetupWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2008" y="1893"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <generalization id="32">    
-    <end type="SOURCE" refId="31"/>    
-    <end type="TARGET" refId="27"/>  
-  </generalization>  
-  <generalization id="33">    
-    <end type="SOURCE" refId="17"/>    
-    <end type="TARGET" refId="14"/>  
-  </generalization>  
-  <generalization id="34">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="14"/>  
-  </generalization>  
-  <generalization id="35">    
-    <end type="SOURCE" refId="26"/>    
-    <end type="TARGET" refId="27"/>  
-  </generalization>  
-  <generalization id="36">    
+  <nesting id="65">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="28"/>  
+  </nesting>  
+  <realization id="66">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <association id="67">    
+    <end type="SOURCE" refId="56" navigable="false">      
+      <attribute id="68" name="db"/>      
+      <multiplicity id="69" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="70">    
+    <end type="SOURCE" refId="38"/>    
+    <end type="TARGET" refId="40"/>  
+  </nesting>  
+  <realization id="71">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <nesting id="72">    
+    <end type="SOURCE" refId="56"/>    
+    <end type="TARGET" refId="53"/>  
+  </nesting>  
+  <association id="73">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="74" name="db"/>      
+      <multiplicity id="75" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="76">    
+    <end type="SOURCE" refId="38" navigable="false">      
+      <attribute id="77" name="driimerdb"/>      
+      <multiplicity id="78" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="79">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <association id="80">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="81" name="db"/>      
+      <multiplicity id="82" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="83">    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="37"/>  
+  </nesting>  
+  <nesting id="84">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="31"/>  
+  </nesting>  
+  <nesting id="85">    
+    <end type="SOURCE" refId="46"/>    
+    <end type="TARGET" refId="45"/>  
+  </nesting>  
+  <association id="86">    
+    <end type="SOURCE" refId="56" navigable="false">      
+      <attribute id="87" name="parent"/>      
+      <multiplicity id="88" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="56" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="89">    
+    <end type="SOURCE" refId="36" navigable="false">      
+      <attribute id="90" name="parent"/>      
+      <multiplicity id="91" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="92">    
+    <end type="SOURCE" refId="58" navigable="false">      
+      <attribute id="93" name="db"/>      
+      <multiplicity id="94" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="95">    
+    <end type="SOURCE" refId="61" navigable="false">      
+      <attribute id="96" name="main"/>      
+      <multiplicity id="97" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="60" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="98">    
+    <end type="SOURCE" refId="56"/>    
+    <end type="TARGET" refId="52"/>  
+  </nesting>  
+  <nesting id="99">    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="51"/>  
+  </nesting>  
+  <nesting id="100">    
+    <end type="SOURCE" refId="58"/>    
+    <end type="TARGET" refId="57"/>  
+  </nesting>  
+  <association id="101">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="102" name="parent"/>      
+      <multiplicity id="103" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="104">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <nesting id="105">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="34"/>  
+  </nesting>  
+  <nesting id="106">    
+    <end type="SOURCE" refId="60"/>    
+    <end type="TARGET" refId="59"/>  
+  </nesting>  
+  <realization id="107">    
     <end type="SOURCE" refId="22"/>    
-    <end type="TARGET" refId="24"/>  
-  </generalization>  
-  <generalization id="37">    
-    <end type="SOURCE" refId="23"/>    
-    <end type="TARGET" refId="24"/>  
-  </generalization>  
-  <dependency id="38">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="12"/>  
-  </dependency>  
-  <dependency id="39">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
-  <dependency id="40">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <association id="108">    
+    <end type="SOURCE" refId="59" navigable="false">      
+      <attribute id="109" name="mandant"/>      
+      <multiplicity id="110" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="111">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="42"/>  
+  </nesting>  
+  <nesting id="112">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="23"/>  
+  </nesting>  
+  <nesting id="113">    
+    <end type="SOURCE" refId="56"/>    
+    <end type="TARGET" refId="54"/>  
+  </nesting>  
+  <association id="114">    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="115" name="parent"/>      
+      <multiplicity id="116" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="56" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="117">    
+    <end type="SOURCE" refId="44"/>    
+    <end type="TARGET" refId="43"/>  
+  </nesting>  
+  <nesting id="118">    
+    <end type="SOURCE" refId="47"/>    
+    <end type="TARGET" refId="48"/>  
+  </nesting>  
+  <nesting id="119">    
+    <end type="SOURCE" refId="63"/>    
+    <end type="TARGET" refId="64"/>  
+  </nesting>  
+  <nesting id="120">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="26"/>  
+  </nesting>  
+  <nesting id="121">    
+    <end type="SOURCE" refId="56"/>    
+    <end type="TARGET" refId="55"/>  
+  </nesting>  
+  <association id="122">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="123" name="db"/>      
+      <multiplicity id="124" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="125">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="126" name="mandant"/>      
+      <multiplicity id="127" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="128">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="25"/>  
+  </nesting>  
+  <nesting id="129">    
+    <end type="SOURCE" refId="38"/>    
+    <end type="TARGET" refId="39"/>  
+  </nesting>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    
