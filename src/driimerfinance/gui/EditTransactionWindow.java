@@ -222,6 +222,14 @@ public class EditTransactionWindow {
 				int sollAccountId = Integer.parseInt(itemData[0].toString());
 				itemData = (Object[])habenField.getSelectedItem();
 				int habenAccountId = Integer.parseInt(itemData[0].toString());
+				
+				//if there was a change in Accounts, recalculate all balances
+				if(habenAccountId != transToEdit.getFk_HabenKonto() || sollAccountId != transToEdit.getFk_SollKonto()){
+					//reset old accounts
+					FinanceHelper.calculateAccountAmounts(helper.getAccountById(transToEdit.getFk_SollKonto()), helper.getAccountById(transToEdit.getFk_HabenKonto()), -initialValue);
+					//Recalculate amounts for new Transaction
+					FinanceHelper.calculateAccountAmounts(helper.getAccountById(sollAccountId), helper.getAccountById(habenAccountId), initialValue);
+				}
 				transToEdit.setFk_SollKonto(sollAccountId);
 				transToEdit.setFk_HabenKonto(habenAccountId);
 				transToEdit.setBezeichnung(transactionField.getText());
