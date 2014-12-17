@@ -240,6 +240,11 @@ public class EditTransactionWindow {
 					errorMessage += "\nBetrag und Beleg-Nr. m\u00fcssen eine Zahl sein!";
 					hasError = true;
 				}
+				//transaction on only one account is not valid
+				if(transToEdit.getFk_HabenKonto() == transToEdit.getFk_SollKonto()){
+					errorMessage += "\nBitte w\u00e4hlen sie unterschie Soll- und Habenkonto unterschiedlich.";
+					hasError = true;
+				}
 				if (!hasError) {
 					transToEdit.updateInDB();
 					

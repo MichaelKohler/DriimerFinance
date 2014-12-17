@@ -71,7 +71,7 @@ public class SetupWindow {
 	private void addDescription() {
 		JPanel descriptionPanel = new JPanel();
 		JTextArea label = new JTextArea(
-				"Danke, dass Sie sich für DriimerFinance entschieden haben. Bitte beachten Sie, dass wir keine Möglichkeit haben, das Passwort zurückzusetzen, falls Sie dieses vergessen sollten. Zudem wird für die Lizenzüberprüfung eine Internetverbindung vorausgesetzt.");
+				"Danke, dass Sie sich f\u00fcr DriimerFinance entschieden haben. Bitte beachten Sie, dass wir keine M\u00f6glichkeit haben, das Passwort zur\u00fcckzusetzen, falls Sie dieses vergessen sollten. Zudem wird f\u00fcr die Lizenz\u00dcberpr\u00fcfung eine Internetverbindung vorausgesetzt.");
 		label.setPreferredSize(new Dimension(350, 100));
 		label.setEditable(false);
 		label.setColumns(30);
@@ -97,7 +97,7 @@ public class SetupWindow {
 		JLabel pw2Label = new JLabel("Passwort wiederholen");
 		formPanel.add(pw2Label);
 		formPanel.add(pwField2);
-		JLabel licenseLabel = new JLabel("Lizenzschlüssel");
+		JLabel licenseLabel = new JLabel("Lizenzschl\u00fcssel");
 		formPanel.add(licenseLabel);
 		formPanel.add(licenseField);
 		JLabel mysqlHostLabel = new JLabel("MySQL Host");
