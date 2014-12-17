@@ -44,23 +44,3 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
--- -----------------------------------------------------
--- Data for table `DriimerFinance`.`Mandanten`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `DriimerFinance`;
-INSERT INTO `DriimerFinance`.`Mandanten` (`idMandanten`, `Name`, `DBSchema`) VALUES (1, 'Driimer GMBH', 'DRIIMERGMBH');
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `DriimerFinance`.`User`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `DriimerFinance`;
-INSERT INTO `DriimerFinance`.`User` (`idUser`, `Name`, `Vorname`, `Password`, `username`) VALUES (1, 'Administrator', 'Super', 'Driimer', 'admin');
-
-COMMIT;
-
