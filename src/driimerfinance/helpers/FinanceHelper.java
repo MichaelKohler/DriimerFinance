@@ -113,41 +113,41 @@ public class FinanceHelper {
 		int habenType = haben.getFk_AccountType();
 		
 		// Aktiv  Aktiv    -> Höher  Tiefer
-		// Aktiv  Ertrag   -> Höher  Tiefer
+		// Aktiv  Aufwand   -> Höher  Höher
 		// Aufwand Aktiv  -> Höher  Tiefer
-		// Aufwand Ertrag -> Höher  Tiefer
+		// Aufwand Aufwand -> Höher  Höher
 		if ((sollType == AccountTypeEnum.ACTIVE.getId() || sollType == AccountTypeEnum.SPENDING.getId()) &&
-				(habenType == AccountTypeEnum.ACTIVE.getId() || habenType == AccountTypeEnum.EARNING.getId())) {
+				(habenType == AccountTypeEnum.ACTIVE.getId() || habenType == AccountTypeEnum.SPENDING.getId())) {
 			newSollBalance = soll.getBalance() + amount;
 			newHabenBalance = haben.getBalance() - amount;
 		}
 		
 		// Aktiv  Passiv    -> Höher  Höher
-		// Aktiv  Aufwand   -> Höher  Höher
+		// Aktiv  Ertrag   -> Höher  Tiefer
 		// Aufwand Passiv  -> Höher  Höher
-		// Aufwand Aufwand -> Höher  Höher
+		// Aufwand Ertrag -> Höher  Tiefer
 		if ((sollType == AccountTypeEnum.ACTIVE.getId() || sollType == AccountTypeEnum.SPENDING.getId()) &&
-				(habenType == AccountTypeEnum.PASSIVE.getId() || habenType == AccountTypeEnum.SPENDING.getId())) {
+				(habenType == AccountTypeEnum.PASSIVE.getId() || habenType == AccountTypeEnum.EARNING.getId())) {
 			newSollBalance = soll.getBalance() + amount;
 			newHabenBalance = haben.getBalance() + amount;
 		}
 		
 		// Passiv  Aktiv    -> Tiefer  Tiefer
-		// Passiv  Ertrag   -> Tiefer  Tiefer
+		// Passiv  Aufwand   -> Tiefer  Höher
 		// Ertrag Aktiv  -> Tiefer  Tiefer
-		// Ertrag Ertrag -> Tiefer  Tiefer
+		// Ertrag Aufwand -> Tiefer  Höher
 		if ((sollType == AccountTypeEnum.PASSIVE.getId() || sollType == AccountTypeEnum.EARNING.getId()) &&
-				(habenType == AccountTypeEnum.ACTIVE.getId() || habenType == AccountTypeEnum.EARNING.getId())) {
+				(habenType == AccountTypeEnum.ACTIVE.getId() || habenType == AccountTypeEnum.SPENDING.getId())) {
 			newSollBalance = soll.getBalance() - amount;
 			newHabenBalance = haben.getBalance() - amount;
 		}
 		
 		// Passiv  Passiv    -> Tiefer  Höher
-		// Passiv  Aufwand   -> Tiefer  Höher
+		// Passiv  Ertrag   -> Tiefer  Tiefer
 		// Ertrag Passiv  -> Tiefer  Höher
-		// Ertrag Aufwand -> Tiefer  Höher
+		// Ertrag Ertrag -> Tiefer  Tiefer
 		if ((sollType == AccountTypeEnum.PASSIVE.getId() || sollType == AccountTypeEnum.EARNING.getId()) &&
-				(habenType == AccountTypeEnum.PASSIVE.getId() || habenType == AccountTypeEnum.SPENDING.getId())) {
+				(habenType == AccountTypeEnum.PASSIVE.getId() || habenType == AccountTypeEnum.EARNING.getId())) {
 			newSollBalance = soll.getBalance() - amount;
 			newHabenBalance = haben.getBalance() + amount;
 		}
