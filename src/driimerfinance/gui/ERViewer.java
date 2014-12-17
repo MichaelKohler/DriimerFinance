@@ -167,7 +167,7 @@ public class ERViewer {
     public void exportPDF() {
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
-		chooser.setDialogTitle("Select Destination");
+		chooser.setDialogTitle("W\u00e4hlen sie einen Speicherort f\u00fcr ihre Erfolgsrechnung");
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		chooser.setFileFilter(new FileNameExtensionFilter("PDF Files",
 				"PDF", "pdf"));
