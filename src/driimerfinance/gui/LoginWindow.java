@@ -8,6 +8,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,7 +36,7 @@ import java.awt.BorderLayout;
 public class LoginWindow {
 	
 	JFrame frame = new JFrame("Driimer Finance - Login");
-	ImageIcon icon = new ImageIcon("images/DF.png");
+	ImageIcon icon = null;
 	DriimerDBHelper db = new DriimerDBHelper();
 	JPasswordField passwordText;
 	
@@ -39,6 +44,13 @@ public class LoginWindow {
 	 * Constructor
 	 */
     public LoginWindow() {
+    	    File imageFile = new File("images/DF.png");
+    	    if (imageFile.exists()) {
+    	        icon = new ImageIcon(imageFile.getAbsolutePath());
+    	    } else {
+    	    	    URL url = getClass().getResource("/DF.png");
+    	    	    icon = new ImageIcon(url);
+    	    }
         createGUI();
     }
     
@@ -53,9 +65,22 @@ public class LoginWindow {
 
 		JPanel mainpanel = new JPanel() {
 			// Paint the background image
-			public void paintComponent(Graphics g) {  
-			Image img = Toolkit.getDefaultToolkit().getImage(new File("images/driimer.jpg").getAbsolutePath());
-			g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);  
+			public void paintComponent(Graphics g) {
+				File driimerFile = new File("images/driimer.jpg");
+				String driimerFilePath = driimerFile.getAbsolutePath();
+				if (!driimerFile.exists()) {
+					URL url = getClass().getResource("/driimer.jpg");
+					File logoFile = new File("bin/driimer.jpg");
+					try {
+						InputStream in = url.openStream();
+						Files.copy(in, logoFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					driimerFilePath = logoFile.getAbsolutePath();
+				}
+			    Image img = Toolkit.getDefaultToolkit().getImage(driimerFilePath);
+			    g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);  
 			}
 		};
 		
