@@ -34,11 +34,11 @@ public class MenuBarSingleton {
 
 		JMenuBar bar = new JMenuBar();
 
-		JMenu file = new JMenu("File");
-		file.setMnemonic(KeyEvent.VK_F);
+		JMenu file = new JMenu("Datei");
+		file.setMnemonic(KeyEvent.VK_D);
 
-		JMenuItem exportMenuItem = new JMenuItem("Export Raw Data..");
-		exportMenuItem.setMnemonic(KeyEvent.VK_E);
+		JMenuItem exportMenuItem = new JMenuItem("Rohdaten exportieren..");
+		exportMenuItem.setMnemonic(KeyEvent.VK_R);
 		exportMenuItem.setToolTipText("Daten exportieren..");
 		exportMenuItem.addActionListener(new ActionListener() {
 			@Override
@@ -58,7 +58,7 @@ public class MenuBarSingleton {
 		});
 		file.add(exportMenuItem);
 		
-		JMenuItem importMenuItem = new JMenuItem("Import Raw Data..");
+		JMenuItem importMenuItem = new JMenuItem("Rohdaten importieren..");
 		importMenuItem.setMnemonic(KeyEvent.VK_E);
 		importMenuItem.setToolTipText("Daten importieren..");
 		importMenuItem.addActionListener(new ActionListener() {
