@@ -1,10 +1,9 @@
 package driimerfinance.models;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.text.Normalizer;
 import java.util.Properties;
 import java.util.UUID;
@@ -112,13 +111,14 @@ public class Mandant implements IModel {
     public void setCurrentWorkingMandant() {
     	    Properties prop = new Properties();
 		try {
-			URL url = getClass().getResource("../../driimerfinance/database/database.properties");
-			prop.load(new FileInputStream(url.toURI().getPath()));
+			File propertiesFile = new File("bin/driimerfinance/database/database.properties");
+			if (!propertiesFile.exists()) {
+				propertiesFile = new File("../../driimerfinance/database/database.properties");
+			}
+			prop.load(new FileInputStream(propertiesFile.getAbsolutePath()));
 			prop.setProperty("databasename", this.getDBSchema()); // sets the name of the schema as value in the properties file
-			prop.store(new FileOutputStream(url.toURI().getPath()), null);
+			prop.store(new FileOutputStream(propertiesFile.getAbsolutePath()), null);
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 		MenuBarSingleton.setEnabled(true); // set all the menu items to enabled since we have a working mandant now

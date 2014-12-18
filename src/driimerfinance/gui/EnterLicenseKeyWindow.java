@@ -4,11 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Properties;
 
 import javax.swing.ImageIcon;
@@ -96,13 +95,14 @@ public class EnterLicenseKeyWindow {
 				Properties prop = new Properties();
 				try {
 					// save the new key to the properties file
-					URL url = getClass().getResource("../../driimerfinance/database/database.properties");
-					prop.load(new FileInputStream(url.toURI().getPath()));
+					File propertiesFile = new File("bin/driimerfinance/database/database.properties");
+					if (!propertiesFile.exists()) {
+						propertiesFile = new File("../../driimerfinance/database/database.properties");
+					}
+					prop.load(new FileInputStream(propertiesFile.getAbsolutePath()));
 					prop.setProperty("licensekey", licenseField.getText());
-					prop.store(new FileOutputStream(url.toURI().getPath()), null);
+					prop.store(new FileOutputStream(propertiesFile.getAbsolutePath()), null);
 				} catch (IOException ex) {
-					ex.printStackTrace();
-				} catch (URISyntaxException ex) {
 					ex.printStackTrace();
 				}
 				

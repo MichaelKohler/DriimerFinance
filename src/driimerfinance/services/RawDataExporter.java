@@ -35,9 +35,11 @@ public class RawDataExporter implements Runnable {
 	private void setDBPreferences() {
 		Properties properties = new Properties();
 		try {
-			properties.load(new FileInputStream(new File(
-					"bin/driimerfinance/database/database.properties")
-					.getAbsoluteFile()));
+			File propertiesFile = new File("bin/driimerfinance/database/database.properties");
+			if (!propertiesFile.exists()) {
+				propertiesFile = new File("../../driimerfinance/database/database.properties");
+			}
+			properties.load(new FileInputStream(propertiesFile.getAbsoluteFile()));
 			host = properties.getProperty("host");
 			username = properties.getProperty("user");
 			dbname = properties.getProperty("databasename");
