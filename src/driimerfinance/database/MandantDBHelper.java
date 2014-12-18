@@ -1,5 +1,7 @@
 package driimerfinance.database;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -42,11 +44,12 @@ public class MandantDBHelper {
 	 */
 	public MandantDBHelper() {
 		Properties prop = new Properties();
-		InputStream in;
 		try {
-			in = getClass().getResourceAsStream("database.properties");
-			prop.load(in);
-			in.close();
+			File propertiesFile = new File("bin/driimerfinance/database/database.properties");
+			if (!propertiesFile.exists()) {
+				propertiesFile = new File("../../driimerfinance/database/database.properties");
+			}
+			prop.load(new FileInputStream(propertiesFile.getAbsolutePath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -55,6 +58,7 @@ public class MandantDBHelper {
 		String host = prop.getProperty("host");
 		String user = prop.getProperty("user");
 		String databasename = prop.getProperty("databasename");
+		System.out.println(databasename);
 		String password = prop.getProperty("password");
 
 		// instantiate the connection to the datbase with the given credentials
